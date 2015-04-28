@@ -31,11 +31,13 @@
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
  * @license    http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
- * @version    IdPRef-Sprint2
+ * @version    0.3-Sprint3-R57
  */
 
 $step = 9;
 if (count($this->data['sir']['info']) > 0) {
     echo "<p>" . implode("<br/>", $this->data['sir']['info']) . "</p>";
+    echo $this->t('{sir_install:sir_install:step9_pub_key}')."</br>"; 
+    echo  "<textarea rows='3' cols='90' readonly='readonly' >".$this->data['sir']['cert']."</textarea>"; 
 }
 ?>

@@ -39,7 +39,7 @@
 # Copyroght:    Copyright (C) 2014 - 2015 by the Spanish Research and
 #               Academic Network.
 # License:      http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
-# Version:      IdPRef-Sprint2
+# Version:      0.3-Sprint3-R57
 #
 # **************************************************************************** #
 

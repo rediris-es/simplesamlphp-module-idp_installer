@@ -31,7 +31,7 @@
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
  * @license    http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
- * @version    IdPRef-Sprint2
+ * @version    0.3-Sprint3-R57
  */
 
 $step = 1;

@@ -31,7 +31,7 @@
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
  * @license    http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
- * @version    IdPRef-Sprint2
+ * @version    0.3-Sprint3-R57
  */
 
 /**
@@ -116,10 +116,17 @@ function sir_install_hook_step1(&$data) {
                 "modules",                
             );
             $perms_ko = array();
+            $apachegroupname = getApacheGroup();
             foreach ($files as $file) {
                 $f = realpath(__DIR__ . "/../../../" . $file);
-                if (!is_writable($f)) {
-                    $perms_ko[] = $f;
+                if (!is_writable($f) || !is_readable($f)) {
+                    $actual_perms = fileperms($f);
+                    $new_perms = $actual_perms | 0060 ;
+                    @$changed_perm = chmod($f, $new_perms);
+                    @$changed_grp = chgrp($f, $apachegroupname);
+                    if(!($changed_perm && $changed_grp)){
+                        $perms_ko[] = $f;
+                    }
                 }
             }
             if (count($perms_ko) > 0) {
@@ -140,6 +147,13 @@ function sir_install_hook_step1(&$data) {
             }
         }
     }
+    
+    //Aquí se configuran los idiomas que estarán disponibles para SSPHP
+    $confile = __DIR__ . '/../../../config/config.php';
+    include($confile);
+    $config['language.available']     = ['es', 'en', 'eu'];
+    $res                              = @file_put_contents($confile, '<?php  $config = ' . var_export($config, 1) . "; ?>");
+    
     if (count($data['errors']) == 0) {
         $data['info'][] = $ssphpobj->t('{sir_install:sir_install:step1_all_ok}');
     }

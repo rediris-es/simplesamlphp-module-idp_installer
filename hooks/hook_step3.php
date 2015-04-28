@@ -31,7 +31,7 @@
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
  * @license    http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
- * @version    IdPRef-Sprint2
+ * @version    0.3-Sprint3-R57
  */
 
 /**
@@ -48,6 +48,27 @@ function sir_install_hook_step3(&$data) {
     if (array_key_exists('ssphp_password', $_REQUEST) && array_key_exists('ssphp_password2', $_REQUEST) && !empty($_REQUEST['ssphp_password'])) {
         $pass  = $_REQUEST['ssphp_password'];
         $pass2 = $_REQUEST['ssphp_password2'];
+        if(isset($_REQUEST['ssphp_organization_name'])){ 
+            $org_name = $_REQUEST['ssphp_organization_name'];
+        }
+        if(isset($_REQUEST['ssphp_organization_description'])){
+            $org_info = $_REQUEST['ssphp_organization_description'];
+        }
+        if(isset($_REQUEST['ssphp_organization_info_url'])){
+            $org_url_info = $_REQUEST['ssphp_organization_info_url'];
+        } 
+        $file_tmp_name = realpath(__DIR__ . '/../../../cert/').'/tmp_org_info.php';
+        if(file_exists($file_tmp_name)){
+            unlink($file_tmp_name);
+        }
+        if($file = fopen($file_tmp_name, "x")){
+            fwrite($file, '<?php $org_info = array('
+                            . "'name' => '$org_name',"
+                            . "'info' => '$org_info',"
+                            . "'url'  => '$org_url_info'); ");
+            fclose($file);
+        }
+        $data['ssphpobj']->data['buffer_info_org']= array($org_name,$org_info,$org_url_info);
         if (strcmp($pass, $pass2) == 0) {
             if (array_key_exists('ssphp_technicalcontact_name', $_REQUEST) && array_key_exists('ssphp_technicalcontact_email', $_REQUEST) && !empty($_REQUEST['ssphp_technicalcontact_name']) && !empty($_REQUEST['ssphp_technicalcontact_email'])) {
                 $filename                         = __DIR__ . '/../../../config/config.php';

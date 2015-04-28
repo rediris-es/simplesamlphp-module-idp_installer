@@ -31,7 +31,7 @@
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
  * @license    http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
- * @version    IdPRef-Sprint2
+ * @version    0.3-Sprint3-R57
  */
 $step      = 2;
 $next_step = 3;
@@ -55,6 +55,14 @@ if (count($this->data['sir']['errors']) > 0) {
     <?php echo $this->t('{sir_install:sir_install:step2_contact_email}'); ?>:<br/>
     <input type="text" value="" name="ssphp_technicalcontact_email" style="width:300px;"><br/>
     <p><?php echo $this->t('{sir_install:sir_install:step2_contact_info}'); ?></p>
+    
+    <h4><?php echo $this->t('{sir_install:sir_install:step2_organization_title}'); ?></h4>
+    <?php echo $this->t('{sir_install:sir_install:step2_organization_name}'); ?>:<br/>
+    <input type="text" value="" name="ssphp_organization_name" style="width:300px;"><br/>
+    <?php echo $this->t('{sir_install:sir_install:step2_organization_description}'); ?>:<br/>
+    <input type="text" value="" name="ssphp_organization_description" style="width:300px;"><br/>
+    <?php echo $this->t('{sir_install:sir_install:step2_organization_info_url}'); ?>:<br/>
+    <input type="text" value="" name="ssphp_organization_info_url" style="width:300px;"><br/>
 
-    <input type="submit" value="<?php echo $button_msg; ?>"></input>
+    <br/><input type="submit" value="<?php echo $button_msg; ?>"></input>
 </form>

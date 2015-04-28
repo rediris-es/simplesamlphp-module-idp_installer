@@ -104,6 +104,18 @@
     "step2_contact_title": {
         "es": "2.2 Datos del contacto técnico de la organización"
     },
+    "step2_organization_title": {
+        "es": "2.3 Datos de la organización"
+    },
+    "step2_organization_name": {
+        "es": "Nombre de la organización"
+    },
+    "step2_organization_description": {
+        "es": "Breve descripción de la organización"
+    },
+    "step2_organization_info_url": {
+        "es": "URL a la página de información de la organización"
+    },
     "step2_contact_email": {
         "es": "Correo electrónico"
     },
@@ -111,7 +123,7 @@
         "es": "Nombre y apellidos del contacto técnico de la organización"
     },
     "step2_contact_info": {
-        "es": "Recuerde que esta información estará disponible en los metadatos de esta organización.<br/> El correo electrónico se utilizará para remitir errores de SimpleSMLphp de forma automática."
+        "es": "Recuerde que esta información estará disponible en los metadatos de esta organización.<br/> El correo electrónico se utilizará para remitir errores de SimpleSAMLphp de forma automática."
     },
     "step2_timezone_info": {
         "es": "Se ha obtenido la zona horaria configurada por defecto para PHP. Ésta es:"
@@ -195,7 +207,7 @@
         "es": "Seleccione si desea crear un nuevo certificado, o si por otra parte, prefiere importar uno ya existente: "
     },
     "step7_all_ok":{
-        "es":"Se ha configurado los metadatos para que su SimpleSAMLphp funcione como Idp <strong>de manera satisfactoria</strong>."
+        "es":"Se ha configurado los metadatos para que su SimpleSAMLphp funcione como IdP <strong>de manera satisfactoria</strong>."
     },
     "step7_all_info_extra":{
         "es":"Si desea comprobar cuales han sido los nuevos metadatos creados, puede comprobarlos "
@@ -204,7 +216,10 @@
         "es":"aquí."
     },
     "step7_error":{
-        "es":"Se ha intentado configurar los metadatos para que su SimpleSAMLphp funcione como Idp, <strong>pero NO ha sido posible</strong>."
+        "es":"Se ha intentado configurar los metadatos para que su SimpleSAMLphp funcione como IdP, <strong>pero NO ha sido posible</strong>."
+    },
+    "step7_command_error":{
+        "es":"Se produjo un error al generar el certificado: "
     },
     "step6_cert_info":{
         "es": "Para la creación automática de los certificados del IdP es necesario que introduzca el nombre de su organización: "
@@ -270,6 +285,12 @@
         "es":"El certificado para este IdP se encuentra en "
     },
     "step9_pub_key":{
-        "es":"El certificado del IdP es: "
+        "es":"El contenido del certificado es: "
+    },
+    "step9_modified_files":{
+        "es":"Los ficheros modificados en el proceso de instalación han sido: </br>"
+    },
+    "step9_url_init":{
+        "es":"Si desea acceder a la página principal del recién instalado SimpleSAMLphp, puede hacerlo "
     }
 }
