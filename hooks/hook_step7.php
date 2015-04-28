@@ -27,7 +27,7 @@
 
 /**
  * Paso 7 del modulo instalador para SimpleSAMLphp v1.13.1
- * @package    IdPRef\modules\sir_install
+ * @package    IdPRef\modules\simplesamlphp-module-idp-installer
  * @author     "PRiSE [Auditoria y Consultoria de privacidad y Seguridad, S.L.]"
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
@@ -40,7 +40,7 @@
  *
  * @param array &$data  Los datos a utilizar por las plantillas de tipo stepn
  */
-function sir_install_hook_step7(&$data) {
+function simplesamlphp-module-idp-installer_hook_step7(&$data) {
     $hostname = $_SERVER['HTTP_HOST'];
     $pkey_file = $hostname . ".key.pem";
     $cert_file = $hostname . ".crt.pem";
@@ -53,7 +53,7 @@ function sir_install_hook_step7(&$data) {
         $pem = $dir_certs . "/" . $pkey_file;
 
         if (!file_exists($dir_certs) && !is_writable($dir_certs . "/../")) {
-            $data['errors'][] = $data['ssphpobj']->t('{sir_install:sir_install:step6_mkdir_cert_error}');
+            $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step6_mkdir_cert_error}');
             $data['errors'][] = "<pre>&gt; mkdir $dir_certs</pre>";
             return true;
         } else if (!is_dir($dir_certs)) {
@@ -61,7 +61,7 @@ function sir_install_hook_step7(&$data) {
         } else if (!is_writable($dir_certs)) {
             $username = getFileUsername($dir_certs);
             $groupname = getApacheGroup();
-            $data['errors'][] = $data['ssphpobj']->t('{sir_install:sir_install:step6_perm_cert_error}');
+            $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step6_perm_cert_error}');
             $data['errors'][] = "<pre>&gt; chown -R " . $username . ":" . $groupname . " $dir_certs\n&gt; chmod -R g+w " . $dir_certs . "</pre>";
             return true;
         }
@@ -76,19 +76,19 @@ function sir_install_hook_step7(&$data) {
                         $x = @file_put_contents($pem, $priv_key);
                         $y = @file_put_contents($crt, $cert);
                         if ($x === false || $y === false) {
-                            $data['errors'][] = $data['ssphpobj']->t('{sir_install:sir_install:step6_cert_error}');
+                            $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step6_cert_error}');
                             return true;
                         }
                     } else {
-                        $data['errors'][] = $data['ssphpobj']->t('{sir_install:sir_install:step6_cert_rsa_error}');
+                        $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step6_cert_rsa_error}');
                         return true;
                     }
                 } else {
-                    $data['errors'][] = $data['ssphpobj']->t('{sir_install:sir_install:step6_cert_rsa_error}');
+                    $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step6_cert_rsa_error}');
                     return true;
                 }
             } else {
-                $data['errors'][] = $data['ssphpobj']->t('{sir_install:sir_install:step6_cert_error_comparation}');
+                $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step6_cert_error_comparation}');
                 return true;
             }
         } else {
@@ -113,16 +113,16 @@ function sir_install_hook_step7(&$data) {
 
             // Se procesan los mensajes de salida de errores
             if($outCode !== 0){
-                $data['errors'][] = $data['ssphpobj']->t('{sir_install:sir_install:step7_command_error}').'</br></br><pre>'.$respStderr.'</pre>';
+                $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step7_command_error}').'</br></br><pre>'.$respStderr.'</pre>';
                 }
         }
 
         if (!file_exists($crt) || !file_exists($pem)) {
             $username = getFileUsername($dir_certs);
             $groupname = getApacheGroup();
-            $data['errors'][] = $data['ssphpobj']->t('{sir_install:sir_install:step6_cert_error}');
+            $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step6_cert_error}');
             if (isset($command)) {
-                $data['errors'][] = $data['ssphpobj']->t('{sir_install:sir_install:step6_cert_error_suggest}');
+                $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step6_cert_error_suggest}');
                 $data['errors'][] = $command;
                 return true;
             }
@@ -136,12 +136,12 @@ function sir_install_hook_step7(&$data) {
         $config['metadata.sign.certificate'] = $cert_file;
         $res = @file_put_contents($filename, '<?php  $config = ' . var_export($config, 1) . "; ?>");
         if (!$res) {
-            $data['errors'][] = $data['ssphpobj']->t('{sir_install:sir_install:step2_contact_save_error}');
-            $data['errors'][] = $data['ssphpobj']->t('{sir_install:sir_install:step2_contact_save_error2}') . " <i>" . realpath($filename) . "</i>";
+            $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step2_contact_save_error}');
+            $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step2_contact_save_error2}') . " <i>" . realpath($filename) . "</i>";
             return true;
         }
     } else if (!isset($_REQUEST['only_part2']) || empty($_REQUEST['only_part2'])) {
-        $data['errors'][] = $data['ssphpobj']->t('{sir_install:sir_install:step6_org_name_empty_error}');
+        $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step6_org_name_empty_error}');
         return true;
     }
     //Segunda parte del Hook7
@@ -220,21 +220,21 @@ function sir_install_hook_step7(&$data) {
     unlink($file_tmp_name);
     if (!$res || count($perms_ko) > 0) {
         if (function_exists('posix_getgrnam')) {
-            $aux = "<br/>" . $data['ssphpobj']->t('{sir_install:sir_install:step7_error}');
-            $aux .= "<br/>" . $data['ssphpobj']->t('{sir_install:sir_install:step4_perms_ko}');
+            $aux = "<br/>" . $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step7_error}');
+            $aux .= "<br/>" . $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step4_perms_ko}');
             $filename = $perms_ko[0];
             $recursive = is_dir($filename) ? "-R" : "";
             $aux.= "<pre>&gt; chown $recursive " . getFileUsername($filename) . ":" . getApacheGroup() . " $filename\n&gt; chmod $recursive g+rw " . $filename . "</pre>";
         }
         $data['errors2'][] = $aux;
-        $data['errors2'][] = $data['ssphpobj']->t("{sir_install:sir_install:step1_remember_change_perms}");
+        $data['errors2'][] = $data['ssphpobj']->t("{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step1_remember_change_perms}");
     }
     if (count($data['errors2']) == 0) {
         $url_meta = 'http://' . $_SERVER['HTTP_HOST'] . substr($_SERVER['SCRIPT_NAME'], 0, -23) . "saml2/idp/metadata.php?output=xhtml";
-        $data['info'][] = $data['ssphpobj']->t('{sir_install:sir_install:step7_all_ok}');
-        $data['info'][] = $data['ssphpobj']->t('{sir_install:sir_install:step7_all_info_extra}') . " <a href='$url_meta' target='_blank'>" . $data['ssphpobj']->t('{sir_install:sir_install:step7_here}') . "</a>";
+        $data['info'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step7_all_ok}');
+        $data['info'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step7_all_info_extra}') . " <a href='$url_meta' target='_blank'>" . $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step7_here}') . "</a>";
     } else {
-        $data['errors2'][] = $data['ssphpobj']->t('{sir_install:sir_install:step7_error}');
+        $data['errors2'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step7_error}');
     }
     return $res;
 }

@@ -26,7 +26,7 @@
 
 /** 
  * Plantilla para el paso 2 del modulo instalador para SimpleSAMLphp v1.13.1
- * @package    IdPRef\modules\sir_install
+ * @package    IdPRef\modules\simplesamlphp-module-idp-installer
  * @author     "PRiSE [Auditoria y Consultoria de privacidad y Seguridad, S.L.]"
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
@@ -36,32 +36,32 @@
 $step      = 2;
 $next_step = 3;
 if (count($this->data['sir']['errors']) > 0) {
-    $button_msg = $this->t('{sir_install:sir_install:try_again_button}');
+    $button_msg = $this->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:try_again_button}');
 } else {
-    $button_msg = $this->t('{sir_install:sir_install:next_step}');
+    $button_msg = $this->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:next_step}');
 }
 ?>
 <form action="" method="post">    
-    <h4><?php echo $this->t('{sir_install:sir_install:step2_access_title}'); ?></h4>
+    <h4><?php echo $this->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step2_access_title}'); ?></h4>
     <input type="hidden" name="step" value="<?php echo $next_step; ?>">
-    <?php echo $this->t('{sir_install:sir_install:step2_access_password}'); ?><br/>
+    <?php echo $this->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step2_access_password}'); ?><br/>
     <input type="password" value="" name="ssphp_password" style="width:200px;"><br/>
-    <?php echo $this->t('{sir_install:sir_install:step2_access_password2}'); ?><br/>
+    <?php echo $this->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step2_access_password2}'); ?><br/>
     <input type="password" value="" name="ssphp_password2" style="width:200px;"><br/>
 
-    <h4><?php echo $this->t('{sir_install:sir_install:step2_contact_title}'); ?></h4>
-    <?php echo $this->t('{sir_install:sir_install:step2_contact_name}'); ?>:<br/>
+    <h4><?php echo $this->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step2_contact_title}'); ?></h4>
+    <?php echo $this->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step2_contact_name}'); ?>:<br/>
     <input type="text" value="" name="ssphp_technicalcontact_name" style="width:300px;"><br/>
-    <?php echo $this->t('{sir_install:sir_install:step2_contact_email}'); ?>:<br/>
+    <?php echo $this->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step2_contact_email}'); ?>:<br/>
     <input type="text" value="" name="ssphp_technicalcontact_email" style="width:300px;"><br/>
-    <p><?php echo $this->t('{sir_install:sir_install:step2_contact_info}'); ?></p>
+    <p><?php echo $this->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step2_contact_info}'); ?></p>
     
-    <h4><?php echo $this->t('{sir_install:sir_install:step2_organization_title}'); ?></h4>
-    <?php echo $this->t('{sir_install:sir_install:step2_organization_name}'); ?>:<br/>
+    <h4><?php echo $this->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step2_organization_title}'); ?></h4>
+    <?php echo $this->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step2_organization_name}'); ?>:<br/>
     <input type="text" value="" name="ssphp_organization_name" style="width:300px;"><br/>
-    <?php echo $this->t('{sir_install:sir_install:step2_organization_description}'); ?>:<br/>
+    <?php echo $this->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step2_organization_description}'); ?>:<br/>
     <input type="text" value="" name="ssphp_organization_description" style="width:300px;"><br/>
-    <?php echo $this->t('{sir_install:sir_install:step2_organization_info_url}'); ?>:<br/>
+    <?php echo $this->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step2_organization_info_url}'); ?>:<br/>
     <input type="text" value="" name="ssphp_organization_info_url" style="width:300px;"><br/>
 
     <br/><input type="submit" value="<?php echo $button_msg; ?>"></input>

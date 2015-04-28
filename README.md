@@ -73,7 +73,7 @@ After the module has been installed and the web server configured, the administr
 point his browser to this URL to start the IdP configuration process:
 
 ````
-http://sso.example.com/module.php/sir_install/
+http://sso.example.com/module.php/simplesamlphp-module-idp-installer/
 ````
 
 Post-install

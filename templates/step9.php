@@ -26,7 +26,7 @@
 
 /** 
  * Plantilla para el paso 9 del modulo instalador para SimpleSAMLphp v1.13.1
- * @package    IdPRef\modules\sir_install
+ * @package    IdPRef\modules\simplesamlphp-module-idp-installer
  * @author     "PRiSE [Auditoria y Consultoria de privacidad y Seguridad, S.L.]"
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
@@ -37,7 +37,7 @@
 $step = 9;
 if (count($this->data['sir']['info']) > 0) {
     echo "<p>" . implode("<br/>", $this->data['sir']['info']) . "</p>";
-    echo $this->t('{sir_install:sir_install:step9_pub_key}')."</br>"; 
+    echo $this->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step9_pub_key}')."</br>"; 
     echo  "<textarea rows='3' cols='90' readonly='readonly' >".$this->data['sir']['cert']."</textarea>"; 
 }
 ?>

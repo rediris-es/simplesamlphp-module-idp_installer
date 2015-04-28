@@ -26,7 +26,7 @@
 
 /** 
  * Plantilla para el paso 3 del modulo instalador para SimpleSAMLphp v1.13.1
- * @package    IdPRef\modules\sir_install
+ * @package    IdPRef\modules\simplesamlphp-module-idp-installer
  * @author     "PRiSE [Auditoria y Consultoria de privacidad y Seguridad, S.L.]"
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
@@ -36,7 +36,7 @@
 
 $step = 2;
 $next_step = 5;
-drawButton($step, $this->t('{sir_install:sir_install:try_again_button_step_n}')." 2", 'style="margin-top:20px;float:left;margin-right:10px;"');
-drawButton($next_step, $this->t('{sir_install:sir_install:next_step}'), 'style="margin-top:35px;"'); 
+drawButton($step, $this->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:try_again_button_step_n}')." 2", 'style="margin-top:20px;float:left;margin-right:10px;"');
+drawButton($next_step, $this->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:next_step}'), 'style="margin-top:35px;"'); 
 
 ?>
