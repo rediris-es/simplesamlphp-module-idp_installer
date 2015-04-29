@@ -26,7 +26,7 @@
 
 /** 
  * Plantilla para el paso 6 del modulo instalador para SimpleSAMLphp v1.13.1
- * @package    IdPRef\modules\simplesamlphp_module_idp_installer
+ * @package    IdPRef\modules\idp_installer
  * @author     "PRiSE [Auditoria y Consultoria de privacidad y Seguridad, S.L.]"
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
@@ -55,7 +55,7 @@ $options   = array(
         'import'  => "Importar certificado"
 );
 ?>
-<p><?php echo $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step6_cert_select}'); ?>
+<p><?php echo $this->t('{idp_installer:idp_installer:step6_cert_select}'); ?>
     <select id="cert_type" name="cert_type" onchange="showCertForm();">
         <?php
         $selected = 'create';
@@ -71,12 +71,12 @@ $options   = array(
 </p>
 <?php
 
-$inputs_create = '<h4>'.$this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step6_create_title}').'</h4>';
-$inputs_create.= "<p style='margin-top:3px;'>" . $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step6_cert_info}');
+$inputs_create = '<h4>'.$this->t('{idp_installer:idp_installer:step6_create_title}').'</h4>';
+$inputs_create.= "<p style='margin-top:3px;'>" . $this->t('{idp_installer:idp_installer:step6_cert_info}');
 $inputs_create.= '<input type="text" name="organization_name" value="" style="width: 500px; margin-top:5px;"/></p>';
 
-$inputs_import = '<h4>'.$this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step6_import_title}').'</h4>';
-$inputs_import.= "<p style='margin-top:3px;'>". $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step6_cert_info2}').'</p>';
+$inputs_import = '<h4>'.$this->t('{idp_installer:idp_installer:step6_import_title}').'</h4>';
+$inputs_import.= "<p style='margin-top:3px;'>". $this->t('{idp_installer:idp_installer:step6_cert_info2}').'</p>';
 $inputs_import.= 'Certificado:<br/>';
 $inputs_import.= '<textarea name="private_key" style="width: 90%; height: 8em; font-family: Monospace"></textarea><br/>';
 $inputs_import.= 'Clave privada:<br/>';
@@ -85,15 +85,15 @@ $inputs_import.= '<textarea name="certificate" style="width: 90%; height: 8em; f
 ?>
 <div id = "create_form" <?php if ($selected == "import") { ?>style="display:none;" <?php } ?>>
     <?php
-    drawButton($next_step, $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:next_step}'), '', $inputs_create);
+    drawButton($next_step, $this->t('{idp_installer:idp_installer:next_step}'), '', $inputs_create);
     ?>
 </div>
 <div id = "import_form" <?php if ($selected == "create") { ?>style="display:none;" <?php } ?>>
     <?php
-    drawButton($next_step, $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:next_step}'), '', $inputs_import);
+    drawButton($next_step, $this->t('{idp_installer:idp_installer:next_step}'), '', $inputs_import);
     ?>
 </div>
 <?php
 $dir_certs = realpath(__DIR__ . "/../../../") . "/cert";
-echo "<p style='margin-top:3px;'>" . $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step6_footer_note}') . '<i>' . $dir_certs . '</i></p>';
+echo "<p style='margin-top:3px;'>" . $this->t('{idp_installer:idp_installer:step6_footer_note}') . '<i>' . $dir_certs . '</i></p>';
 ?>

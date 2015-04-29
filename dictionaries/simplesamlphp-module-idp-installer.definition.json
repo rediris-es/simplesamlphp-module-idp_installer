@@ -1,5 +1,5 @@
 {
-    "simplesamlphp_module_idp_installer_header": {
+    "idp_installer_header": {
         "es": "Instalador de la conexión con SIR"
     },
     "step_subtitle1": {

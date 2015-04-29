@@ -26,7 +26,7 @@
 
 /** 
  * Paso 1 del modulo instalador para SimpleSAMLphp v1.13.1
- * @package    IdPRef\modules\simplesamlphp_module_idp_installer
+ * @package    IdPRef\modules\idp_installer
  * @author     "PRiSE [Auditoria y Consultoria de privacidad y Seguridad, S.L.]"
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
@@ -59,12 +59,12 @@
  * @param array &$data  Los datos a utilizar por las plantillas de tipo stepn
  * 
  */
-function simplesamlphp_module_idp_installer_hook_step1(&$data) {
+function idp_installer_hook_step1(&$data) {
     $ssphpobj = $data['ssphpobj'];
     //Comprobamos la versión de PHP
     if (version_compare(PHP_VERSION, "5.3.0", ">=") === false) {
-        $data['errors'][] = $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:general_error}');
-        $data['errors'][] = $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step1_error_version}');
+        $data['errors'][] = $ssphpobj->t('{idp_installer:idp_installer:general_error}');
+        $data['errors'][] = $ssphpobj->t('{idp_installer:idp_installer:step1_error_version}');
     } else {
         //Continuamos comprobando las extensiones de PHP
         $extensions        = array("date", "dom", "hash", "libxml", "openssl", "pcre", "SPL", "zlib", "mcrypt", "posix");
@@ -76,12 +76,12 @@ function simplesamlphp_module_idp_installer_hook_step1(&$data) {
             }
         }
         if (count($failed_extensions) > 0) {
-            $data['errors'][] = $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:general_error}');
-            $data['errors'][] = $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step1_error_extensions}') . implode(", ", $failed_extensions) . ".";
+            $data['errors'][] = $ssphpobj->t('{idp_installer:idp_installer:general_error}');
+            $data['errors'][] = $ssphpobj->t('{idp_installer:idp_installer:step1_error_extensions}') . implode(", ", $failed_extensions) . ".";
         } else {
             //Continuamos comprobando memcache (opcional)
             if (!isExtensionActive('memcached', $loaded_extensions)) {
-                $data['warning'][] = $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step1_memcached_error}');
+                $data['warning'][] = $ssphpobj->t('{idp_installer:idp_installer:step1_memcached_error}');
             }
             //Continuamos comprobando LDAP, Driver PDO
             $ldap    = isLDAPextensionActive($loaded_extensions);
@@ -91,22 +91,22 @@ function simplesamlphp_module_idp_installer_hook_step1(&$data) {
                 //Todo OK
             } else if (!$ldap && !$pdo) {
                 //Todo KO, me dan igual los módulos, porq pdo no está activo
-                $data['errors'][] = $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:general_error}');
-                $data['errors'][] = $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step1_any_data_source_error}');
+                $data['errors'][] = $ssphpobj->t('{idp_installer:idp_installer:general_error}');
+                $data['errors'][] = $ssphpobj->t('{idp_installer:idp_installer:step1_any_data_source_error}');
             } else if (!$ldap && $pdo && $modulos) {
                 //Solo PDO
-                $aux               = $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step1_only_pdo}');
-                $aux.= " " . $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step1_only_pdo_modules_list}');
+                $aux               = $ssphpobj->t('{idp_installer:idp_installer:step1_only_pdo}');
+                $aux.= " " . $ssphpobj->t('{idp_installer:idp_installer:step1_only_pdo_modules_list}');
                 $aux.= implode(", ", getPDOModulesActive($loaded_extensions)) . ".";
                 $data['warning'][] = $aux;
             } else if (!$ldap && $pdo && !$modulos) {
                 //Necesita modulos $pdo
-                $data['errors'][] = $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:general_error}');
-                $data['errors'][] = $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step1_pdo_no_modules}');
+                $data['errors'][] = $ssphpobj->t('{idp_installer:idp_installer:general_error}');
+                $data['errors'][] = $ssphpobj->t('{idp_installer:idp_installer:step1_pdo_no_modules}');
             } else if ($ldap) {
                 //Solo LDAP ($ldap y me da igual si $pdo o $modulos estan ok, 
                 //ya se que algo falla por que no entré en caso 1
-                $data['warning'][] = $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step1_only_ldap}');
+                $data['warning'][] = $ssphpobj->t('{idp_installer:idp_installer:step1_only_ldap}');
             }
             $files    = array(
                 "config/config.php",
@@ -130,12 +130,12 @@ function simplesamlphp_module_idp_installer_hook_step1(&$data) {
                 }
             }
             if (count($perms_ko) > 0) {
-                $aux = $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step1_perms_ko}');
+                $aux = $ssphpobj->t('{idp_installer:idp_installer:step1_perms_ko}');
                 $aux.= "<ul style='margin-top:30px;'><li>".implode("</li><li>",$perms_ko)."</li></ul>";
-                $aux.= $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step1_perms_ko2}');
+                $aux.= $ssphpobj->t('{idp_installer:idp_installer:step1_perms_ko2}');
 
                 if(function_exists('posix_getgrnam')){                    
-                    $aux.= "<br/>".$ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step1_perms_ko3}');
+                    $aux.= "<br/>".$ssphpobj->t('{idp_installer:idp_installer:step1_perms_ko3}');
                     $filename = $perms_ko[0];
                     $username = getFileUsername($filename);
                     $groupname = getApacheGroup();                    
@@ -143,7 +143,7 @@ function simplesamlphp_module_idp_installer_hook_step1(&$data) {
                     $aux.= "<pre>&gt; chown $recursive ".$username.":".$groupname." $filename\n&gt; chmod $recursive g+rw ".$filename."</pre>";
                 }
                 $data['errors'][] = $aux;
-                $data['errors'][] = $ssphpobj->t("{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step1_remember_change_perms}");
+                $data['errors'][] = $ssphpobj->t("{idp_installer:idp_installer:step1_remember_change_perms}");
             }
         }
     }
@@ -155,7 +155,7 @@ function simplesamlphp_module_idp_installer_hook_step1(&$data) {
     $res                              = @file_put_contents($confile, '<?php  $config = ' . var_export($config, 1) . "; ?>");
     
     if (count($data['errors']) == 0) {
-        $data['info'][] = $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step1_all_ok}');
+        $data['info'][] = $ssphpobj->t('{idp_installer:idp_installer:step1_all_ok}');
     }
     return true;
 }

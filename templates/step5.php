@@ -26,7 +26,7 @@
 
 /**
  * Plantilla para el paso 5 del modulo instalador para SimpleSAMLphp v1.13.1
- * @package    IdPRef\modules\simplesamlphp_module_idp_installer
+ * @package    IdPRef\modules\idp_installer
  * @author     "PRiSE [Auditoria y Consultoria de privacidad y Seguridad, S.L.]"
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
@@ -70,13 +70,13 @@
         unset($options['ldap']);
     }
     if (count($this->data['sir']['errors']) > 0) {
-        $button_msg = $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:try_again_button}');
+        $button_msg = $this->t('{idp_installer:idp_installer:try_again_button}');
         $next_step  = 5;
     } else {
-        $button_msg = $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:next_step}');
+        $button_msg = $this->t('{idp_installer:idp_installer:next_step}');
     }
     ?>
-    <p><?php echo $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step5_datasource_select}'); ?>
+    <p><?php echo $this->t('{idp_installer:idp_installer:step5_datasource_select}'); ?>
         <select id="data_source_type" name="data_source_type" onchange="showDatasource();">
             <?php
             $selected = isset($this->data['sir']['datasource_selected'])?$this->data['sir']['datasource_selected']:'ldap';
@@ -92,47 +92,47 @@
     </p>
     <div onload = "showDatasource();">
         <div id = "ldap_form" <?php if ((!$ldap && $pdo)||$selected=="pdo") { ?>style="display:none" <?php } ?>>
-            <h3><?php echo $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step5_ldap_title}'); ?></h3>
+            <h3><?php echo $this->t('{idp_installer:idp_installer:step5_ldap_title}'); ?></h3>
             <p>
-                <?php echo $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step5_ldap_hostname}'); ?><br/>
+                <?php echo $this->t('{idp_installer:idp_installer:step5_ldap_hostname}'); ?><br/>
                 <input type="text" name="ldap_hostname" value="" style="width: 300px;"/><br/>
-                <?php echo $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step5_ldap_example}'); ?><br/>
+                <?php echo $this->t('{idp_installer:idp_installer:step5_ldap_example}'); ?><br/>
             </p>
             <p>   
-                <?php echo $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step5_ldap_enable}'); ?><br/>
+                <?php echo $this->t('{idp_installer:idp_installer:step5_ldap_enable}'); ?><br/>
                 <select name="ldap_enable_tls">
-                    <option value="0"><?php echo $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step5_yes}'); ?></option>
-                    <option value="1"><?php echo $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step5_no}'); ?></option>
+                    <option value="0"><?php echo $this->t('{idp_installer:idp_installer:step5_yes}'); ?></option>
+                    <option value="1"><?php echo $this->t('{idp_installer:idp_installer:step5_no}'); ?></option>
                 </select><br/>
             </p>
             <p>    
-                <?php echo $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step5_ldap_referral}'); ?><br/>
+                <?php echo $this->t('{idp_installer:idp_installer:step5_ldap_referral}'); ?><br/>
                 <select name="ldap_referral">
-                    <option value="0"><?php echo $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step5_yes}'); ?></option>
-                    <option value="1"><?php echo $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step5_no}'); ?></option>
+                    <option value="0"><?php echo $this->t('{idp_installer:idp_installer:step5_yes}'); ?></option>
+                    <option value="1"><?php echo $this->t('{idp_installer:idp_installer:step5_no}'); ?></option>
                 </select><br/>
             </p>   
             <div class="caution" style="min-height:45px;">
-                <?php echo $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step5_ldap_info}'); ?>
+                <?php echo $this->t('{idp_installer:idp_installer:step5_ldap_info}'); ?>
             </div>
         </div>
         <div id="pdo_form" <?php if ((!$pdo && $ldap) || ($ldap && $pdo && $selected=="ldap")) { ?>style="display:none" <?php } ?>>
-            <h3><?php echo $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step5_pdo_title}'); ?></h3>
+            <h3><?php echo $this->t('{idp_installer:idp_installer:step5_pdo_title}'); ?></h3>
             <p>
-                <?php echo $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step5_pdo_dsn}'); ?><br/>
+                <?php echo $this->t('{idp_installer:idp_installer:step5_pdo_dsn}'); ?><br/>
                 <input type="text" name="pdo_dsn" value="" style="width: 600px;"/><br/>
-                <?php echo $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step5_pdo_example}'); ?><br/>
+                <?php echo $this->t('{idp_installer:idp_installer:step5_pdo_example}'); ?><br/>
             </p>
             <p>
-                <?php echo $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step5_pdo_username}'); ?><br/>
+                <?php echo $this->t('{idp_installer:idp_installer:step5_pdo_username}'); ?><br/>
                 <input type="text" name="pdo_username" value="" style="width: 300px;"/><br/>
             </p>
             <p>
-                <?php echo $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step5_pdo_password}'); ?><br/>
+                <?php echo $this->t('{idp_installer:idp_installer:step5_pdo_password}'); ?><br/>
                 <input type="password" name="pdo_password" value="" style="width: 300px;"/><br/>
             </p>
             <div class="caution" style="min-height:45px;">
-                <?php echo $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step5_ldap_info}'); ?>
+                <?php echo $this->t('{idp_installer:idp_installer:step5_ldap_info}'); ?>
             </div>
         </div>
         <input type="hidden" name="step" value="<?php echo $next_step; ?>"/>

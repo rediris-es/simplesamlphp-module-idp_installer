@@ -26,7 +26,7 @@
 
 /** 
  * Paso 6 del modulo instalador para SimpleSAMLphp v1.13.1
- * @package    IdPRef\modules\simplesamlphp_module_idp_installer
+ * @package    IdPRef\modules\idp_installer
  * @author     "PRiSE [Auditoria y Consultoria de privacidad y Seguridad, S.L.]"
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
@@ -40,7 +40,7 @@
  *
  * @param array &$data  Los datos a utilizar por las plantillas de tipo stepn
  */
-function simplesamlphp_module_idp_installer_hook_step6(&$data) {
+function idp_installer_hook_step6(&$data) {
     $data['datasources'] = getDataSources();
     if (isset($_REQUEST['data_source_type'])) {
         $ds_type = $_REQUEST['data_source_type'];
@@ -50,7 +50,7 @@ function simplesamlphp_module_idp_installer_hook_step6(&$data) {
                 ldap_set_option($res, LDAP_OPT_PROTOCOL_VERSION,3);               
                 $res = @ldap_bind($res);
                 if (!$res) {
-                    $data['errors'][]            = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step5_datasource_error}');
+                    $data['errors'][]            = $data['ssphpobj']->t('{idp_installer:idp_installer:step5_datasource_error}');
                     $data['datasource_selected'] = 'ldap';
                 } else {
                     $filename                  = __DIR__ . '/../../../config/authsources.php';
@@ -79,8 +79,8 @@ function simplesamlphp_module_idp_installer_hook_step6(&$data) {
                     }
                     $res2 = @file_put_contents($filename, '<?php  $config = ' . var_export($config, 1) . "; ?>");
                     if (!$res2) {
-                        $data['errors'][]            = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step2_contact_save_error}');
-                        $data['errors'][]            = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step2_contact_save_error2}') . " <i>" . realpath($filename) . "</i>";
+                        $data['errors'][]            = $data['ssphpobj']->t('{idp_installer:idp_installer:step2_contact_save_error}');
+                        $data['errors'][]            = $data['ssphpobj']->t('{idp_installer:idp_installer:step2_contact_save_error2}') . " <i>" . realpath($filename) . "</i>";
                         $data['datasource_selected'] = 'ldap';
                     }
                 }
@@ -97,7 +97,7 @@ function simplesamlphp_module_idp_installer_hook_step6(&$data) {
                     $res = false;
                 }
                 if ($res === false) {
-                    $data['errors'][]            = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step5_datasource_error}');
+                    $data['errors'][]            = $data['ssphpobj']->t('{idp_installer:idp_installer:step5_datasource_error}');
                     $data['datasource_selected'] = 'pdo';
                 } else {
                     $filename                 = __DIR__ . '/../../../config/authsources.php';
@@ -114,8 +114,8 @@ function simplesamlphp_module_idp_installer_hook_step6(&$data) {
                     }
                     $res2 = @file_put_contents($filename, '<?php  $config = ' . var_export($config, 1) . "; ?>");
                     if (!$res2) {
-                        $data['errors'][]            = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step2_contact_save_error}');
-                        $data['errors'][]            = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step2_contact_save_error2}') . " <i>" . realpath($filename) . "</i>";
+                        $data['errors'][]            = $data['ssphpobj']->t('{idp_installer:idp_installer:step2_contact_save_error}');
+                        $data['errors'][]            = $data['ssphpobj']->t('{idp_installer:idp_installer:step2_contact_save_error2}') . " <i>" . realpath($filename) . "</i>";
                         $data['datasource_selected'] = 'pdo';
                     }
                 }
@@ -123,6 +123,6 @@ function simplesamlphp_module_idp_installer_hook_step6(&$data) {
             }
         }
     }
-    $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step5_datasource_request_error}');
+    $data['errors'][] = $data['ssphpobj']->t('{idp_installer:idp_installer:step5_datasource_request_error}');
     return true;
 }

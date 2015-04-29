@@ -26,7 +26,7 @@
 
 /** 
  * 
- * @package    IdPRef\modules\simplesamlphp_module_idp_installer\lib
+ * @package    IdPRef\modules\idp_installer\lib
  * @author     "PRiSE [Auditoria y Consultoria de privacidad y Seguridad, S.L.]"
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network

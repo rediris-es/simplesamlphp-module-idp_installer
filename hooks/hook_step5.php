@@ -26,7 +26,7 @@
 
 /** 
  * Paso 5 del modulo instalador para SimpleSAMLphp v1.13.1
- * @package    IdPRef\modules\simplesamlphp_module_idp_installer
+ * @package    IdPRef\modules\idp_installer
  * @author     "PRiSE [Auditoria y Consultoria de privacidad y Seguridad, S.L.]"
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
@@ -40,9 +40,9 @@
  *
  * @param array &$data  Los datos a utilizar por las plantillas de tipo stepn
  */
-function simplesamlphp_module_idp_installer_hook_step5(&$data) {
+function idp_installer_hook_step5(&$data) {
     $data['datasources'] = getDataSources();
-    $require_mods = array("saml", "simplesamlphp_module_idp_installer", "modinfo", "ldap", "sqlauth", "core", "portal"); //Modulos obligatorios
+    $require_mods = array("saml", "idp_installer", "modinfo", "ldap", "sqlauth", "core", "portal"); //Modulos obligatorios
     $ssphpobj     = $data['ssphpobj'];
     $modules      = SimpleSAML_Module::getModules();
     sort($modules);
@@ -64,7 +64,7 @@ function simplesamlphp_module_idp_installer_hook_step5(&$data) {
                     @touch($f . '/default-enable');
 
                     if (!file_exists($f . '/default-enable')) {
-                        $data['errors'][] = $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step4_error}');
+                        $data['errors'][] = $ssphpobj->t('{idp_installer:idp_installer:step4_error}');
                     }
                 }
             } else { //PARA LOS QUE QUEREMOS DESACTIVAR
@@ -74,17 +74,17 @@ function simplesamlphp_module_idp_installer_hook_step5(&$data) {
                     @touch($f . '/default-disable');
 
                     if (!file_exists($f . '/default-disable')) {
-                        $data['errors'][] = $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step4_error}');
+                        $data['errors'][] = $ssphpobj->t('{idp_installer:idp_installer:step4_error}');
                     }
                 }
             }
         }
     }
     if (count($modules_ko) > 0) {
-        $data['errors'][] = $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step4_error}');
+        $data['errors'][] = $ssphpobj->t('{idp_installer:idp_installer:step4_error}');
     } elseif (count($perms_ko) > 0) {
         if (function_exists('posix_getgrnam')) {
-            $aux = "<br/>" . $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step4_perms_ko}');
+            $aux = "<br/>" . $ssphpobj->t('{idp_installer:idp_installer:step4_perms_ko}');
             $filename = $perms_ko[0];
             $file_owner = posix_getpwuid(fileowner($filename));
             $group = posix_getgrgid(posix_getgid());
@@ -92,12 +92,12 @@ function simplesamlphp_module_idp_installer_hook_step5(&$data) {
             $aux.= "<pre>&gt; chown $recursive " . $file_owner['name'] . ":" . $group['name'] . " $filename\n&gt; chmod $recursive g+w " . $filename . "</pre>";
         }
         $data['errors'][] = $aux;
-        $data['errors'][] = $ssphpobj->t("{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step1_remember_change_perms}");
+        $data['errors'][] = $ssphpobj->t("{idp_installer:idp_installer:step1_remember_change_perms}");
     }
     if (count($data['errors']) == 0) {
-        $data['info'][] = $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step4_all_ok}');
+        $data['info'][] = $ssphpobj->t('{idp_installer:idp_installer:step4_all_ok}');
     } /*else {
-        $data['errors'][] = $ssphpobj->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step4_error}');
+        $data['errors'][] = $ssphpobj->t('{idp_installer:idp_installer:step4_error}');
     }*/
     return true;
 }

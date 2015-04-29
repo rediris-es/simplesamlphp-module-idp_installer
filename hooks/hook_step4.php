@@ -26,7 +26,7 @@
 
 /** 
  * Paso 4 del modulo instalador para SimpleSAMLphp v1.13.1
- * @package    IdPRef\modules\simplesamlphp_module_idp_installer
+ * @package    IdPRef\modules\idp_installer
  * @author     "PRiSE [Auditoria y Consultoria de privacidad y Seguridad, S.L.]"
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
@@ -37,6 +37,6 @@
 /**
  * @param array &$data  Los datos a utilizar por las plantillas de tipo stepn
  */
-function simplesamlphp_module_idp_installer_hook_step4(&$data) {
+function idp_installer_hook_step4(&$data) {
     return true;
 }

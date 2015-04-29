@@ -26,7 +26,7 @@
 
 /** 
  * Paso 9 del modulo instalador para SimpleSAMLphp v1.13.1
- * @package    IdPRef\modules\simplesamlphp_module_idp_installer
+ * @package    IdPRef\modules\idp_installer
  * @author     "PRiSE [Auditoria y Consultoria de privacidad y Seguridad, S.L.]"
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
@@ -39,7 +39,7 @@
  *
  * @param array &$data  Los datos a utilizar por las plantillas de tipo stepn
  */
-function simplesamlphp_module_idp_installer_hook_step9(&$data) {
+function idp_installer_hook_step9(&$data) {
 
     $conf_path = realpath(__DIR__ . '/../../../config/config.php');
     $idph_path = realpath(__DIR__ . '/../../../metadata/saml20-idp-hosted.php');
@@ -49,9 +49,9 @@ function simplesamlphp_module_idp_installer_hook_step9(&$data) {
     $cert_path = realpath(__DIR__ . '/../../../cert');
     $cert = $cert_path."/".$_SERVER['HTTP_HOST'].'.crt';
     
-    $data['info'][] = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step9_finished}');    
+    $data['info'][] = $data['ssphpobj']->t('{idp_installer:idp_installer:step9_finished}');    
     if (function_exists('posix_getgrnam')) {
-        $aux = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step9_change_perms}');
+        $aux = $data['ssphpobj']->t('{idp_installer:idp_installer:step9_change_perms}');
         $print = false;
         if(@!chmod($conf_path, 0440)){
             $aux.= "<pre>&gt; chmod 440 " . $conf_path . "</pre>";
@@ -81,8 +81,8 @@ function simplesamlphp_module_idp_installer_hook_step9(&$data) {
         }
         $print ? $data['info'][] = $aux : $data['info'][] = "\n";
     }
-    $data['info'][] = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step9_remember}');
-    $data['info'][] = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step9_modified_files}');
+    $data['info'][] = $data['ssphpobj']->t('{idp_installer:idp_installer:step9_remember}');
+    $data['info'][] = $data['ssphpobj']->t('{idp_installer:idp_installer:step9_modified_files}');
     
     $aux  = "<pre>&gt;" . $conf_path . "</pre>";
     $aux .= "<pre>&gt;" . $idph_path . "</pre>";
@@ -91,12 +91,12 @@ function simplesamlphp_module_idp_installer_hook_step9(&$data) {
     $data['info'][] = $aux;
     
     $url_meta       = 'http://'.$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'], 0, -23) . "saml2/idp/metadata.php?output=xhtml";
-    $data['info'][] = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step7_all_info_extra}') . " <a href='$url_meta' target='_blank'>" . $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step7_here}') . "</a>";
+    $data['info'][] = $data['ssphpobj']->t('{idp_installer:idp_installer:step7_all_info_extra}') . " <a href='$url_meta' target='_blank'>" . $data['ssphpobj']->t('{idp_installer:idp_installer:step7_here}') . "</a>";
     
     $url_init       = 'http://'.$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'], 0, -23) . "module.php/core/frontpage_welcome.php";
-    $data['info'][] = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step9_url_init}') . " <a href='$url_init' target='_blank'>" . $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step7_here}') . "</a></br>";
+    $data['info'][] = $data['ssphpobj']->t('{idp_installer:idp_installer:step9_url_init}') . " <a href='$url_init' target='_blank'>" . $data['ssphpobj']->t('{idp_installer:idp_installer:step7_here}') . "</a></br>";
     
-    $data['info'][] = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step9_remember_cert}').'<i>'.$cert_path.'</i>';
+    $data['info'][] = $data['ssphpobj']->t('{idp_installer:idp_installer:step9_remember_cert}').'<i>'.$cert_path.'</i>';
     $data['cert']   = file_get_contents($cert);
     return true;
 }
