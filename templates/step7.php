@@ -26,7 +26,7 @@
 
 /** 
  * Plantilla para el paso 7 del modulo instalador para SimpleSAMLphp v1.13.1
- * @package    IdPRef\modules\simplesamlphp-module-idp-installer
+ * @package    IdPRef\modules\simplesamlphp_module_idp_installer
  * @author     "PRiSE [Auditoria y Consultoria de privacidad y Seguridad, S.L.]"
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
@@ -38,11 +38,11 @@ $step      = 7;
 $next_step = 8;
 $inputs="";
 if (count($this->data['sir']['errors2']) > 0) {
-    $button_msg = $this->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:try_again_button}');
+    $button_msg = $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:try_again_button}');
     $next_step  = $step;
     $inputs ='<input type="hidden" name="only_part2" value="true"/>';
 } else {
-    $button_msg = $this->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:next_step}');
+    $button_msg = $this->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:next_step}');
     if (count($this->data['sir']['info']) > 0) {
         echo "<p>" . implode("<br/>", $this->data['sir']['info']) . "</p>";
     }

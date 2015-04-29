@@ -26,7 +26,7 @@
 
 /** 
  * Paso 8 del modulo instalador para SimpleSAMLphp v1.13.1
- * @package    IdPRef\modules\simplesamlphp-module-idp-installer
+ * @package    IdPRef\modules\simplesamlphp_module_idp_installer
  * @author     "PRiSE [Auditoria y Consultoria de privacidad y Seguridad, S.L.]"
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
@@ -41,7 +41,7 @@ require_once(realpath(__DIR__ . '/../../../www/_include.php'));
  *
  * @param array &$data  Los datos a utilizar por las plantillas de tipo stepn
  */
-function simplesamlphp-module-idp-installer_hook_step8(&$data) {
+function simplesamlphp_module_idp_installer_hook_step8(&$data) {
     $filename_sp_remote  = realpath(__DIR__ . '/../../../metadata/saml20-sp-remote.php');
     $filename_idp_remote = realpath(__DIR__ . '/../../../metadata/saml20-idp-remote.php');
     $perms_ko            = array();
@@ -53,7 +53,7 @@ function simplesamlphp-module-idp-installer_hook_step8(&$data) {
     $xmldata = curl_exec($ch);
 
     if (curl_exec($ch) === false) {
-        $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step8_curl_error}');
+        $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step8_curl_error}');
         $data['errors'][] = "<ul><li>" . curl_error($ch) . "</ul></li>";
         return true;
     }
@@ -72,21 +72,21 @@ function simplesamlphp-module-idp-installer_hook_step8(&$data) {
         $res = @file_put_contents($filename_sp_remote, $output['saml20-sp-remote'], FILE_APPEND);
         $res = $res && @file_put_contents($filename_idp_remote, $output['saml20-idp-remote'], FILE_APPEND);
     } else {
-        $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step8_curl_error2}');
+        $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step8_curl_error2}');
     }
     if (!$res || count($perms_ko) > 0) {
         if (function_exists('posix_getgrnam')) {
-            $aux       = "<br/>" . $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step8_error}');
-            $aux .= "<br/>" . $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step4_perms_ko}');
+            $aux       = "<br/>" . $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step8_error}');
+            $aux .= "<br/>" . $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step4_perms_ko}');
             $filename  = $perms_ko[0];
             $recursive = is_dir($filename) ? "-R" : "";
             $aux.= "<pre>&gt; chown $recursive " . getFileUsername($filename) . ":" . getApacheGroup() . " $filename\n&gt; chmod $recursive g+rw " . $filename . "</pre>";
         }
         $data['errors'][] = $aux;
-        $data['errors'][] = $data['ssphpobj']->t("{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step1_remember_change_perms}");
+        $data['errors'][] = $data['ssphpobj']->t("{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step1_remember_change_perms}");
     }
     if (count($data['errors']) == 0) {
-        $data['info'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step8_all_ok}');
+        $data['info'][] = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step8_all_ok}');
     }
 
     return $res;

@@ -26,7 +26,7 @@
 
 /** 
  * Paso 3 del modulo instalador para SimpleSAMLphp v1.13.1
- * @package    IdPRef\modules\simplesamlphp-module-idp-installer
+ * @package    IdPRef\modules\simplesamlphp_module_idp_installer
  * @author     "PRiSE [Auditoria y Consultoria de privacidad y Seguridad, S.L.]"
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
@@ -44,7 +44,7 @@
  *
  * @param array &$data  Los datos a utilizar por las plantillas de tipo stepn
  */
-function simplesamlphp-module-idp-installer_hook_step3(&$data) {
+function simplesamlphp_module_idp_installer_hook_step3(&$data) {
     if (array_key_exists('ssphp_password', $_REQUEST) && array_key_exists('ssphp_password2', $_REQUEST) && !empty($_REQUEST['ssphp_password'])) {
         $pass  = $_REQUEST['ssphp_password'];
         $pass2 = $_REQUEST['ssphp_password2'];
@@ -86,19 +86,19 @@ function simplesamlphp-module-idp-installer_hook_step3(&$data) {
                 $config['enable.wsfed-sp']        = false;
                 $res                              = @file_put_contents($filename, '<?php  $config = ' . var_export($config, 1) . "; ?>");
                 if (!$res) {
-                    $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step2_contact_save_error}');
-                    $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step2_contact_save_error2}') . " <i>" . realpath($filename) . "</i>";
+                    $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step2_contact_save_error}');
+                    $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step2_contact_save_error2}') . " <i>" . realpath($filename) . "</i>";
                 } else {
-                    $data['warning'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step2_timezone_info}') . " <i>" . $config['timezone'] . "</i>. " . $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step2_timezone_info2}');
+                    $data['warning'][] = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step2_timezone_info}') . " <i>" . $config['timezone'] . "</i>. " . $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step2_timezone_info2}');
                 }
             } else {
-                $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step2_contact_info_error}');
+                $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step2_contact_info_error}');
             }
         } else {
-            $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step2_passwords_error}');
+            $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step2_passwords_error}');
         }
     } else {
-        $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp-module-idp-installer:simplesamlphp-module-idp-installer:step2_password_ko_error}');
+        $data['errors'][] = $data['ssphpobj']->t('{simplesamlphp_module_idp_installer:simplesamlphp_module_idp_installer:step2_password_ko_error}');
     }
     return true;
 }
