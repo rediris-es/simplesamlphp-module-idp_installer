@@ -230,7 +230,7 @@ function idp_installer_hook_step7(&$data) {
         $data['errors2'][] = $data['ssphpobj']->t("{idp_installer:idp_installer:step1_remember_change_perms}");
     }
     if (count($data['errors2']) == 0) {
-        $url_meta = 'http://' . $_SERVER['HTTP_HOST'] . substr($_SERVER['SCRIPT_NAME'], 0, -23) . "saml2/idp/metadata.php?output=xhtml";
+        $url_meta = 'http://' . $_SERVER['HTTP_HOST'] . substr($_SERVER['SCRIPT_NAME'], 0, -25) . "saml2/idp/metadata.php?output=xhtml";
         $data['info'][] = $data['ssphpobj']->t('{idp_installer:idp_installer:step7_all_ok}');
         $data['info'][] = $data['ssphpobj']->t('{idp_installer:idp_installer:step7_all_info_extra}') . " <a href='$url_meta' target='_blank'>" . $data['ssphpobj']->t('{idp_installer:idp_installer:step7_here}') . "</a>";
     } else {
