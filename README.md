@@ -18,7 +18,7 @@ composer.phar require rediris-es/simplesaml-module-idp_installer:dev-master
 ```
 
 where `dev-master` instructs Composer to install the `master` branch from the Git repository. See the
-[releases](https://github.com/rediris-es/simplesaml-module-idp_installer/releases) available if you
+[releases](https://github.com/rediris-es/simplesamlphp-module-idp_installer/releases) available if you
 want to use a stable version of the module.
 
 Web server configuration
