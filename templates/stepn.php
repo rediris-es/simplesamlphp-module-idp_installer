@@ -52,7 +52,7 @@ $this->data['sir']['errors'] = array_merge($this->data['sir']['errors'], $this->
 <div class="idp_installer_step" style="height: 500px;display:block;">
     <?php
     if (count($this->data['sir']['errors']) > 0) {
-        $img_error = substr($_SERVER['PHP_SELF'], 0, -23 )."resources/icons/experience/gtk-dialog-error.48x48.png";
+        $img_error = substr($_SERVER['PHP_SELF'], 0, -25 )."resources/icons/experience/gtk-dialog-error.48x48.png";
         echo '<div style="border-left: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; background: #f5f5f5";>';
 	echo '	<img style="margin-right: 10px;margin-left: 5px;" class="float-l erroricon" src='.$img_error.'>';
         echo '  <p style="padding-top: 5px " >'.implode("<br/>", $this->data['sir']['errors']) . '</p>';
