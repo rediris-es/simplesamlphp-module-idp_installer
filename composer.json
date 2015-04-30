@@ -1,5 +1,5 @@
 {
-	"name": "rediris-es/idp_installer",
+	"name": "rediris-es/simplesamlphp-module-idp_installer",
 	"description": "A SimpleSAMLphp module for pre-installing an IdP.",
 	"version": "0.3",
 	"minimum-stability": "dev",
