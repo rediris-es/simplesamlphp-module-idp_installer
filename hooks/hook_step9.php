@@ -74,7 +74,7 @@ function idp_installer_hook_step9(&$data) {
             $aux.= "<pre>&gt; chmod $recursive5 555 " . $mods_path . "</pre>";
             $print = true;
         }
-        if(@!chmod($cert_path, 0440)){
+        if(@!chmod($cert_path, 0540)){
             $recursive6 = is_dir($cert_path) ? "-R" : "";
             $aux.= "<pre>&gt; chmod $recursive6 540 " . $cert_path . "</pre>";
             $print = true;
