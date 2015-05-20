@@ -288,7 +288,7 @@
         "es":"El contenido del certificado es: "
     },
     "step9_modified_files":{
-        "es":"Los ficheros modificados en el proceso de instalación han sido: </br>"
+        "es":"Los ficheros modificados en el proceso de instalación han sido: "
     },
     "step9_url_init":{
         "es":"Si desea acceder a la página principal del recién instalado SimpleSAMLphp, puede hacerlo "
