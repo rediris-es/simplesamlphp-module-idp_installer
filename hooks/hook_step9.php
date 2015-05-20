@@ -47,7 +47,7 @@ function idp_installer_hook_step9(&$data) {
     $idpr_path = realpath(__DIR__ . '/../../../metadata/saml20-idp-remote.php');
     $mods_path = realpath(__DIR__ . '/../../../modules'); 
     $cert_path = realpath(__DIR__ . '/../../../cert');
-    $cert = $cert_path."/".$_SERVER['HTTP_HOST'].'.crt';
+    $cert = $cert_path."/".$_SERVER['HTTP_HOST'].'.crt.pem';
     
     $data['info'][] = $data['ssphpobj']->t('{idp_installer:idp_installer:step9_finished}');    
     if (function_exists('posix_getgrnam')) {
