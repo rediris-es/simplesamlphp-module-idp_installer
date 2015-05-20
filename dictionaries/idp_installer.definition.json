@@ -168,7 +168,7 @@
         "es": "Activar TLS para la conexión con LDAP"
     },
     "step5_ldap_referral": {
-        "es": "Activar el seguimiento de referrals. Los controladores de AD pueden requerir su desactivación para functionar correctamente"
+        "es": "Activar el seguimiento de referrals. Los controladores de dominio de Active Directory pueden requerir su desactivación para functionar correctamente"
     },
     "step5_ldap_timeout": {
         "es": "Timeout de acceso al LDAP, en segundos"
