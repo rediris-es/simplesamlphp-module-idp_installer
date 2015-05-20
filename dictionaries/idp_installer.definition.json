@@ -129,7 +129,7 @@
         "es": "Se ha obtenido la zona horaria configurada por defecto para PHP. Ésta es:"
     },
     "step2_timezone_info2": {
-        "es": "Si esta zona horaria no es correcta, modifiquela en su configuración de PHP y reintente de nuevo el paso 2."
+        "es": "Sólo si considera que esta zona horaria no es correcta, modifiquela en su configuración de PHP y reintente de nuevo este paso. Si es correcta puede continuar con el siguiente paso."
     },
     "step2_password_ko_error": {
         "es": "Debe introducir una contraseña válida."
