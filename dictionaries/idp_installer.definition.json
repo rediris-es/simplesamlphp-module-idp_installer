@@ -1,6 +1,6 @@
 {
     "idp_installer_header": {
-        "es": "Instalador de IdP para SIR2"
+        "es": "Instalador del IdP de referencia de SIR2"
     },
     "step_subtitle1": {
         "es": "Paso "
@@ -174,7 +174,7 @@
         "es": "Timeout de acceso al LDAP, en segundos"
     },
     "step5_ldap_info": {
-        "es": "Esta configuración permitirá la conexión del IdP a la fuente de datos, pero no incluye la configuración de obtención de la información del mismo. Para configurar esto, se deberá seguir la documentación oficial de SimpleSAMLphp."
+        "es": "Esta configuración permitirá la conexión del IdP a la fuente de datos, pero no incluye la configuración de obtención de la información de la misma. Para configurar esta, se deberá seguir la documentación oficial de SimpleSAMLphp."
     },
     "step5_ldap_title":{
         "es":"Configuración de fuente de datos de tipo LDAP"
@@ -207,7 +207,7 @@
         "es": "Seleccione si desea crear un nuevo certificado, o si por otra parte, prefiere importar uno ya existente: "
     },
     "step7_all_ok":{
-        "es":"Se ha configurado los metadatos para que su SimpleSAMLphp funcione como IdP <strong>de manera satisfactoria</strong>."
+        "es":"Se ha configurado los metadatos para que su SimpleSAMLphp funcione como IdP <strong>de manera satisfactoria</strong>. Recuerde que <strong>debe enviar al operador de la federación SIR2</Strong> los metadatos de su IdP."
     },
     "step7_all_info_extra":{
         "es":"Si desea comprobar cuales han sido los nuevos metadatos creados, puede comprobarlos "
