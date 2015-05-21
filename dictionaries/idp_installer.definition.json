@@ -30,7 +30,7 @@
         "es":"Paso 5 de 7: Configuración del protocolo SAML 2.0"
     },
     "step8_h3":{
-        "es":"Paso 6 de 7: Añadiendo metadatos del SIR"
+        "es":"Paso 6 de 7: Añadiendo metadatos de SIR2"
     },
     "step9_h3":{
         "es":"Paso 7 de 7: Fin de la configuración"
@@ -42,7 +42,7 @@
         "es": "Siguiente"
     },
     "general_error": {
-        "es": "Error al instalar la conexión con el SIR."
+        "es": "Error al instalar la conexión con la federación SIR2."
     },
     "step1_error_version": {
         "es": "La versión de PHP deberá ser mayor a igual a 5.3.0."
@@ -258,16 +258,16 @@
         "es":"<strong> Nota:</strong> Los certificados creados se guardarán en "
     },
     "step8_all_ok":{
-        "es":"Se han añadido los metadatos correspondientes al SIR <strong>de manera satisfactoria</strong>."
+        "es":"Se han añadido los metadatos correspondientes al SIR2 <strong>de manera satisfactoria</strong>."
     },
     "step8_error":{
-        "es":"Se ha intentado añadir los metadatos correspondientes al SIR, <strong>pero NO ha sido posible</strong>."
+        "es":"Se ha intentado añadir los metadatos correspondientes a la federación SIR2, <strong>pero NO ha sido posible</strong>."
     },
     "step8_curl_error":{
-        "es":"Se ha producido un error obteniendo los metadatos del SIR, por favor compruebe que su accesibilidad a ellos es la correcta. El mensaje de error es el siguiente: "
+        "es":"Se ha producido un error obteniendo los metadatos de SIR2, por favor compruebe que su accesibilidad a ellos es la correcta. El mensaje de error es el siguiente: "
     },
     "step8_curl_error2":{
-        "es":"Se ha producido un error obteniendo los metadatos del SIR, los motadatos obtenidos no son los correctos. Pongase en contacto con el administrador."
+        "es":"Se ha producido un error obteniendo los metadatos del SIR2, los metadatos obtenidos no son los correctos. Pongase en contacto con el administrador."
     },
     "step9_all_ok":{
         "es":"Lista de pasos a seguir: "
@@ -276,7 +276,7 @@
         "es":"Se recomienda ejecutar los siguientes comandos por seguridad:"
     },
     "step9_finished":{
-        "es":"¡Enhorabuena!, ha completado la configuración de su SimpleSAMLphp para que funcione con SIR."
+        "es":"<strong>¡Enhorabuena!</strong>, ha completado la configuración de su SimpleSAMLphp para que funcione con SIR2."
     },
     "step9_remember":{
         "es":"Se recomienda que a continuación, se sigan los pasos indicados en la Guía de Instalación y Configuración del IdP de Referencia."
