@@ -151,7 +151,7 @@ function idp_installer_hook_step1(&$data) {
     //Aquí se configuran los idiomas que estarán disponibles para SSPHP
     $confile = __DIR__ . '/../../../config/config.php';
     include($confile);
-    $config['language.available']     = ['es', 'en', 'eu'];
+    $config['language.available']     = ['es'];
     $res                              = @file_put_contents($confile, '<?php  $config = ' . var_export($config, 1) . "; ?>");
     
     if (count($data['errors']) == 0) {
