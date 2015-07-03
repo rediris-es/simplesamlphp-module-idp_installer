@@ -58,8 +58,8 @@ function idp_installer_hook_step6(&$data) {
                     $config['ldap_datasource'] = array(
                         'ldap:LDAP',
                         'hostname'          => $_REQUEST['ldap_hostname'],
-                        'enable_tls'        => $_REQUEST['ldap_enable_tls'] == 1 ? TRUE : FALSE,
-                        'referrals'         => $_REQUEST['ldap_referral'] == 1 ? TRUE : FALSE,
+                        'enable_tls'        => $_REQUEST['ldap_enable_tls'] == 0 ? TRUE : FALSE,
+                        'referrals'         => $_REQUEST['ldap_referral'] == 0 ? TRUE : FALSE,
                         'timeout'           => 30,
                         'debug'             => FALSE,
                         'attributes'        => NULL,
