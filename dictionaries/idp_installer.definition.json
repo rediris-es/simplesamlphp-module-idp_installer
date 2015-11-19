@@ -198,7 +198,7 @@
         "es":"Los datos de conexión no son correctos."
     },
     "step5_ldap_example":{
-        "es":"Ej. ‘ldap://example.com’"
+        "es":"Ej. ‘ldap.example.com’"
     },
     "step5_pdo_example":{
         "es":"Ej. ‘mysql:host=localhost;port=3306;dbname=my_database;unix_socket=/opt/local/var/mysql/mysqld.sock’"
