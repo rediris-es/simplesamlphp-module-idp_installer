@@ -20,7 +20,7 @@
 		"simplesamlphp/composer-module-installer": "~1.0"
 	},
 	"extra": {
-        	"ssp-mixedcase-module-name": “idpinstaller”
+        	"ssp-mixedcase-module-name": "idpinstaller"
 	},
 	
 }
