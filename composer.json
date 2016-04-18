@@ -16,6 +16,9 @@
 		"email": "jmanuel.macias@rediris.es"
 	}	
 	],
+    	"extra": {
+        	"ssp-mixedcase-module-name": "IdPinstaller"
+    	},
 	"require": {
 		"simplesamlphp/composer-module-installer": ">=1.1.4"
 	}
