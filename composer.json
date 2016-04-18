@@ -1,5 +1,5 @@
 {
-	"name": "rediris-es/simplesamlphp-module-idp_installer",
+	"name": "rediris-es/simplesamlphp-module-idpinstaller",
 	"description": "A SimpleSAMLphp module for pre-installing an IdP.",
 	"version": "0.3",
 	"minimum-stability": "dev",
@@ -19,4 +19,8 @@
 	"require": {
 		"simplesamlphp/composer-module-installer": "~1.0"
 	}
+	"extra": {
+        	"ssp-mixedcase-module-name": “idpinstaller”
+	},
+	
 }
