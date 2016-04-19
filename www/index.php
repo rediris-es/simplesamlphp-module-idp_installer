@@ -27,7 +27,7 @@
 /**
  * Punto de entrada de ejecución del módulo.
  * 
- * @package    IdPRef\modules\idp_installer
+ * @package    IdPRef\modules\idpinstaller
  * @author     "PRiSE [Auditoria y Consultoria de privacidad y Seguridad, S.L.]"
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
@@ -47,7 +47,7 @@ if(isset($_REQUEST['step'])){
    
 }
 $config = SimpleSAML_Configuration::getInstance();
-$t = new SimpleSAML_XHTML_Template($config, 'idp_installer:stepn.php');
+$t = new SimpleSAML_XHTML_Template($config, 'idpinstaller:stepn.php');
 
 $sirinfo = array(
 	'info' => &$info, 

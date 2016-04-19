@@ -14,11 +14,11 @@ Once you have installed SimpleSAMLphp, installing this module is very simple. Ju
 command in the root of your SimpleSAMLphp installation:
 
 ```
-composer.phar require rediris-es/simplesaml-module-idp_installer:dev-master
+composer.phar require rediris-es/simplesaml-module-idpinstaller:dev-master
 ```
 
 where `dev-master` instructs Composer to install the `master` branch from the Git repository. See the
-[releases](https://github.com/rediris-es/simplesamlphp-module-idp_installer/releases) available if you
+[releases](https://github.com/rediris-es/simplesamlphp-module-idpinstaller/releases) available if you
 want to use a stable version of the module.
 
 Web server configuration
@@ -73,7 +73,7 @@ After the module has been installed and the web server configured, the administr
 point his browser to this URL to start the IdP configuration process:
 
 ````
-http://sso.example.com/module.php/simplesamlphp_module_idp_installer/
+http://sso.example.com/module.php/simplesamlphp_module_idpinstaller/
 ````
 
 Post-install

@@ -26,7 +26,7 @@
 
 /** 
  * Plantilla para el paso N del modulo instalador para SimpleSAMLphp v1.13.1
- * @package    IdPRef\modules\idp_installer
+ * @package    IdPRef\modules\idpinstaller
  * @author     "PRiSE [Auditoria y Consultoria de privacidad y Seguridad, S.L.]"
  * @copyright  Copyright (C) 2014 - 2015 by the Spanish Research and Academic
  *             Network
@@ -34,7 +34,7 @@
  * @version    0.3-Sprint3-R57
  */
 
-$this->data['header'] = $this->t('{idp_installer:idp_installer:idp_installer_header}');
+$this->data['header'] = $this->t('{idpinstaller:idpinstaller:idpinstaller_header}');
 $this->includeAtTemplateBase('includes/header.php');
 if (count($this->data['sir']['errors']) > 0 && (int)$this->data['sir']['step']!==1 && (int)$this->data['sir']['step']!==4 && (int)$this->data['sir']['step']!==8 && (int)$this->data['sir']['step']!==9) {    
         $this->data['sir']['step'] =  (int)$this->data['sir']['step'] -1;
@@ -43,13 +43,13 @@ $this->data['sir']['errors'] = array_merge($this->data['sir']['errors'], $this->
 ?>
 <h2><?php
     if(count($this->data['sir']['errors']) > 0){
-        echo $this->t("{idp_installer:idp_installer:step_error_h3}");
-        echo $this->t("{idp_installer:idp_installer:step".$this->data['sir']['step']."_h3}");
+        echo $this->t("{idpinstaller:idpinstaller:step_error_h3}");
+        echo $this->t("{idpinstaller:idpinstaller:step".$this->data['sir']['step']."_h3}");
     } else {
-        echo $this->t("{idp_installer:idp_installer:step".$this->data['sir']['step']."_h3}");
+        echo $this->t("{idpinstaller:idpinstaller:step".$this->data['sir']['step']."_h3}");
     }
     ?></h2>
-<div class="idp_installer_step" style="height: 500px;display:block;">
+<div class="idpinstaller_step" style="height: 500px;display:block;">
     <?php
     if (count($this->data['sir']['errors']) > 0) {
         $img_error = substr($_SERVER['PHP_SELF'], 0, -25 )."resources/icons/experience/gtk-dialog-error.48x48.png";
