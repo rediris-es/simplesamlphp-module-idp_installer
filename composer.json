@@ -17,9 +17,9 @@
 	}	
 	],
     	"extra": {
-        	"ssp-mixedcase-module-name": "IdPinstaller"
+        	"ssp-mixedcase-module-name": "idpinstaller"
     	},
-	"require": {
-		"simplesamlphp/composer-module-installer": ">=1.1.4"
-	}
+    	"require": {
+        	"simplesamlphp/composer-module-installer": "~1.0"
+    	}
 }
