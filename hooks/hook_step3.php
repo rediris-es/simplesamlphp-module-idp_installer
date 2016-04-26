@@ -74,7 +74,8 @@ function idpinstaller_hook_step3(&$data) {
                 $filename                         = __DIR__ . '/../../../config/config.php';
                 include($filename);
                 $config['auth.adminpassword']     = $pass;
-                $config['secretsalt']             = bin2hex(openssl_random_pseudo_bytes(16));
+                //$config['secretsalt']             = bin2hex(openssl_random_pseudo_bytes(16));
+                $config['secretsalt']             = shell_exec("tr -cd '[:alnum:][:blank:]' < /dev/urandom | head -c48; echo");
                 $config['technicalcontact_name']  = $_REQUEST['ssphp_technicalcontact_name'];
                 $config['technicalcontact_email'] = $_REQUEST['ssphp_technicalcontact_email'];
                 $config['language.default']       = "es";
