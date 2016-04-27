@@ -45,7 +45,7 @@ function idpinstaller_hook_step8(&$data) {
     $filename_sp_remote  = realpath(__DIR__ . '/../../../metadata/saml20-sp-remote.php');
     $filename_idp_remote = realpath(__DIR__ . '/../../../metadata/saml20-idp-remote.php');
     $perms_ko            = array();
-    $dir_meta            = "http://www.rediris.es/sir/shibtest1metadata.xml";
+    $dir_meta            = "https://md.sir2.rediris.es/hub/sir2-hub-metadata.xml";
 
     $ch      = curl_init($dir_meta);
     curl_setopt($ch, CURLOPT_HEADER, false);
