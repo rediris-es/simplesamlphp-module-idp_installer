@@ -1,7 +1,7 @@
 {
 	"name": "rediris-es/simplesamlphp-module-idpinstaller",
 	"description": "A SimpleSAMLphp module for pre-installing an IdP.",
-	"minimum-stability": "stable",
+	"minimum-stability": "devel",
 	"type": "simplesamlphp-module",
     	"license": "Apache-2.0",	
 	"keywords": [ "simplesamlphp", "RedIRIS", "SIR", "IdP", "installer" ],
@@ -16,7 +16,6 @@
 	}	
 	],
     	"require": {
-        	"simplesamlphp/composer-module-installer": "~1.0",
-        	"satooshi/php-coveralls": "v1.0.0"
+        	"simplesamlphp/composer-module-installer": "~1.0"
     	}
 }
