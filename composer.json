@@ -16,6 +16,7 @@
 	}	
 	],
     	"require": {
-        	"simplesamlphp/composer-module-installer": "~1.0"
+        	"simplesamlphp/composer-module-installer": "~1.0",
+        	"satooshi/php-coveralls": "v1.0.0"
     	}
 }
