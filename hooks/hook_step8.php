@@ -48,6 +48,11 @@ function idpinstaller_hook_step8(&$data) {
     $dir_meta            = "https://md.sir2.rediris.es/hub/sir2-hub-metadata.xml";
 
     $ch      = curl_init($dir_meta);
+    
+    // this should be only a temporal workaround 
+    if (defined('CURLOPT_IPRESOLVE') && defined('CURL_IPRESOLVE_V4')){
+        curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+    }
     curl_setopt($ch, CURLOPT_HEADER, false);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $xmldata = curl_exec($ch);
