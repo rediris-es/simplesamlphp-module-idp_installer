@@ -89,11 +89,11 @@ function idpinstaller_hook_step9(&$data) {
     $aux .= "<pre>&gt;" . $spr_path  . "</pre>";
     $aux .= "<pre>&gt;" . $idpr_path . "</pre>";
     $data['info'][] = $aux;
-    
-    $url_meta       = 'http://'.$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'], 0, -25) . "saml2/idp/metadata.php?output=xhtml";
+
+    $url_meta       = 'http://'.$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'], 0, -24) . "saml2/idp/metadata.php?output=xhtml";
     $data['info'][] = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step7_all_info_extra}') . " <a href='$url_meta' target='_blank'>" . $data['ssphpobj']->t('{idpinstaller:idpinstaller:step7_here}') . "</a>";
     
-    $url_init       = 'http://'.$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'], 0, -25) . "module.php/core/frontpage_welcome.php";
+    $url_init       = 'http://'.$_SERVER['HTTP_HOST'].substr($_SERVER['SCRIPT_NAME'], 0, -24) . "module.php/core/frontpage_welcome.php";
     $data['info'][] = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step9_url_init}') . " <a href='$url_init' target='_blank'>" . $data['ssphpobj']->t('{idpinstaller:idpinstaller:step7_here}') . "</a></br>";
     
     $data['info'][] = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step9_remember_cert}').'<i>'.$cert_path.'</i>';
