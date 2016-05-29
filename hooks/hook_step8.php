@@ -79,7 +79,7 @@ function idpinstaller_hook_step8(&$data) {
     } else {
         $data['errors'][] = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step8_curl_error2}');
     }
-    if (!$res || count($perms_ko) > 0) {
+    if (!$res && count($perms_ko) > 0) {
         if (function_exists('posix_getgrnam')) {
             $aux       = "<br/>" . $data['ssphpobj']->t('{idpinstaller:idpinstaller:step8_error}');
             $aux .= "<br/>" . $data['ssphpobj']->t('{idpinstaller:idpinstaller:step4_perms_ko}');
