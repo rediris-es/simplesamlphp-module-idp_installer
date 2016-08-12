@@ -42,7 +42,7 @@
  */
 function idpinstaller_hook_step5(&$data) {
     $data['datasources'] = getDataSources();
-    $require_mods = array("saml", "idpinstaller", "modinfo", "ldap", "sqlauth", "core", "portal"); //Modulos obligatorios
+    $require_mods = array("saml", "idpinstaller", "modinfo", "ldap", "sqlauth", "core", "portal", "sir2skin"); //Modulos obligatorios
     $ssphpobj     = $data['ssphpobj'];
     $modules      = SimpleSAML_Module::getModules();
     sort($modules);
