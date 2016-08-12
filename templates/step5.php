@@ -106,8 +106,8 @@
             <p>   
                 <?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_anonymous_bind}'); ?><br/>
                 <select name="ldap_anonymous_bind">
-                    <option value="0"><?php echo $this->t('{idpinstaller:idpinstaller:step5_anonbind_yes}'); ?></option>
-                    <option value="1"><?php echo $this->t('{idpinstaller:idpinstaller:step5_anonbind_no}'); ?></option>
+                    <option value="1"><?php echo $this->t('{idpinstaller:idpinstaller:step5_anonbind_yes}'); ?></option>
+                    <option value="0"><?php echo $this->t('{idpinstaller:idpinstaller:step5_anonbind_no}'); ?></option>
                 </select><br/>
             </p>            
             <p>En el caso de realizar bind anónimo especifique el DN y password:</p>
