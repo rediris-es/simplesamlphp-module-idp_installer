@@ -161,9 +161,27 @@
     "step5_yes": {
         "es": "Sí"
     },
+    "step5_ldap_anonymous_bind": {
+        "es": "Realizar bind anónimo"
+    },    
+    "step5_anonbind_no": {
+        "es": "No"
+    },
+    "step5_anonbind_yes": {
+        "es": "Sí"
+    },    
+    "step5_ldap_binddn": {
+        "es": "Bind DN"
+    },    
+    "step5_ldap_bindpassword": {
+        "es": "Password para hacer bind"
+    },        
     "step5_ldap_hostname": {
         "es": "Nombre de host del servidor LDAP"
     },
+    "step5_ldap_port": {
+        "es": "Número de puerto del servidor LDAP"
+    },    
     "step5_ldap_enable": {
         "es": "Activar TLS para la conexión con LDAP"
     },
@@ -200,6 +218,15 @@
     "step5_ldap_example":{
         "es":"Ej. ‘ldap.example.com’"
     },
+    "step5_ldap_port_example":{
+        "es":"Ej. ‘389’"
+    },    
+    "step5_ldap_binddn_example":{
+        "es":"Ej. ‘cn=admin,dc=example,dc=com’"
+    },    
+    "step5_ldap_bindpassword_example":{
+        "es":"Contraseña para el usuario con el que se hace bind"
+    },        
     "step5_pdo_example":{
         "es":"Ej. ‘mysql:host=localhost;port=3306;dbname=my_database;unix_socket=/opt/local/var/mysql/mysqld.sock’"
     },

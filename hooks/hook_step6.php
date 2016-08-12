@@ -45,10 +45,16 @@ function idpinstaller_hook_step6(&$data) {
     if (isset($_REQUEST['data_source_type'])) {
         $ds_type = $_REQUEST['data_source_type'];
         if (strcmp($ds_type, "ldap") == 0 && ($data['datasources'] == "all" || $data['datasources'] == "ldap")) {
-            if (array_key_exists('ldap_hostname', $_REQUEST) && !empty($_REQUEST['ldap_hostname']) && array_key_exists('ldap_enable_tls', $_REQUEST) && array_key_exists('ldap_referral', $_REQUEST)) {
-                $res = ldap_connect($_REQUEST['ldap_hostname'], 389);
-                ldap_set_option($res, LDAP_OPT_PROTOCOL_VERSION,3);               
-                $res = @ldap_bind($res);
+            if (array_key_exists('ldap_hostname', $_REQUEST) && !empty($_REQUEST['ldap_hostname']) && 
+                    array_key_exists('ldap_port', $_REQUEST) && !empty($_REQUEST['ldap_port']) &&
+                    array_key_exists('ldap_enable_tls', $_REQUEST) && array_key_exists('ldap_referral', $_REQUEST)) {
+                $res = ldap_connect($_REQUEST['ldap_hostname'], $_REQUEST['ldap_hostname']);
+                ldap_set_option($res, LDAP_OPT_PROTOCOL_VERSION,3);     
+                if( !empty($_REQUEST['ldap_anonymous_bind']) && $_REQUEST['ldap_anonymous_bind'] != 'No'){
+                    $res = @ldap_bind($res); //anonymous bind
+                }else{
+                    $res = @ldap_bind($res,$_REQUEST['ldap_binddn'],$_REQUEST['ldap_bindpassword']); //non-anonymous bind
+                }
                 if (!$res) {
                     $data['errors'][]            = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step5_datasource_error}');
                     $data['datasource_selected'] = 'ldap';
@@ -57,13 +63,14 @@ function idpinstaller_hook_step6(&$data) {
                     include($filename);
                     $config['ldap_datasource'] = array(
                         'ldap:LDAP',
-                        'hostname'          => $_REQUEST['ldap_hostname'],
+                        'hostname'          => $_REQUEST['ldap_hostname'].":".$_REQUEST['ldap_port'],
                         'enable_tls'        => $_REQUEST['ldap_enable_tls'] == 0 ? TRUE : FALSE,
                         'referrals'         => $_REQUEST['ldap_referral'] == 0 ? TRUE : FALSE,
                         'timeout'           => 30,
                         'debug'             => FALSE,
                         'attributes'        => NULL,
-                        'dnpattern'         => '',
+                        'dnpattern'         => "'uid=%username%,".$_REQUEST['ldap_binddn']."'" ,       // binddn if needed
+                        'ldap.password'     => $_REQUEST['ldap_bindpassword'],  // ldap password if needed
                         'search.enable'     => FALSE,
                         'search.base'       => '',
                         'search.attributes' => array(),
