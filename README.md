@@ -14,7 +14,7 @@ Once you have installed SimpleSAMLphp, installing this module is very simple. Ju
 command in the root of your SimpleSAMLphp installation:
 
 ```
-composer.phar require rediris-es/simplesaml-module-idpinstaller:dev-master
+composer.phar require rediris-es/simplesamlphp-module-idpinstaller:dev-master
 ```
 
 where `dev-master` instructs Composer to install the `master` branch from the Git repository. See the
