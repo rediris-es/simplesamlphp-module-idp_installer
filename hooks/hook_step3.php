@@ -73,32 +73,12 @@ function idpinstaller_hook_step3(&$data) {
             if (array_key_exists('ssphp_technicalcontact_name', $_REQUEST) && array_key_exists('ssphp_technicalcontact_email', $_REQUEST) && !empty($_REQUEST['ssphp_technicalcontact_name']) && !empty($_REQUEST['ssphp_technicalcontact_email'])) {
                 $filename                         = __DIR__ . '/../../../config/config.php';
                 include($filename);
-                
-		//ALMACENAMIENTO ANTERIOR DE PASSWORD
-		//$config['auth.adminpassword']     = $pass;
-		//FIN ALMACENAMIENTO ANTERIOR DE PASSWORD
 		
-		/*
-                NUEVA FORMA DE ALMACENAR PASSWORD
-                Adrian Gomez en Julio de 2018 #2
-                Pôsibles algoritmos de cifrado: 
-                md2          md4          md5          sha1         sha224       sha256
-                sha384       sha512       ripemd128    ripemd160    ripemd256    ripemd320
-                whirlpool    tiger128,3   tiger160,3   tiger192,3   tiger128,4   tiger160,4
-                tiger192,4   snefru       snefru256    gost         adler32      crc32
-                crc32b       salsa10      salsa20      haval128,3   haval160,3   haval192,3
-                haval224,3   haval256,3   haval128,4   haval160,4   haval192,4   haval224,4
-                haval256,4   haval128,5   haval160,5   haval192,5   haval224,5   haval256,5
-                */
-                $algoritmo = 'sha256';
-                $salt = 'S';//Si no queremos usar salt, simplemente poner ''
-                $config['auth.adminpassword'] = SimpleSAML\Utils\Crypto::pwHash($pass, strtoupper($salt.$algoritmo));
-		/* Fin Adrian Gomez Julio 2018 #2*/
-
-                //$config['secretsalt']             = bin2hex(openssl_random_pseudo_bytes(16));
-                
-
-		$config['secretsalt']             = shell_exec("tr -cd '[:alnum:][:blank:]' < /dev/urandom | head -c48; echo");
+                $algoritmo = 'sha512';
+		
+		$salt = shell_exec("tr -cd '[:alnum:][:blank:]' < /dev/urandom | head -c48; echo");
+		$config['auth.adminpassword'] = SimpleSAML\Utils\Crypto::pwHash($pass, strtoupper($algoritmo), $salt);
+		$config['secretsalt']		  = $salt;
                 $config['technicalcontact_name']  = $_REQUEST['ssphp_technicalcontact_name'];
                 $config['technicalcontact_email'] = $_REQUEST['ssphp_technicalcontact_email'];
                 $config['language.default']       = "es";
