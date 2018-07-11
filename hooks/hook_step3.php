@@ -108,6 +108,15 @@ function idpinstaller_hook_step3(&$data) {
                 $config['enable.shib13-idp']      = false;
                 $config['enable.adfs-idp']        = false;
                 $config['enable.wsfed-sp']        = false;
+		/* Aniadido por Adrian Gomez en Julio de 2018
+		 Modificacion de directivas de configuración para dar mayor seguridad. #3
+		*/
+		$config['admin.protectindexpage'] = true;
+		$config['showerrors']		  = false;
+		$config['session.cookie.secure']  = true;
+		$config['trusted.url.domains']	  = array();
+		/*Fin de aniadido por Adrian Gomez*/
+
                 $res                              = @file_put_contents($filename, '<?php  $config = ' . var_export($config, 1) . "; ?>");
                 if (!$res) {
                     $data['errors'][] = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step2_contact_save_error}');

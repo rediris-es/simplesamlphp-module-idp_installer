@@ -196,7 +196,8 @@ function idpinstaller_hook_step7(&$data) {
         'certificate' => '$cert_file',
         'auth' => '$auth',
         'attributes.NameFormat' => 'urn:oasis:names:tc:SAML:2.0:attrname-format:uri',
-        'attributes' => array(
+       	'signature.algorithm' => 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256',
+	'attributes' => array(
                 'eduPersonTargetedID',
                 'eduPersonAffiliation',
                 'schacHomeOrganization',
