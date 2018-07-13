@@ -151,3 +151,240 @@ function transaleXMLToSsPHP($xmldata){
     }
     return $output;
 }
+
+
+function arrayToFileString($array, $nivel=0){
+    $fileContent = " array(\n";
+    $tabNivel = "";
+    for ($i=0; $i < $nivel; $i++) { 
+        $tabNivel .= "\t";
+    }
+
+    foreach ($array as $key => $value) {
+
+        if(array_values($array) === $array && !is_array($value)){
+            $fileContent .= $tabNivel."\t\t".varToString($value, '', $nivel);
+        }else{
+           
+            $fileContent .= $tabNivel."\t\t".varToString($value, $key, $nivel);
+        }
+    }
+    $fileContent .= $tabNivel."\t)";
+    return $fileContent;
+}
+
+function varToString($var, $key, $nivel=0){
+
+    $stringVar = "";
+    $stringKey = "";
+    if($key!==''){
+        $stringKey = "'{$key}' => ";
+    }
+    if (is_array($var) === true)
+    {
+        $stringVar = $stringKey.(arrayToFileString($var, $nivel+1)).", \n";
+    } 
+    //una vez que hemos obtenido los datos vamos a procesarlos de manera correcta
+    //en el caso de que sea un string añadiremos comillas simples al rededor del fichero
+    else if ( gettype($var) == 'string' )
+    {
+        $stringVar = $stringKey." '{$var}', \n";;
+    }
+    //en el caso de que tengamos un dato boleano, el propio php mostrará un 0 si el valor es falso
+    //y cualquier otro número en el caso de que el valor sea verdadero
+    else if ( gettype($var) == 'boolean' )
+    {
+        if ($var == 0)
+        {
+            $stringVar = $stringKey." FALSE, \n";;
+        }
+        else
+        {
+            $stringVar = $stringKey." TRUE, \n";;
+        }
+    }
+    //finalmente si el tipo de dato es NULL no mostrará nada. Por lo que será necesario incluir tambien el valor null
+    else if ( gettype($var) == 'NULL' )
+    {
+        $stringVar = $stringKey." NULL, \n";;
+    }
+    else
+    {
+        $stringVar = $stringKey." {$var}, \n";;
+    }
+    return $stringVar;
+}
+
+
+
+
+
+function overwriteAuthsources ($config, $filename)
+{
+    $file = __DIR__ . '/../../../config-templates/'.$filename;
+    $fopen = fopen($file, 'r');
+    $fread = fread($fopen,filesize($file));
+    fclose($fopen);
+    //a continuación dividiremos el fichero en líneas
+    $remove = "\n";
+    $split = explode($remove, $fread);
+    //declaramos también otras variables útiles para el recorrido del contenido del fichero
+    $fileContent = "";
+    $isCommentLong = false;
+    $isArrayLong = 0;
+    //creamos la variable config aux para no altearar el array original
+    $configAux = $config;
+    $i = 0;
+
+    //una vez dividido pasamos a recorrerlo
+    foreach ($split as $string)
+    {
+        $matched = false;
+    $i++;
+        //Primero de todo. miramos si la linea es un comentario o no
+        $isComment = false;
+        //primero le quitamos los espacios en blanco
+        $stringAux = str_replace(' ', '', $string);
+        if (substr($stringAux,0,1) == '/')
+        {
+            //si empieza por /* entonces es un comentario de varias lineas
+            if ( substr($stringAux,1,1) == '*')
+            {
+                $isComment = true;
+                $isCommentLong = true;
+            }
+            //si empieza por //entonces es un comentario de una linea
+            if (substr($stringAux,1,1) == '/')
+            {
+                $isComment = true;
+            }
+        }
+       //Por el contrario si contiene * / suponemos que se ha cerrado un comentario largo
+       if (strpos($stringAux, '*/') !== false) 
+       {
+           $isComment = true;
+           $isCommentLong = false;
+        }
+        //si no es un comentario, entonces procedemos a comparar
+        if ($isComment == false && $isCommentLong == false)
+        {
+            //ahora vamos a recorrer cada uno de los elementos que contiene el array config
+            foreach ($configAux as $clave => $valor)
+            {
+                 //por cada elemento del config vamos a ver si coincide o si contiene la cadena que estamos buscando
+                 if (strpos($string, $clave) !== false) 
+                 {
+                    //de ser así indicamos a ciertas variables y ponemos una marca por pantalla para que se vea que la hemos encontrado
+                    $matched = true;
+                   
+                    //si encontramos que vamos a sobrescribir un array entonces lo vamos a tratar de manera diferente
+                   
+                    if (strpos($string,"array(") !== false)
+                    {
+                        //dividimos el string en dos lo que viene antes del array y lo que viene después
+                        $splitedString = explode( 'array(', $string );
+                
+                        //lo que hay antes lo dejamos intacto por ejemplo en el caso
+                        //'Nombre del atributo' => array('array','con muchas','cosas');
+                        //quedaría así 'Nombre del atributo' => array(
+                        $fileContent .= $splitedString[0];
+                        //a continuación comprobamos si es un array multilinea o si acaba en la misma linea
+                        if ( strpos ( $string, ")," ) !== false )
+                        {
+                            //el array acaba en la misma linea
+                        } 
+                        else
+                        {
+                            $isArrayLong = 1;
+                        }
+                        //ahora veremos el contenido del nuevo array que tenemos en el config
+                        //en el caso de que no sea un array o que tenga longitud Cero entonces dejamos el nuevo array vacío
+                        if ( is_array($valor) && sizeof($valor) > 0 )
+                        {
+                            if ( strcmp(array_keys($valor)[0],"Array") !== 0 )
+                            {
+                                $fileContent .= arrayToFileString($valor);
+			                    //$stringExport = var_export($valor,1);
+                                ////$fileContent .= "'". implode("','",$valor) . "'";
+                                //$fileContent .= "" . $stringExport . "";
+                            }
+                        }else{
+                            $fileContent .= " array()";
+                        }
+
+                        $fileContent .= ",\n";
+                    } 
+                    //una vez que hemos obtenido los datos vamos a procesarlos de manera correcta
+                    //en el caso de que sea un string añadiremos comillas simples al rededor del fichero
+                    else if ( gettype($valor) == 'string' )
+                    {
+                        $fileContent .= "\t'{$clave}' => '{$valor}', \n";
+                    }
+                    //en el caso de que tengamos un dato boleano, el propio php mostrará un 0 si el valor es falso
+                    //y cualquier otro número en el caso de que el valor sea verdadero
+                    else if ( gettype($valor) == 'boolean' )
+                    {
+                        if ($valor == 0)
+                        {
+                            $fileContent .= "\t'{$clave}' => FALSE,\n";
+                        }
+                        else
+                        {
+                            $fileContent .= "\t'{$clave}' => TRUE,\n";
+                        }
+                    }
+                    //finalmente si el tipo de dato es NULL no mostrará nada. Por lo que será necesario incluir tambien el valor null
+                    else if ( gettype($valor) == 'NULL' )
+                    {
+                            $fileContent .= "\t'{$clave}' => NULL,\n";
+                    }
+                    else
+                    {
+                        $fileContent .= "\t'{$clave}' => {$valor},\n";
+                    }
+                    //además también eliminaremos este elemento del array para que no se vuelva a repetir
+                    unset($configAux[$clave]);
+                 }
+            }
+        }
+        //aquí vamos a comprobar si se cierra el array o si hay algún array anidado
+        //comprobamos que matched sea falso por que de lo contrario la primera vez lo sumará dos veces
+        if ($isArrayLong > 0 && $matched == false)
+        {
+            if ($isComment == false && $isCommentLong == false)
+            {
+                if (strpos($string,"array(") !== false)
+                {
+                    $isArrayLong++;
+                }
+                if (strpos($string,"),") !== false)
+                {
+                    $isArrayLong--;
+                }
+            }
+            else
+            {
+                $fileContent .= $string . "\n";
+            }
+        }
+        //si no se ha encontrado ninguna coincidencia entonces se copia el contenido del fichero tal cual
+        else if ($matched == false)
+        {
+            if ($i == count($split) - 1 )
+            {
+                //recorremos el array por si acaso se nos han quedado datos sin sobrescribir
+                foreach ($configAux as $clave => $valor)
+                {
+                    //en este caso todos los elementos que encontramos son un array de arrays así que para una mayor eficiencia
+                    //utilizaremos la función var_export
+                    //$fileContent .= "\t\t'{$clave}' => " . var_export($valor,1) . ", \n";
+                    $fileContent .= "\t'{$clave}' => " .arrayToFileString($valor).", \n";
+                }
+            }
+                $fileContent .= $string . "\n";
+        }
+           
+    }
+    //Creamos el fichero php correspondiente
+    return $fileContent;
+}
