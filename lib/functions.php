@@ -389,6 +389,7 @@ function overwriteAuthsources ($config, $filename)
             }
                
         }
+        $fileContent .= "\n ?>";
         //Creamos el fichero php correspondiente
         return $fileContent;
 }

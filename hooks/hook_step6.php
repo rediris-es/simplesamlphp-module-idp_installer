@@ -85,13 +85,12 @@ function idpinstaller_hook_step6(&$data) {
                         unset($config['sql_datasource']);
                     }
                     $stringConfig = overwriteAuthsources($config, 'authsources.php');
-                    /*echo $stringConfig;
-                    //$res = @file_put_contents($filename, $stringConfig);
+                    $res2 = @file_put_contents($filename, $stringConfig);
                     if (!$res2) {
                         $data['errors'][]            = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step2_contact_save_error}');
                         $data['errors'][]            = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step2_contact_save_error2}') . " <i>" . realpath($filename) . "</i>";
                         $data['datasource_selected'] = 'ldap';
-                    }*/
+                    }
                 }
                 return true;
             }
@@ -121,7 +120,7 @@ function idpinstaller_hook_step6(&$data) {
                     if (array_key_exists('ldap_datasource', $config)) {
                         unset($config['ldap_datasource']);
                     }
-                    $res2 = @file_put_contents($filename, '<?php  $config = ' . var_export($config, 1) . "; ?>");
+                    $res2 = @file_put_contents($filename, $stringConfig);
                     if (!$res2) {
                         $data['errors'][]            = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step2_contact_save_error}');
                         $data['errors'][]            = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step2_contact_save_error2}') . " <i>" . realpath($filename) . "</i>";
