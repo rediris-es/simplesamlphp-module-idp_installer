@@ -49,7 +49,7 @@ $this->data['sir']['errors'] = array_merge($this->data['sir']['errors'], $this->
         echo $this->t("{idpinstaller:idpinstaller:step".$this->data['sir']['step']."_h3}");
     }
     ?></h2>
-<div class="idpinstaller_step" style="height: 500px;display:block;">
+<div class="idpinstaller_step" style="display:block;">
     <?php
     if (count($this->data['sir']['errors']) > 0) {
         $img_error = substr($_SERVER['PHP_SELF'], 0, -24 )."resources/icons/experience/gtk-dialog-error.48x48.png";

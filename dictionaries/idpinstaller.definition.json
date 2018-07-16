@@ -101,6 +101,12 @@
     "step2_access_password2": {
         "es": "Introduzca de nuevo su contraseña:"
     },
+    "step2_pass_text": {
+	"es": "Fuerza de la contraseña"
+    },
+    "step2_access_generate": {
+   	"es": "Generar contraseña segura"
+     },
     "step2_contact_title": {
         "es": "2.2 Datos del contacto técnico de la organización"
     },
