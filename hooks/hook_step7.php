@@ -134,7 +134,8 @@ function idpinstaller_hook_step7(&$data) {
         $config['metadata.sign.privatekey'] = $pkey_file;
         $config['metadata.sign.privatekey_pass'] = NULL;
         $config['metadata.sign.certificate'] = $cert_file;
-        $res = @file_put_contents($filename, '<?php  $config = ' . var_export($config, 1) . "; ?>");
+        $stringConfig = overwriteAuthsources($config, 'config.php');
+        $res = @file_put_contents($filename, $stringConfig);
         if (!$res) {
             $data['errors'][] = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step2_contact_save_error}');
             $data['errors'][] = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step2_contact_save_error2}') . " <i>" . realpath($filename) . "</i>";

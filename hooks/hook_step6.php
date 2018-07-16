@@ -69,7 +69,7 @@ function idpinstaller_hook_step6(&$data) {
                         'timeout'           => 30,
                         'debug'             => FALSE,
                         'attributes'        => NULL,
-                        'dnpattern'         => "'uid=%username%,".$_REQUEST['ldap_binddn']."'" ,       // binddn if needed
+                        'dnpattern'         => "uid=%username%,".$_REQUEST['ldap_binddn'] ,       // binddn if needed
                         'ldap.password'     => $_REQUEST['ldap_bindpassword'],  // ldap password if needed
                         'search.enable'     => FALSE,
                         'search.base'       => '',
@@ -84,12 +84,14 @@ function idpinstaller_hook_step6(&$data) {
                     if (array_key_exists('sql_datasource', $config)) {
                         unset($config['sql_datasource']);
                     }
-                    $res2 = @file_put_contents($filename, '<?php  $config = ' . var_export($config, 1) . "; ?>");
+                    $stringConfig = overwriteAuthsources($config, 'authsources.php');
+                    /*echo $stringConfig;
+                    //$res = @file_put_contents($filename, $stringConfig);
                     if (!$res2) {
                         $data['errors'][]            = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step2_contact_save_error}');
                         $data['errors'][]            = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step2_contact_save_error2}') . " <i>" . realpath($filename) . "</i>";
                         $data['datasource_selected'] = 'ldap';
-                    }
+                    }*/
                 }
                 return true;
             }
