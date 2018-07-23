@@ -35,15 +35,66 @@
  */
 ?>
 
+<?php
+
+    function generateRandom($length)
+    {
+        $number = "";
+
+        for($i=0; $i<$length; $i++){
+            $number .= mt_rand(0,9);
+        }
+
+        return $number;
+        
+    }
+
+    function generateUsers()
+    {
+        $numUsers = 2;
+        $users = array();
+        while(count($users)<$numUsers){
+            $number = generateRandom(5);
+
+            if(!in_array($number, $users)){
+                $users []= "u".$number;
+            }
+        }
+
+        return $users;
+
+    }   
+
+    function generatePass()
+    {
+        $pass = array();
+        $pass []= generateSecurePass();
+        $pass []= generateSecurePass();
+
+        return $pass;
+    }
+
+    $users = generateUsers();
+    $pass = generatePass();
+    $rolUsers = array("staff", "faculty");
+
+?>
+
 <script type="text/javascript">
     function showDatasource() {
         var elem = document.getElementById('data_source_type');
         if (elem.value == "ldap") {
             SimpleSAML_show('ldap_form');
             SimpleSAML_hide('pdo_form');
-        } else {
-            SimpleSAML_hide('ldap_form');
+            SimpleSAML_hide('config_form');
+        } else if(elem.value == "pdo") {
             SimpleSAML_show('pdo_form');
+            SimpleSAML_hide('ldap_form');
+            SimpleSAML_hide('config_form');
+        } else if(elem.value == "config"){
+            SimpleSAML_hide('ldap_form');
+            SimpleSAML_hide('pdo_form');
+            SimpleSAML_show('config_form');
         }
     }
 </script>
@@ -53,21 +104,33 @@
     $step      = 5;
     $next_step = 6;
     $options   = array(
-        'ldap' => "LDAP",
-        'pdo'  => "PDO"
+        'ldap'   => "LDAP",
+        'pdo'    => "PDO",
+        'config' => 'CONFIG'
     );
     
     if (strcmp($this->data['sir']['datasources'], "all") == 0) {
         $ldap = true;
         $pdo  = true;
+        $conf = true;
     } else if (strcmp($this->data['sir']['datasources'], "ldap") == 0) {
         $ldap = true;
         $pdo = false;
+        $conf = false;
         unset($options['pdo']);
+        unset($options['config']);
     } else if (strcmp($this->data['sir']['datasources'], "pdo") == 0) {
         $pdo  = true;
         $ldap = false;
+        $conf = false;
         unset($options['ldap']);
+        unset($options['config']);
+    } else if(strcmp($this->data['sir']['datasources'], "config") == 0){
+        $pdo  = false;
+        $ldap = false;
+        $conf = true;
+        unset($options['ldap']);
+        unset($options['pdo']);
     }
     if (count($this->data['sir']['errors']) > 0) {
         $button_msg = $this->t('{idpinstaller:idpinstaller:try_again_button}');
@@ -91,7 +154,7 @@
         </select>
     </p>
     <div onload = "showDatasource();">
-        <div id = "ldap_form" <?php if ((!$ldap && $pdo)||$selected=="pdo") { ?>style="display:none" <?php } ?>>
+        <div id = "ldap_form" <?php if ((!$ldap && ($pdo || $conf))|| $selected=="pdo" || $selected=="config") { ?>style="display:none" <?php } ?>>
             <h3><?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_title}'); ?></h3>
             <p>
                 <?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_hostname}'); ?><br/>
@@ -139,7 +202,7 @@
                 <?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_info}'); ?>
             </div>
         </div>
-        <div id="pdo_form" <?php if ((!$pdo && $ldap) || ($ldap && $pdo && $selected=="ldap")) { ?>style="display:none" <?php } ?>>
+        <div id="pdo_form" <?php if ((!$pdo && ($ldap || $conf)) || ($ldap && $pdo && $conf && ($selected=="ldap" || $selected=="conf"))) { ?>style="display:none" <?php } ?>>
             <h3><?php echo $this->t('{idpinstaller:idpinstaller:step5_pdo_title}'); ?></h3>
             <p>
                 <?php echo $this->t('{idpinstaller:idpinstaller:step5_pdo_dsn}'); ?><br/>
@@ -158,6 +221,29 @@
                 <?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_info}'); ?>
             </div>
         </div>
+
+        <div id="config_form" <?php if ((!$conf && ($ldap || $pdo)) || ($ldap && $pdo && $conf && ($selected=="ldap" || $selected=="pdo"))) { ?>style="display:none" <?php } ?>>
+            <h3><?php echo $this->t('{idpinstaller:idpinstaller:step5_config_title}'); ?></h3>
+
+            <?php foreach ($users as $key => $user): ?>
+                <h4>Usuario <?php echo ($key+1); ?></h4>
+                <p>
+                    <?php echo $this->t('{idpinstaller:idpinstaller:step5_config_user}'); ?><br/>
+                    <input type="text" readonly="readonly" name="config_user[]" value="<?php echo $user; ?>" style="width: 300px;"/><br/>
+                </p>
+                <p>
+                    <?php echo $this->t('{idpinstaller:idpinstaller:step5_config_pass}'); ?><br/>
+                    <input type="text" readonly="readonly" name="config_pass[]" value="<?php echo $pass[$key]; ?>" style="width: 300px;"/><br/>
+                </p>
+                <p>
+                    <?php echo $this->t('{idpinstaller:idpinstaller:step5_config_rol}'); ?><br/>
+                    <input type="text" readonly="readonly" name="config_rol[]" value="<?php echo $rolUsers[$key]; ?>" style="width: 300px;"/><br/>
+                </p>
+
+            <?php endforeach; ?>
+
+        </div>        
+
         <input type="hidden" name="step" value="<?php echo $next_step; ?>"/>
         <input type="submit" value="<?php echo $button_msg; ?>"/>
     </div>

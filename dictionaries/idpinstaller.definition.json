@@ -232,6 +232,18 @@
     },    
     "step5_ldap_bindpassword_example":{
         "es":"Contraseña para el usuario con el que se hace bind"
+    },
+    "step5_config_title":{
+        "es":"Configuración de fuente de datos en fichero de configuración authsources"
+    },
+    "step5_config_user": {
+    	"es":"Nombre de usuario: "
+    },   
+    "step5_config_pass": {
+    	"es":"Contraseña: "
+    },  
+    "step5_config_rol": {
+    	"es":"Rol del usuario: "
     },        
     "step5_pdo_example":{
         "es":"Ej. ‘mysql:host=localhost;port=3306;dbname=my_database;unix_socket=/opt/local/var/mysql/mysqld.sock’"
