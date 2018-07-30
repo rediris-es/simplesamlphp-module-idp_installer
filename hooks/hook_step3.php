@@ -57,6 +57,9 @@ function idpinstaller_hook_step3(&$data) {
         if(isset($_REQUEST['ssphp_organization_info_url'])){
             $org_url_info = $_REQUEST['ssphp_organization_info_url'];
         } 
+        if(isset($_REQUEST['ssphp_organization_domain'])){
+            $org_domain = $_REQUEST['ssphp_organization_domain'];
+        } 
         $file_tmp_name = realpath(__DIR__ . '/../../../cert/').'/tmp_org_info.php';
         if(file_exists($file_tmp_name)){
             unlink($file_tmp_name);
@@ -65,6 +68,7 @@ function idpinstaller_hook_step3(&$data) {
             fwrite($file, '<?php $org_info = array('
                             . "'name' => '$org_name',"
                             . "'info' => '$org_info',"
+                            . "'domain' => '$org_domain',"
                             . "'url'  => '$org_url_info'); ");
             fclose($file);
         }

@@ -155,6 +155,7 @@ function idpinstaller_hook_step7(&$data) {
         include ($file_tmp_name);
     }
     $org_name = !empty($org_info['name']) && $org_info['name'] !== '' ? $org_info['name'] : "idp-$hostname";
+    $org_domain = !empty($org_info['domain']) && $org_info['domain'] !== '' ? $org_info['domain'] : "idp-$hostname";
     $org_desc = !empty($org_info['info']) && $org_info['info'] !== '' ? $org_info['info'] : "idp-$hostname";
     $org_url  = !empty($org_info['url'])  && $org_info['url']  !== '' ? $org_info['url']  : $hostname;
     
@@ -189,6 +190,13 @@ function idpinstaller_hook_step7(&$data) {
                 'gl' => '$org_url',
                 'eu' => '$org_url',
                 'ca' => '$org_url',
+            ),
+            'Domain' => array(
+                'en' => '$org_domain',
+                'es' => '$org_domain',
+                'gl' => '$org_domain',
+                'eu' => '$org_domain',
+                'ca' => '$org_domain',
             ),
         ),
         'host' => '__DEFAULT__',

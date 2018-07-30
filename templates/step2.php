@@ -54,7 +54,13 @@ span.pass-txt{
 /*Fin codigo creado por Adrian Gomez en Julio de 2018*/
 </style>
 
-<form action="" method="post">    
+<div id="domain-error" style="display: none; border-left: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; background: #f5f5f5;">  
+  <img style="margin-right: 10px;margin-left: 5px;" class="float-l erroricon" src="/resources/icons/experience/gtk-dialog-error.48x48.png">  
+  <p style="padding-top: 5px "><?php echo $this->t('{idpinstaller:idpinstaller:step2_domain_error}'); ?></p>
+  <div style="clear:both"></div>
+</div>
+
+<form action="" method="post" onsubmit="return validateForm()">    
     <h4><?php echo $this->t('{idpinstaller:idpinstaller:step2_access_title}'); ?></h4>
     <input type="hidden" name="step" value="<?php echo $next_step; ?>">
     <?php echo $this->t('{idpinstaller:idpinstaller:step2_access_password}'); ?><br/>
@@ -76,6 +82,8 @@ span.pass-txt{
     <input type="text" value="" name="ssphp_organization_name" style="width:300px;"><br/>
     <?php echo $this->t('{idpinstaller:idpinstaller:step2_organization_description}'); ?>:<br/>
     <input type="text" value="" name="ssphp_organization_description" style="width:300px;"><br/>
+    <?php echo $this->t('{idpinstaller:idpinstaller:step2_organization_domain}'); ?>:<br/>
+    <input type="text" value="" name="ssphp_organization_domain" style="width:300px;"><br/>
     <?php echo $this->t('{idpinstaller:idpinstaller:step2_organization_info_url}'); ?>:<br/>
     <input type="text" value="" name="ssphp_organization_info_url" style="width:300px;"><br/>
 
@@ -207,6 +215,22 @@ function checkPass(pass) {
 /*
 Fin de codigo nuevo creado por Adrian Gomez
 */
+
+
+function validateForm(){
+
+    var inputDomain = document.getElementsByName('ssphp_organization_domain')[0];
+    var errorDomain = document.getElementById('domain-error');
+    if(/^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/.test(inputDomain.value)){
+        errorDomain.style.display = "none";
+        this.submit();
+        return true;
+    }
+    errorDomain.style.display = "block";
+    window.scrollTo(0,0);
+    return false;
+
+ }
 
 </script>
 

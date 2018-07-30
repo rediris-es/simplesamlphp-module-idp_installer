@@ -119,6 +119,9 @@
     "step2_organization_description": {
         "es": "Breve descripción de la organización"
     },
+     "step2_organization_domain": {
+        "es": "Dominio principal de la organización"
+    },
     "step2_organization_info_url": {
         "es": "URL a la página de información de la organización"
     },
@@ -151,6 +154,9 @@
     },
     "step2_contact_save_error2": {
         "es": "El error puede deberse a un problema de permisos. Compruebe que los permisos son adecuados para el archivo "
+    },
+    "step2_domain_error": {
+        "es": "El formato del dominio de la organización es incorrecto "
     },
     "step5_datasource_select":{
         "es": "Seleccione el tipo de fuente de datos que va a utilizar como origen de la información de los usuarios: "
