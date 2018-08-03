@@ -26,7 +26,7 @@ msgid "{idpinstaller:idpinstaller:step_subtitle2}"
 msgstr "de 4"
 
 msgid "{idpinstaller:idpinstaller:step1_h3}"
-msgstr Paso 1 de 7: Preparación del sistema"
+msgstr "Paso 1 de 7: Preparación del sistema"
 
 msgid "{idpinstaller:idpinstaller:step2_h3}"
 msgstr "Paso 2 de 7: Configuración básica del sistema"
@@ -86,10 +86,10 @@ msgid "{idpinstaller:idpinstaller:step1_any_data_source_error}"
 msgstr "Es necesario que tenga alguna extensión para conectar su IdP a una fuente de datos. Instale las extensiones LDAP y PDO correspondientes."
 
 msgid "{idpinstaller:idpinstaller:step1_all_ok}"
-msgstr "es": "Su sistema tiene todos los requisitos necesarios para continuar con la instalación."
+msgstr "Su sistema tiene todos los requisitos necesarios para continuar con la instalación."
 
 msgid "{idpinstaller:idpinstaller:step1_perms_ko}"
-msgstr "es": "Los permisos de los siguientes archivos o directorios no son correctos: "
+msgstr "Los permisos de los siguientes archivos o directorios no son correctos: "
 
 msgid "{idpinstaller:idpinstaller:step1_perms_ko2}"
 msgstr "Para poder continuar con la instalación deberá cambiar los permisos de estos archivos o directorios para permitir la escritura del grupo de apache correspondiente."
@@ -287,7 +287,7 @@ msgid "{idpinstaller:idpinstaller:step7_error}"
 msgstr "Se ha intentado configurar los metadatos para que su SimpleSAMLphp funcione como IdP, <strong>pero NO ha sido posible</strong>."
 
 msgid "{idpinstaller:idpinstaller:step7_command_error}"
-msgstr "es":"Se produjo un error al generar el certificado: "
+msgstr "Se produjo un error al generar el certificado: "
 
 msgid "{idpinstaller:idpinstaller:step6_cert_info}"
 msgstr "Para la creación automática de los certificados del IdP es necesario que introduzca el nombre de su organización: "
