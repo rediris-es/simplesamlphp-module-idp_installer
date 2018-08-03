@@ -1,0 +1,178 @@
+
+<script type="text/javascript">
+    function showDatasource() {
+        var elem = document.getElementById('data_source_type');
+        if (elem.value == "ldap") {
+            SimpleSAML_show('ldap_form');
+            SimpleSAML_hide('pdo_form');
+            SimpleSAML_hide('config_form');
+        } else if(elem.value == "pdo") {
+            SimpleSAML_show('pdo_form');
+            SimpleSAML_hide('ldap_form');
+            SimpleSAML_hide('config_form');
+        } else if(elem.value == "config"){
+            SimpleSAML_hide('ldap_form');
+            SimpleSAML_hide('pdo_form');
+            SimpleSAML_show('config_form');
+        }
+    }
+</script>
+
+{% set step = 5 %}
+{% set next_step = 6 %}
+{% set options = {'ldap':"LDAP", 'pdo':"PDO", 'config':"CONFIG"} %}
+
+{% if sir.datasources == "all" %}
+    {% set ldap = true %}
+    {% set pdo = true %}
+    {% set conf = true %}
+{% elseif sir.datasources == "ldap" %}
+    {% set ldap = true %}
+    {% set pdo = false %}
+    {% set conf = false %}
+     {% set options = options | slice('pdo','config') %}
+{% elseif sir.datasources == "pdo" %}
+    {% set ldap = false %}
+    {% set pdo = true %}
+    {% set conf = false %}
+     {% set options = options | slice('ldap','config') %}
+{% elseif sir.datasources == "config" %}
+    {% set ldap = false %}
+    {% set pdo = false %}
+    {% set conf = true %}
+    {% set options = options | slice('pdo','ldap') %}
+{% endif %}    
+
+{% if sir.errors | length > 0 %}
+  {% set button_msg = '{idpinstaller:idpinstaller:try_again_button}' | trans %}
+  {% set next_step = step %}
+{% else %}
+  {% set button_msg = '{idpinstaller:idpinstaller:next_step}' | trans %}
+{% endif %}
+
+{% if sir.datasource_selected is not null %}
+    {% set selected = sir.datasource_selected %}
+{% else %}
+    {% set selected = "ldap" %}
+{% endif %}
+
+<form action="" method="post" style="margin-top:20px;">    
+
+    <p>{% trans '{idpinstaller:idpinstaller:step5_datasource_select}' %}
+        <select id="data_source_type" name="data_source_type" onchange="showDatasource();">
+            {% for key, option in options %}
+                <option value='{{key}}' 
+                {% if selected == key %}
+                    selected="true"
+                {% endif %}
+                >{{option}}</option>
+            {% endfor %}
+        </select>
+    </p>
+    <div onload = "showDatasource();">
+        <div id = "ldap_form" 
+            {% if ((ldap == false and (pdo == true or conf == true)) or selected == "pdo" or selected == "config") %}
+                style="display:none"
+            {% endif %}
+            >
+
+            <h3>{% trans '{idpinstaller:idpinstaller:step5_ldap_title}' %}</h3>
+            <p>
+                {% trans '{idpinstaller:idpinstaller:step5_ldap_hostname}' %}<br/>
+                <input type="text" name="ldap_hostname" value="" style="width: 300px;"/><br/>
+                <span class="example">{% trans '{idpinstaller:idpinstaller:step5_ldap_example}' %}</span><br/>
+            </p>
+            <p>
+                {% trans '{idpinstaller:idpinstaller:step5_ldap_port}' %}<br/>
+                <input type="text" name="ldap_port" value="" style="width: 300px;"/><br/>
+                <span class="example">{% trans '{idpinstaller:idpinstaller:step5_ldap_port_example}' %}</span><br/>
+            </p>
+            <p>   
+                {% trans '{idpinstaller:idpinstaller:step5_ldap_anonymous_bind}' %}<br/>
+                <select name="ldap_anonymous_bind">
+                    <option value="1">{% trans '{idpinstaller:idpinstaller:step5_anonbind_yes}' %}</option>
+                    <option value="0">{% trans '{idpinstaller:idpinstaller:step5_anonbind_no}' %}</option>
+                </select><br/>
+            </p>            
+            <p>En el caso de realizar bind anónimo especifique el DN y password:</p>
+            <p>
+                {% trans '{idpinstaller:idpinstaller:step5_ldap_binddn}' %}<br/>
+                <input type="text" name="ldap_binddn" value="" style="width: 300px;"/><br/>
+                <span class="example">{% trans '{idpinstaller:idpinstaller:step5_ldap_binddn_example}' %}</span><br/>
+            </p>    
+            <p>
+                {% trans '{idpinstaller:idpinstaller:step5_ldap_bindpassword}' %}<br/>
+                <input type="text" name="ldap_bindpassword" value="" style="width: 300px;"/><br/>
+                <span class="example">{% trans '{idpinstaller:idpinstaller:step5_ldap_bindpassword_example}' %}</span><br/>
+            </p>              
+            <p>   
+                {% trans '{idpinstaller:idpinstaller:step5_ldap_enable}' %}<br/>
+                <select name="ldap_enable_tls">
+                    <option value="0">{% trans '{idpinstaller:idpinstaller:step5_yes}' %}</option>
+                    <option value="1">{% trans '{idpinstaller:idpinstaller:step5_no}' %}</option>
+                </select><br/>
+            </p>
+            <p>    
+                {% trans '{idpinstaller:idpinstaller:step5_ldap_referral}' %}<br/>
+                <select name="ldap_referral">
+                    <option value="0">{% trans '{idpinstaller:idpinstaller:step5_yes}' %}</option>
+                    <option value="1">{% trans '{idpinstaller:idpinstaller:step5_no}' %}</option>
+                </select><br/>
+            </p>   
+            <div class="caution" style="min-height:45px;">
+                {% trans '{idpinstaller:idpinstaller:step5_ldap_info}' %}
+            </div>
+        </div>
+        <div id="pdo_form" 
+           {% if ((pdo == false and (ldap == true or conf == true)) or ( ldap == true and pdo == true and conf == true and ( selected == "ldap" or selected == "conf" ))) %}
+                style="display:none"
+            {% endif %}
+            >
+            <h3>{% trans '{idpinstaller:idpinstaller:step5_pdo_title}' %}</h3>
+            <p>
+                {% trans '{idpinstaller:idpinstaller:step5_pdo_dsn}' %}<br/>
+                <input type="text" name="pdo_dsn" value="" style="width: 600px;"/><br/>
+                <span class="example">{% trans '{idpinstaller:idpinstaller:step5_pdo_example}' %}</span><br/>
+            </p>
+            <p>
+                {% trans '{idpinstaller:idpinstaller:step5_pdo_username}' %}<br/>
+                <input type="text" name="pdo_username" value="" style="width: 300px;"/><br/>
+            </p>
+            <p>
+                {% trans '{idpinstaller:idpinstaller:step5_pdo_password}' %}<br/>
+                <input type="password" name="pdo_password" value="" style="width: 300px;"/><br/>
+            </p>
+            <div class="caution" style="min-height:45px;">
+                {% trans '{idpinstaller:idpinstaller:step5_ldap_info}' %}
+            </div>
+        </div>
+
+        <div id="config_form" 
+            {% if ((conf == false and (ldap == true or pdo == true)) or ( ldap == true and pdo == true and conf == true and ( selected == "ldap" or selected == "pdo" ))) %}
+                style="display:none"
+            {% endif %}
+            >
+            <h3>{% trans '{idpinstaller:idpinstaller:step5_config_title}' %}</h3>
+
+            {% for key, user in sir.users %}
+                <h4>Usuario {{key+1}}</h4>
+                <p>
+                    {% trans '{idpinstaller:idpinstaller:step5_config_user}' %}<br/>
+                    <input type="text" readonly="readonly" name="config_user[]" value="{{user}}" style="width: 300px;"/><br/>
+                </p>
+                <p>
+                    {% trans '{idpinstaller:idpinstaller:step5_config_pass}' %}<br/>
+                    <input type="text" readonly="readonly" name="config_pass[]" value="{{sir.pass[key]}}" style="width: 300px;"/><br/>
+                </p>
+                <p>
+                    {% trans '{idpinstaller:idpinstaller:step5_config_rol}' %}<br/>
+                    <input type="text" readonly="readonly" name="config_rol[]" value="{{sir.rolUsers[key]}}" style="width: 300px;"/><br/>
+                </p>
+
+            {% endfor %}
+        </div>        
+
+        <input type="hidden" name="step" value="{{next_step}}"/>
+        <input class="retry-next-button" type="submit" value="{{button_msg}}"/>
+    </div>
+</form>

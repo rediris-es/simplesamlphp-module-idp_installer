@@ -1,0 +1,73 @@
+
+<script type="text/javascript">
+    function showCertForm() {
+        var elem = document.getElementById('cert_type');
+        if (elem.value == "create") {
+            SimpleSAML_show('create_form');
+            SimpleSAML_hide('import_form');
+        } else {            
+            SimpleSAML_hide('create_form');
+            SimpleSAML_show('import_form');
+        }
+    }
+</script>
+
+{% set step = 6 %}
+{% set next_step = 7 %}
+{% set options = {'create': "Crear certificado", 'import': "Importar certificado"} %}
+
+<p>{% trans '{idpinstaller:idpinstaller:step6_cert_select}' %}
+    <select id="cert_type" name="cert_type" onchange="showCertForm();">
+        {% set selected = 'create' %}
+        {% for key, option in options %}
+            <option value="{{key}}"
+                {% if option == k %}
+                    selected = "true"
+                {% endif %}
+            >{{option}}</option>
+        {% endfor %}       
+    </select>
+</p>
+
+
+
+
+
+
+
+<div id = "create_form" 
+    {% if selected == "import" %}
+        style="display:none;"
+    {% endif %}>
+    <div style="margin-top:20px;">
+        <form action="" method="post">    
+            <input type="hidden" name="step" value="{{next_step}}"/>
+            <h4>{% trans '{idpinstaller:idpinstaller:step6_create_title}' %}</h4>
+            <p style='margin-top:3px;'>
+                {% trans '{idpinstaller:idpinstaller:step6_cert_info}' %}
+                <input type="text" name="organization_name" value="" style="width: 500px; margin-top:5px;"/>
+            </p>
+            <input type="submit" value="{% trans '{idpinstaller:idpinstaller:next_step}' %}"/>
+        </form>
+    </div>
+</div>
+<div id = "import_form" 
+    {% if selected == "create" %}
+        style="display:none;"
+    {% endif %}>
+    <div style="margin-top:20px;">
+        <form action="" method="post">    
+            <input type="hidden" name="step" value="{{next_step}}"/>
+            <h4>{% trans '{idpinstaller:idpinstaller:step6_import_title}' %}</h4>
+            <p style='margin-top:3px;'>{% trans '{idpinstaller:idpinstaller:step6_cert_info2}' %}</p>
+            Certificado:<br/>
+            <textarea name="private_key" style="width: 90%; height: 8em; font-family: Monospace"></textarea><br/>
+            Clave privada:<br/>
+            <textarea name="certificate" style="width: 90%; height: 8em; font-family: Monospace"></textarea><br/><br/>
+            <input class="retry-next-button" type="submit" value="{% trans '{idpinstaller:idpinstaller:next_step}' %}"/>
+        </form>
+    </div>
+
+</div>
+<p style='margin-top:3px;'>{% trans '{idpinstaller:idpinstaller:step6_footer_note}' %}<i>{{baseurlpath}}/cert</i></p>
+

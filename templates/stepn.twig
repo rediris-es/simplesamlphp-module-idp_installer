@@ -1,0 +1,59 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+
+{% set header = '{idpinstaller:idpinstaller:idpinstaller_header}' | trans %}
+
+{% if sir.errors | length > 0 and sir.step != 1 and sir.step !=4 and sir.step != 8 and sir.step != 9 %}
+    {% set step = 1 %} 
+{% endif %}
+
+<h2>
+    {% if sir.errors | length > 0 or sir.errors2 | length > 0 %}
+        {% trans '{idpinstaller:idpinstaller:step_error_h3}' %}
+        {{ ('{idpinstaller:idpinstaller:step' ~ sir.step ~ '_h3}')|trans }}
+    {% else %}
+        {{ ('{idpinstaller:idpinstaller:step' ~ sir.step ~ '_h3}')|trans }}
+    {% endif %}
+</h2>
+
+<div class="idpinstaller_step" style="display:block;">
+
+    {% if sir.errors | length > 0 or sir.errors2 | length > 0 %}
+        <div style="border-left: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; background: #f5f5f5;">
+            <img style="margin-right: 10px;margin-left: 5px;" class="float-l erroricon" src="/resources/icons/experience/gtk-dialog-error.48x48.png">
+            <p style="padding-top: 5px " >
+                
+                {% if sir.errors | length > 0%}
+                    {% for key1, error1 in sir.errors %}
+                        {{error1 | raw}} <br />
+                    {% endfor %}
+                {% endif %}
+
+                {% if sir.errors2 | length > 0%}
+                    {% for key2, error2 in sir.errors2 %}
+                        {{error2 | raw}} <br />
+                    {% endfor %}
+                {% endif %}
+
+            </p>
+        </div>
+    {% endif %}
+
+    {% if sir.warning | length > 0 %}
+        <div class="caution" style="min-height:45px;">
+            <p>
+                {% for key, warn in sir.warning %}
+                    {{warn | raw}} <br />
+                {% endfor %}
+            </p>
+        </div>
+    {% endif %}
+
+    {% block stepcontent %}
+       {% include "@idpinstaller/step" ~ sir.step ~ ".twig" %}
+    {% endblock stepcontent %}
+</div>
+
+{% endblock content %}

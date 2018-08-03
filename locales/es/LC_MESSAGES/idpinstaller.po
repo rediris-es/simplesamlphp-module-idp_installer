@@ -1,0 +1,363 @@
+
+#, fuzzy
+msgid "{idpinstaller:idpinstaller:"
+msgstr ""
+"Project-Id-Version: SimpleSAMLphp 1.15\n"
+"Report-Msgid-Bugs-To: simplesamlphp-translation@googlegroups.com\n"
+"POT-Creation-Date: 2016-10-12 09:23+0200\n"
+"PO-Revision-Date: 2016-10-14 12:14+0200\n"
+"Last-Translator: \n"
+"Language: es\n"
+"Language-Team: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+
+
+msgid "{idpinstaller:idpinstaller:idpinstaller_header}"
+msgstr "Instalador del IdP de referencia de SIR2"
+
+msgid "{idpinstaller:idpinstaller:step_subtitle1}"
+msgstr "Paso "
+
+msgid "{idpinstaller:idpinstaller:step_subtitle2}"
+msgstr "de 4"
+
+msgid "{idpinstaller:idpinstaller:step1_h3}"
+msgstr Paso 1 de 7: Preparación del sistema"
+
+msgid "{idpinstaller:idpinstaller:step2_h3}"
+msgstr "Paso 2 de 7: Configuración básica del sistema"
+
+msgid "{idpinstaller:idpinstaller:step3_h3}"
+msgstr "Paso 2 de 7: Configuración básica del sistema"
+
+msgid "{idpinstaller:idpinstaller:step4_h3}"
+msgstr "Paso 2 de 7: Configuración básica del sistema"
+
+msgid "{idpinstaller:idpinstaller:step5_h3}"
+msgstr "Paso 3 de 7: Configuración de fuente de datos"
+
+msgid "{idpinstaller:idpinstaller:step6_h3}"
+msgstr "Paso 4 de 7: Creación de certificados del IdP"
+
+msgid "{idpinstaller:idpinstaller:step7_h3}"
+msgstr "Paso 5 de 7: Configuración del protocolo SAML 2.0"
+
+msgid "{idpinstaller:idpinstaller:step8_h3}"
+msgstr "Paso 6 de 7: Añadiendo metadatos de SIR2"
+
+msgid "{idpinstaller:idpinstaller:step9_h3}"
+msgstr "Paso 7 de 7: Fin de la configuración"
+
+msgid "{idpinstaller:idpinstaller:step_error_h3}"
+msgstr "Error: "
+
+msgid "{idpinstaller:idpinstaller:next_step}"
+msgstr "Siguiente"
+
+msgid "{idpinstaller:idpinstaller:general_error}"
+msgstr "Error al instalar la conexión con la federación SIR2."
+
+msgid "{idpinstaller:idpinstaller:step1_error_version}"
+msgstr "La versión de PHP deberá ser mayor a igual a 5.3.0."
+
+msgid "{idpinstaller:idpinstaller:step1_error_extensions}"
+msgstr "Es necesario que instale las siguientes extensiones PHP: "
+
+msgid "{idpinstaller:idpinstaller:step1_memcached_error}"
+msgstr "Recuerde que si va a desplegar este IdP en entornos balanceados, deberá instalar la extensión <i>memcached</i> de PHP."
+
+msgid "{idpinstaller:idpinstaller:step1_only_ldap}"
+msgstr "Solo tiene instalado el módulo LDAP por lo que podrá conectar únicamente el IdP a este tipo de fuente de datos."
+
+msgid "{idpinstaller:idpinstaller:step1_only_pdo}"
+msgstr "Solo tiene instalado la extensión PHP PDO como fuente de datos, por lo que podrá conectar únicamente el IdP a este tipo de fuente de datos."
+
+msgid "{idpinstaller:idpinstaller:step1_only_pdo_modules_list}"
+msgstr "Las extensiones de PDO que tiene instaladas son: "
+
+msgid "{idpinstaller:idpinstaller:step1_pdo_no_modules}"
+msgstr "Tiene instalado la extensión PHP PDO en el sistema, pero no tiene ningún módulo específico (pdo_mysql, pdo_oci, etc.). Instale el módulo que vaya a requerir según su fuente de datos."
+
+msgid "{idpinstaller:idpinstaller:step1_any_data_source_error}"
+msgstr "Es necesario que tenga alguna extensión para conectar su IdP a una fuente de datos. Instale las extensiones LDAP y PDO correspondientes."
+
+msgid "{idpinstaller:idpinstaller:step1_all_ok}"
+msgstr "es": "Su sistema tiene todos los requisitos necesarios para continuar con la instalación."
+
+msgid "{idpinstaller:idpinstaller:step1_perms_ko}"
+msgstr "es": "Los permisos de los siguientes archivos o directorios no son correctos: "
+
+msgid "{idpinstaller:idpinstaller:step1_perms_ko2}"
+msgstr "Para poder continuar con la instalación deberá cambiar los permisos de estos archivos o directorios para permitir la escritura del grupo de apache correspondiente."
+
+msgid "{idpinstaller:idpinstaller:step1_perms_ko3}"
+msgstr "Para ello puede ejecutar los siguientes comandos:"
+
+msgid "{idpinstaller:idpinstaller:step1_remember_change_perms}"
+msgstr "Para evitar problema de seguridad, recuerde que deberá reestablecer los permisos una vez terminado el proceso de instalación. "
+
+msgid "{idpinstaller:idpinstaller:step1_title}"
+msgstr "Comprobación de requisitos del sistema"
+
+msgid "{idpinstaller:idpinstaller:try_again_button}"
+msgstr "Reintentar"
+
+msgid "{idpinstaller:idpinstaller:try_again_button_step_n}"
+msgstr "Reintentar paso"
+
+msgid "{idpinstaller:idpinstaller:step2_access_title}"
+msgstr "2.1 Datos de acceso a SimpleSAMLphp"
+
+msgid "{idpinstaller:idpinstaller:step2_access_password}"
+msgstr "Introduzca la contraseña de la herramienta de administración de SimpleSAMLphp:"
+
+msgid "{idpinstaller:idpinstaller:step2_access_password2}"
+msgstr "Introduzca de nuevo su contraseña:"
+
+msgid "{idpinstaller:idpinstaller:step2_pass_text}"
+msgstr "Fuerza de la contraseña"
+
+msgid "{idpinstaller:idpinstaller:step2_access_generate}"
+msgstr "Generar contraseña segura"
+
+msgid "{idpinstaller:idpinstaller:step2_contact_title}"
+msgstr "2.2 Datos del contacto técnico de la organización"
+
+msgid "{idpinstaller:idpinstaller:step2_organization_title}"
+msgstr "2.3 Datos de la organización"
+
+msgid "{idpinstaller:idpinstaller:step2_organization_name}"
+msgstr "Nombre de la organización"
+
+msgid "{idpinstaller:idpinstaller:step2_organization_description}"
+msgstr "Breve descripción de la organización"
+
+msgid "{idpinstaller:idpinstaller:step2_organization_domain}"
+msgstr "Dominio principal de la organización"
+
+msgid "{idpinstaller:idpinstaller:step2_organization_info_url}"
+msgstr "URL a la página de información de la organización"
+
+msgid "{idpinstaller:idpinstaller:step2_contact_email}"
+msgstr "Correo electrónico"
+
+msgid "{idpinstaller:idpinstaller:step2_contact_name}"
+msgstr "Nombre y apellidos del contacto técnico de la organización"
+
+msgid "{idpinstaller:idpinstaller:step2_contact_info}"
+msgstr "Recuerde que esta información estará disponible en los metadatos de esta organización.<br/> El correo electrónico se utilizará para remitir errores de SimpleSAMLphp de forma automática."
+
+msgid "{idpinstaller:idpinstaller:step2_timezone_info}"
+msgstr "Se ha obtenido la zona horaria configurada por defecto para PHP. Ésta es:"
+
+msgid "{idpinstaller:idpinstaller:step2_timezone_info2}"
+msgstr "Sólo si considera que esta zona horaria no es correcta, modifiquela en su configuración de PHP y reintente de nuevo este paso. Si es correcta puede continuar con el siguiente paso."
+
+msgid "{idpinstaller:idpinstaller:step2_password_ko_error}"
+msgstr "Debe introducir una contraseña válida."
+
+msgid "{idpinstaller:idpinstaller:step2_passwords_error}"
+msgstr "Las contraseñas introducidas deben coincidir."
+
+msgid "{idpinstaller:idpinstaller:step2_contact_info_error}"
+msgstr "Debe introducir unos datos de contacto válidos."
+
+msgid "{idpinstaller:idpinstaller:step2_contact_save_error}"
+msgstr "Ocurrió un error al modificar la configuración. Inténtelo de nuevo en unos instantes."
+
+msgid "{idpinstaller:idpinstaller:step2_contact_save_error2}"
+msgstr "El error puede deberse a un problema de permisos. Compruebe que los permisos son adecuados para el archivo "
+
+msgid "{idpinstaller:idpinstaller:step2_domain_error}"
+msgstr "El formato del dominio de la organización es incorrecto "
+
+msgid "{idpinstaller:idpinstaller:step5_datasource_select}"
+msgstr "Seleccione el tipo de fuente de datos que va a utilizar como origen de la información de los usuarios: "
+
+msgid "{idpinstaller:idpinstaller:step4_error}"
+msgstr "Se ha detectado que su SimpleSAMLphp no tiene disponible los módulos requeridos. </br>Pongase en contacto con RedIRIS para solventar el problema."
+
+msgid "{idpinstaller:idpinstaller:step4_perms_ko}"
+msgstr "No se ha podido continuar con el proceso de instalación, debido a unos permisos inadecuados. </br>Puede ejecutar los siguientes comandos para solucionar el problema:"
+
+msgid "{idpinstaller:idpinstaller:step5_no}"
+msgstr "No"
+
+msgid "{idpinstaller:idpinstaller:step5_yes}"
+msgstr "Sí"
+
+msgid "{idpinstaller:idpinstaller:step5_ldap_anonymous_bind}"
+msgstr "Realizar bind anónimo"
+
+msgid "{idpinstaller:idpinstaller:step5_anonbind_no}"
+msgstr "No"
+
+msgid "{idpinstaller:idpinstaller:step5_anonbind_yes}"
+msgstr "Sí"
+
+msgid "{idpinstaller:idpinstaller:step5_ldap_binddn}"
+msgstr Bind DN"
+
+msgid "{idpinstaller:idpinstaller:step5_ldap_bindpassword}"
+msgstr "Password para hacer bind"
+
+msgid "{idpinstaller:idpinstaller:step5_ldap_hostname}"
+msgstr "Nombre de host del servidor LDAP"
+
+msgid "{idpinstaller:idpinstaller:step5_ldap_port}"
+msgstr "Número de puerto del servidor LDAP"
+
+msgid "{idpinstaller:idpinstaller:step5_ldap_enable}"
+msgstr "Activar TLS para la conexión con LDAP"
+
+msgid "{idpinstaller:idpinstaller:step5_ldap_referral}"
+msgstr "Activar el seguimiento de referrals. Los controladores de dominio de Active Directory pueden requerir su desactivación para functionar correctamente"
+
+msgid "{idpinstaller:idpinstaller:step5_ldap_timeout}"
+msgstr "Timeout de acceso al LDAP, en segundos"
+
+msgid "{idpinstaller:idpinstaller:step5_ldap_info}"
+msgstr "Esta configuración permitirá la conexión del IdP a la fuente de datos, pero no incluye la configuración de obtención de la información de la misma. Para configurar esta, se deberá seguir la documentación oficial de SimpleSAMLphp."
+
+msgid "{idpinstaller:idpinstaller:step5_ldap_title}"
+msgstr "Configuración de fuente de datos de tipo LDAP"
+
+msgid "{idpinstaller:idpinstaller:step5_pdo_title}"
+msgstr "Configuración de fuente de datos de tipo PDO"
+    
+msgid "{idpinstaller:idpinstaller:step5_pdo_dsn}"
+msgstr "DSN de conexión a la base de datos"
+
+msgid "{idpinstaller:idpinstaller:step5_pdo_username}"
+msgstr "Nombre de usuario"
+
+msgid "{idpinstaller:idpinstaller:step5_pdo_password}"
+msgstr "Contraseña"
+
+msgid "{idpinstaller:idpinstaller:step5_datasource_request_error}"
+msgstr "La fuente de datos utilizada debe ser compatible con las extensiones desplegadas en el sistema."
+
+msgid "{idpinstaller:idpinstaller:step5_datasource_error}"
+msgstr "Los datos de conexión no son correctos."
+
+msgid "{idpinstaller:idpinstaller:step5_ldap_example}"
+msgstr "Ej. ‘ldap.example.com’"
+
+msgid "{idpinstaller:idpinstaller:step5_ldap_port_example}"
+msgstr "Ej. ‘389’"
+
+msgid "{idpinstaller:idpinstaller:step5_ldap_binddn_example}"
+msgstr "Ej. ‘cn=admin,dc=example,dc=com’"
+
+msgid "{idpinstaller:idpinstaller:step5_ldap_bindpassword_example}"
+msgstr "Contraseña para el usuario con el que se hace bind"
+
+msgid "{idpinstaller:idpinstaller:step5_config_title}"
+msgstr "Configuración de fuente de datos en fichero de configuración authsources"
+
+msgid "{idpinstaller:idpinstaller:step5_config_user}"
+msgstr "Nombre de usuario: "
+
+msgid "{idpinstaller:idpinstaller:step5_config_pass}"
+msgstr "Contraseña: "
+
+msgid "{idpinstaller:idpinstaller:step5_config_rol}"
+msgstr "Rol del usuario: "
+
+msgid "{idpinstaller:idpinstaller:step5_pdo_example}"
+msgstr "Ej. ‘mysql:host=localhost;port=3306;dbname=my_database;unix_socket=/opt/local/var/mysql/mysqld.sock’"
+
+msgid "{idpinstaller:idpinstaller:step6_cert_select}"
+msgstr "Seleccione si desea crear un nuevo certificado, o si por otra parte, prefiere importar uno ya existente: "
+
+msgid "{idpinstaller:idpinstaller:step7_all_ok}"
+msgstr "Se ha configurado los metadatos para que su SimpleSAMLphp funcione como IdP <strong>de manera satisfactoria</strong>. Recuerde que <strong>debe enviar al operador de la federación SIR2</Strong> los metadatos de su IdP."
+
+msgid "{idpinstaller:idpinstaller:step7_all_info_extra}"
+msgstr "Si desea comprobar cuales han sido los nuevos metadatos creados, puede comprobarlos "
+
+msgid "{idpinstaller:idpinstaller:step7_here}"
+msgstr "aquí."
+
+msgid "{idpinstaller:idpinstaller:step7_error}"
+msgstr "Se ha intentado configurar los metadatos para que su SimpleSAMLphp funcione como IdP, <strong>pero NO ha sido posible</strong>."
+
+msgid "{idpinstaller:idpinstaller:step7_command_error}"
+msgstr "es":"Se produjo un error al generar el certificado: "
+
+msgid "{idpinstaller:idpinstaller:step6_cert_info}"
+msgstr "Para la creación automática de los certificados del IdP es necesario que introduzca el nombre de su organización: "
+
+msgid "{idpinstaller:idpinstaller:step6_org_name_empty_error}"
+msgstr "Debe introducir un nombre de organización o un certificado y clave correctos."
+
+msgid "{idpinstaller:idpinstaller:step6_mkdir_cert_error}"
+msgstr "Deberá crear el directorio <i>cert</i> en el que se almacenará el certificado generado. Para ello puede ejecutar el siguiente comando: "
+
+msgid "{idpinstaller:idpinstaller:step6_perm_cert_error}"
+msgstr "Debe modificar los permisos de escritura del directorio <i>cert</i> en el que se almacenará el certificado generado. Para ello puede ejecutar los siguientes comandos: "
+
+msgid "{idpinstaller:idpinstaller:step6_cert_error}"
+msgstr "Ocurrió un error al generar los archivos. Genere manualmente los certificados y reintente este paso a continuación."
+
+msgid "{idpinstaller:idpinstaller:step6_cert_error_suggest}"
+msgstr "Para ello puede ejecutar el siguiente comando: "
+
+msgid "{idpinstaller:idpinstaller:step6_cert_error_comparation}"
+msgstr "Su certificado no concuerda con su clave privada, asegurese que ambas son correctas. "
+
+msgid "{idpinstaller:idpinstaller:step6_cert_info2}"
+msgstr "Si ya tiene una certificado y una clave privada que desee utilizar para este IdP, introduzcalos a continuación:"
+
+msgid "{idpinstaller:idpinstaller:step6_cert_rsa_error}"
+msgstr "El certificado y la clave introducidos no son correctos. Debe introducir un certificado y clave de tipo RSA."
+
+msgid "{idpinstaller:idpinstaller:step6_create_title}"
+msgstr "Creación del certificado"
+
+msgid "{idpinstaller:idpinstaller:step6_import_title}"
+msgstr "Importar certificado"
+
+msgid "{idpinstaller:idpinstaller:step6_footer_note}"
+msgstr "<strong> Nota:</strong> Los certificados creados se guardarán en "
+
+msgid "{idpinstaller:idpinstaller:step8_all_ok}"
+msgstr "Se han añadido los metadatos correspondientes al SIR2 <strong>de manera satisfactoria</strong>."
+
+msgid "{idpinstaller:idpinstaller:step8_error}"
+msgstr "Se ha intentado añadir los metadatos correspondientes a la federación SIR2, <strong>pero NO ha sido posible</strong>."
+
+msgid "{idpinstaller:idpinstaller:step8_curl_error}"
+msgstr "Se ha producido un error obteniendo los metadatos de SIR2, por favor compruebe que su accesibilidad a ellos es la correcta. El mensaje de error es el siguiente: "
+
+msgid "{idpinstaller:idpinstaller:step8_curl_error2}"
+msgstr "Se ha producido un error obteniendo los metadatos del SIR2, los metadatos obtenidos no son los correctos. Pongase en contacto con el administrador."
+
+msgid "{idpinstaller:idpinstaller:step9_all_ok}"
+msgstr "Lista de pasos a seguir: "
+
+msgid "{idpinstaller:idpinstaller:step9_change_perms}"
+msgstr "Se recomienda ejecutar los siguientes comandos por seguridad:"
+
+msgid "{idpinstaller:idpinstaller:step9_finished}"
+msgstr "<strong>¡Enhorabuena!</strong>, ha completado la configuración de su SimpleSAMLphp para que funcione con SIR2."
+
+msgid "{idpinstaller:idpinstaller:step9_remember}"
+msgstr "Se recomienda que a continuación, se sigan los pasos indicados en la Guía de Instalación y Configuración del IdP de Referencia."
+
+msgid "{idpinstaller:idpinstaller:step9_remember_cert}"
+msgstr "El certificado para este IdP se encuentra en "
+
+msgid "{idpinstaller:idpinstaller:step9_pub_key}"
+msgstr "El contenido del certificado es: "
+
+msgid "{idpinstaller:idpinstaller:step9_modified_files}"
+msgstr "Los ficheros modificados en el proceso de instalación han sido: "
+
+msgid "{idpinstaller:idpinstaller:step9_url_init}"
+msgstr "Si desea acceder a la página principal del recién instalado SimpleSAMLphp, puede hacerlo "
+

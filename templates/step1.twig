@@ -1,0 +1,29 @@
+{% block stepcontent %}
+
+{% set step = 1 %}
+
+{% if sir.errors | length > 0 %}
+    {% set button_msg = '{idpinstaller:idpinstaller:try_again_button}' | trans %}
+    {% set next_step = 1 %}
+{% else %}
+    {% set button_msg = '{idpinstaller:idpinstaller:next_step}' | trans %}
+    {% set next_step = 2 %}
+    <h3>{% trans '{idpinstaller:idpinstaller:step1_title}' %}</h3>
+
+    {% if sir.info | length > 0 %}
+        <p>
+            {% for key, info in sir.info %}
+                {{info}}<br/>
+            {% endfor %}    
+        </p>
+    {% endif %}
+{% endif %}
+
+<div style="margin-top:20px;">
+    <form action="" method="post">    
+        <input type="hidden" name="step" value="{{next_step}}"/>
+        <input class="retry-next-button" type="submit" value="{{button_msg}}"/>
+    </form>
+</div>
+
+{% endblock stepcontent %}

@@ -1,0 +1,16 @@
+{% set step = 2 %}
+{% set next_step = 5 %}
+
+<div style="margin-top:20px;float:left;margin-right:10px;">
+    <form action="" method="post">    
+        <input type="hidden" name="step" value="{{step}}"/>
+        <input type="submit" value="{% trans '{idpinstaller:idpinstaller:try_again_button_step_n}' %} 2"/>
+    </form>
+</div>
+
+<div style="margin-top:35px;">
+    <form action="" method="post">    
+        <input type="hidden" name="step" value="{{next_step}}"/>
+        <input class="retry-next-button" type="submit" value="{% trans '{idpinstaller:idpinstaller:next_step}' %}"/>
+    </form>
+</div>

@@ -1,0 +1,12 @@
+{% set step = 9 %}
+
+{% if sir.info | length > 0 %}
+	<p>
+		{% for key, info in sir.info %}
+			{{info | raw }}<br/>
+		{% endfor %}	
+	</p>
+	{% trans '{idpinstaller:idpinstaller:step9_pub_key}' %}
+	<textarea rows='3' cols='90' readonly='readonly' >{{sir.cert}}</textarea>
+{% endif %}
+

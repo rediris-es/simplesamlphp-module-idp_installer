@@ -1,0 +1,17 @@
+{% set step = 8 %}
+{% set next_step = 9 %}
+
+{% if sir.errors | length > 0 %}
+	{% set button_msg = '{idpinstaller:idpinstaller:try_again_button}' | trans %}
+	{% set next_step = step %}
+{% else %}
+	{% set button_msg = '{idpinstaller:idpinstaller:next_step}' | trans %}
+{% endif %}
+
+
+<div style="margin-top:35px;">
+    <form action="" method="post">    
+        <input type="hidden" name="step" value="{{next_step}}"/>
+        <input class="retry-next-button" type="submit" value="{{button_msg}}"/>
+    </form>
+</div>

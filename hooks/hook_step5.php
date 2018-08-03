@@ -24,6 +24,52 @@
  *
  * ************************************************************************** */
 
+/* Funciones para generar usuarios y contraseñas aleatorios para exampleauth
+ * Realizado por Adrian Gomez
+ * En Julio de 2018
+ ****************************************************************************** */
+
+
+function generateRandom($length)
+{
+    $number = "";
+
+    for($i=0; $i<$length; $i++){
+        $number .= mt_rand(0,9);
+    }
+
+    return $number;
+    
+}
+
+function generateUsers()
+{
+    $numUsers = 2;
+    $users = array();
+    while(count($users)<$numUsers){
+        $number = generateRandom(5);
+
+        if(!in_array($number, $users)){
+            $users []= "u".$number;
+        }
+    }
+
+    return $users;
+
+}   
+
+function generatePass()
+{
+    $pass = array();
+    $pass []= generateSecurePass();
+    $pass []= generateSecurePass();
+
+    return $pass;
+}
+
+
+
+
 /** 
  * Paso 5 del modulo instalador para SimpleSAMLphp v1.13.1
  * @package    IdPRef\modules\idpinstaller
@@ -42,6 +88,10 @@
  */
 function idpinstaller_hook_step5(&$data) {
     $data['datasources'] = getDataSources();
+    $data['users'] = generateUsers();
+    $data['pass'] = generatePass();
+    $data['rolUsers'] = array("staff", "faculty");
+
     $require_mods = array("saml", "idpinstaller", "modinfo", "ldap", "sqlauth", "core", "portal", "sir2skin"); //Modulos obligatorios
     $ssphpobj     = $data['ssphpobj'];
     $modules      = SimpleSAML_Module::getModules();
