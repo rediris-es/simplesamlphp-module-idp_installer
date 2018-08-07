@@ -1,7 +1,30 @@
 {% extends "base.twig" %}
 
 {% block content %}
-
+{% if not hideLanguageBar -%}
+    <div id="languagebar">
+        <div id="menu">
+            <div class="pure-menu">
+                <ul class="pure-menu-list">
+                {% for key, lang in languageBar -%}
+                    {% if key == currentLanguage -%}
+                    <a class="pure-menu-heading" href="#">{{ lang.name }}</a>
+                    {% else -%}
+                    {% if lang.url -%}
+                    <li class="pure-menu-item"><a href="{{ lang.url }}{%- spaceless %}
+                        {% if queryParams -%}&{% endif -%}
+                            {% for name, value in queryParams -%}
+                                {%- if not loop.first %}&{% endif -%}
+                                {%- if value %}{{ name }}={{ value }}{% else %}{{ name }}{%- endif %}
+                            {%- endfor %}"{% endspaceless %} class="pure-menu-link">{{ lang.name }}</a></li>
+                        {% endif -%}
+                    {% endif -%}
+                {% endfor -%}
+                </ul>
+            </div>
+        </div>
+    </div>
+{%- endif %}
 
 {% set header = '{idpinstaller:idpinstaller:idpinstaller_header}' | trans %}
 

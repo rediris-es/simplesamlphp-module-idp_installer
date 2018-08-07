@@ -55,7 +55,8 @@ $sirinfo = array(
         'errors2' => &$errors2,
 	'warning' => &$warning,
         'step' => &$step,
-        'ssphpobj' => $t
+        'ssphpobj' => $t,
+    'idpinstaller' => true,
 );
 SimpleSAML_Module::callHooks("step$step", $sirinfo);
 
