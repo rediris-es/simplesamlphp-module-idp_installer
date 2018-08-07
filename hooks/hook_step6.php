@@ -139,6 +139,11 @@ function idpinstaller_hook_step6(&$data) {
                     && array_key_exists('config_pass', $_REQUEST) && !empty($_REQUEST['config_pass'])
                     && array_key_exists('config_rol', $_REQUEST) && !empty($_REQUEST['config_rol'])) {
                 
+                $file_tmp_name = realpath(__DIR__ . '/../../../cert/').'/tmp_org_info.php';
+                include($file_tmp_name);
+                $hostname = $_SERVER['HTTP_HOST'];
+                $domain = $org_info['domain'];
+
                 $filename                 = __DIR__ . '/../../../config/authsources.php';
                 include($filename);
 
@@ -154,7 +159,14 @@ function idpinstaller_hook_step6(&$data) {
 
                     $usersArray[$user.":".$userPass] = array(
                         'uid' => array($userRol),
+                        'commonName' => $user,
+                        'displayName' => $user,
                         'eduPersonAffiliation' => array('member', $userRol),
+                        'eduPersonPrincipalName' => $user."@".$domain,
+                        'eduPersonScopedAffiliation' => $userRol."@".$domain,
+                        'mail' => '',
+                        'schacHomeOrganization' => $domain,
+                        'schacHomeOrganizationType' => 'university'
                     );
 
                 }
