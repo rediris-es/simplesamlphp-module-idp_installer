@@ -6,6 +6,13 @@
 	{% set next_step = step %}
 {% else %}
 	{% set button_msg = '{idpinstaller:idpinstaller:next_step}' | trans %}
+	{% if sir.info | length > 0 %}
+		<p>
+			{% for key, info in sir.info %}
+				{{info | raw}}<br/>
+			{% endfor %}	
+		</p>
+	{% endif %}
 {% endif %}
 
 
