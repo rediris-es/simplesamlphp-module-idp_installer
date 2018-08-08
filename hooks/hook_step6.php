@@ -141,7 +141,6 @@ function idpinstaller_hook_step6(&$data) {
                 
                 $file_tmp_name = realpath(__DIR__ . '/../../../cert/').'/tmp_org_info.php';
                 include($file_tmp_name);
-                $hostname = $_SERVER['HTTP_HOST'];
                 $domain = $org_info['domain'];
 
                 $filename                 = __DIR__ . '/../../../config/authsources.php';
@@ -150,6 +149,7 @@ function idpinstaller_hook_step6(&$data) {
                 $users = $_REQUEST['config_user'];
                 $pass = $_REQUEST['config_pass'];
                 $rolUsers = $_REQUEST['config_rol'];
+                $algor = "SHA1";
 
                 $usersArray = array('exampleauth:UserPass');
 
@@ -157,16 +157,22 @@ function idpinstaller_hook_step6(&$data) {
                     $userPass = $pass[$key];
                     $userRol = $rolUsers[$key];
 
+                    $mail = $user."@".$domain;
+
+                    $hash = sha1($mail);
+
                     $usersArray[$user.":".$userPass] = array(
                         'uid' => array($userRol),
                         'commonName' => $user,
                         'displayName' => $user,
                         'eduPersonAffiliation' => array('member', $userRol),
-                        'eduPersonPrincipalName' => $user."@".$domain,
+                        'eduPersonPrincipalName' => $mail,
                         'eduPersonScopedAffiliation' => $userRol."@".$domain,
-                        'mail' => '',
+                        'eduPersonTargetedID' => $mail,
+                        'mail' => $mail,
                         'schacHomeOrganization' => $domain,
-                        'schacHomeOrganizationType' => 'university'
+                        'schacHomeOrganizationType' => 'university',
+                        'schacPersonalUniqueCode' => $user.$algor.$hash,
                     );
 
                 }
