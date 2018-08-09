@@ -155,8 +155,38 @@
     "step2_contact_save_error2": {
         "es": "El error puede deberse a un problema de permisos. Compruebe que los permisos son adecuados para el archivo "
     },
+    "step2_pass1_error": {
+        "es": "La contraseña es obligatoria "
+    },
+    "step2_pass2_error": {
+        "es": "Es obligatorio confirmar la contraseña "
+    },
+    "step2_pass_error": {
+        "es": "Las contraseñas no coinciden "
+    },
+    "step2_name_error": {
+        "es": "El nombre es obligatorio "
+    },
+    "step2_email_error": {
+        "es": "El email es obligatorio "
+    },
+    "step2_email_format_error": {
+        "es": "El formato del email es incorrecto "
+    },
+    "step2_organization_name_error": {
+        "es": "El nombre de la organización es obligatorio "
+    },
+    "step2_organization_description_error": {
+        "es": "La descripción de la organización es obligatoria "
+    },
     "step2_domain_error": {
+        "es": "El dominio de la organización es obligatorio "
+    },
+    "step2_domain_format_error": {
         "es": "El formato del dominio de la organización es incorrecto "
+    },
+    "step2_url_error": {
+        "es": "La URL de la organización es obligatoria "
     },
     "step5_datasource_select":{
         "es": "Seleccione el tipo de fuente de datos que va a utilizar como origen de la información de los usuarios: "
@@ -253,6 +283,27 @@
     },        
     "step5_pdo_example":{
         "es":"Ej. ‘mysql:host=localhost;port=3306;dbname=my_database;unix_socket=/opt/local/var/mysql/mysqld.sock’"
+    },
+    "step5_ldap_hostname_error": {
+        "es": "El hostname del servidor LDAP es obligatorio "
+    },
+    "step5_ldap_port_error": {
+        "es": "El puerto del servidor LDAP es obligatorio "
+    },
+    "step5_ldap_binddn_error": {
+        "es": "Si eliges la opción de bind anónimo es obligatorio rellenar el Bind DN "
+    },
+    "step5_ldap_bindpassword_error": {
+        "es": "Si eliges la opción de bind anónimo es obligatorio rellenar la contraseña para hacer bind "
+    },
+    "step5_pdo_dsn_error": {
+        "es": "El DSN de conexión a la base de datos es obligatorio "
+    },
+    "step5_pdo_username_error": {
+        "es": "El usuario de la base de datos es obligatorio "
+    },
+    "step5_pdo_password_error": {
+        "es": "La contraseña de la base de datos es obligatoria "
     },
     "step6_cert_select":{
         "es": "Seleccione si desea crear un nuevo certificado, o si por otra parte, prefiere importar uno ya existente: "

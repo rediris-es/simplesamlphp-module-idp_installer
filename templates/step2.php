@@ -54,13 +54,26 @@ span.pass-txt{
 /*Fin codigo creado por Adrian Gomez en Julio de 2018*/
 </style>
 
-<div id="domain-error" style="display: none; border-left: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; background: #f5f5f5;">  
+<div id="js-error" style="display: none; border-left: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; background: #f5f5f5;">  
   <img style="margin-right: 10px;margin-left: 5px;" class="float-l erroricon" src="/resources/icons/experience/gtk-dialog-error.48x48.png">  
-  <p style="padding-top: 5px "><?php echo $this->t('{idpinstaller:idpinstaller:step2_domain_error}'); ?></p>
+  <div style="padding-left: 64px;">
+      <p id="pass1_error" class="errors-msg" style="margin: 0; padding-top: 5px "><?php echo $this->t('{idpinstaller:idpinstaller:step2_pass1_error}'); ?></p>
+      <p id="pass2_error" class="errors-msg" style="margin: 0; padding-top: 5px "><?php echo $this->t('{idpinstaller:idpinstaller:step2_pass2_error}'); ?></p>
+      <p id="pass_error" class="errors-msg" style="margin: 0; padding-top: 5px "><?php echo $this->t('{idpinstaller:idpinstaller:step2_pass_error}'); ?></p>
+      <p id="name_error" class="errors-msg" style="margin: 0; padding-top: 5px "><?php echo $this->t('{idpinstaller:idpinstaller:step2_name_error}'); ?></p>
+      <p id="email_error" class="errors-msg" style="margin: 0; padding-top: 5px "><?php echo $this->t('{idpinstaller:idpinstaller:step2_email_error}'); ?></p>
+      <p id="email_format_error" class="errors-msg" style="margin: 0; padding-top: 5px "><?php echo $this->t('{idpinstaller:idpinstaller:step2_email_format_error}'); ?></p>
+      <p id="organization_name_error" class="errors-msg" style="margin: 0; padding-top: 5px "><?php echo $this->t('{idpinstaller:idpinstaller:step2_organization_name_error}'); ?></p>
+      <p id="organization_description_error" class="errors-msg" style="margin: 0; padding-top: 5px "><?php echo $this->t('{idpinstaller:idpinstaller:step2_organization_description_error}'); ?></p>
+      <p id="domain_error" class="errors-msg" style="margin: 0; padding-top: 5px "><?php echo $this->t('{idpinstaller:idpinstaller:step2_domain_error}'); ?></p>
+      <p id="domain_format_error" class="errors-msg" style="margin: 0; padding-top: 5px "><?php echo $this->t('{idpinstaller:idpinstaller:step2_domain_format_error}'); ?></p>
+      <p id="url_error" class="errors-msg" style="margin: 0; padding-top: 5px "><?php echo $this->t('{idpinstaller:idpinstaller:step2_url_error}'); ?></p>
+  </div>
   <div style="clear:both"></div>
 </div>
 
 <form action="" method="post" onsubmit="return validateForm()">    
+
     <h4><?php echo $this->t('{idpinstaller:idpinstaller:step2_access_title}'); ?></h4>
     <input type="hidden" name="step" value="<?php echo $next_step; ?>">
     <?php echo $this->t('{idpinstaller:idpinstaller:step2_access_password}'); ?><br/>
@@ -70,7 +83,8 @@ span.pass-txt{
     <br/>
     <button type="button" onclick="createSecurePassword()"> <?php echo $this->t('{idpinstaller:idpinstaller:step2_access_generate}'); ?>  </button>
     <br/>
-     <h4><?php echo $this->t('{idpinstaller:idpinstaller:step2_contact_title}'); ?></h4>
+    
+    <h4><?php echo $this->t('{idpinstaller:idpinstaller:step2_contact_title}'); ?></h4>
     <?php echo $this->t('{idpinstaller:idpinstaller:step2_contact_name}'); ?>:<br/>
     <input type="text" value="" name="ssphp_technicalcontact_name" style="width:300px;"><br/>
     <?php echo $this->t('{idpinstaller:idpinstaller:step2_contact_email}'); ?>:<br/>
@@ -207,7 +221,7 @@ function checkPass(pass) {
     else if (score < 60 && score >= 30)
         passText = "Debil";
     else
-	passText = "Muy debil";
+        passText = "Muy debil";
     document.getElementById("passScore").innerHTML = passText;
 }
 
@@ -219,18 +233,89 @@ Fin de codigo nuevo creado por Adrian Gomez
 
 function validateForm(){
 
+    var inputPass = document.getElementsByName('ssphp_password')[0];
+    var inputPass2 = document.getElementsByName('ssphp_password2')[0];
+    var inputName = document.getElementsByName('ssphp_technicalcontact_name')[0];
+    var inputEmail = document.getElementsByName('ssphp_technicalcontact_email')[0];
     var inputDomain = document.getElementsByName('ssphp_organization_domain')[0];
-    var errorDomain = document.getElementById('domain-error');
-    if(/^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/.test(inputDomain.value)){
-        errorDomain.style.display = "none";
-        this.submit();
-        return true;
-    }
-    errorDomain.style.display = "block";
-    window.scrollTo(0,0);
-    return false;
+    var inputOrganizationName = document.getElementsByName('ssphp_organization_name')[0];
+    var inputOrganizationDescription = document.getElementsByName('ssphp_organization_description')[0];
+    var inputOrganizationDomain = document.getElementsByName('ssphp_organization_domain')[0];
+    var inputOrganizationInfoURL = document.getElementsByName('ssphp_organization_info_url')[0];
 
- }
+    var error = document.getElementById('js-error');
+    var errors = [];
+
+    var allErrorsElements = document.getElementsByClassName("errors-msg");
+
+    for (var i = 0; i < allErrorsElements.length; i++) {
+        allErrorsElements[i].style.display = "none";
+    } 
+
+    if(inputPass.value.trim().length == 0){
+      errors.push("pass1_error");
+    }
+
+    if(inputPass2.value.trim().length == 0){
+      errors.push("pass2_error");
+    }
+
+    if(inputPass.value!=inputPass2.value){
+      errors.push("pass_error");
+    }
+
+    if(inputName.value.trim().length == 0){
+      errors.push("name_error");
+    }
+
+    if(inputEmail.value.trim().length == 0){
+      errors.push("email_error");
+    }
+
+    if(inputOrganizationName.value.trim().length == 0){
+      errors.push("organization_name_error");
+    }
+
+    if(inputOrganizationDescription.value.trim().length == 0){
+      errors.push("organization_description_error");
+    }
+
+    if(inputOrganizationDomain.value.trim().length == 0){
+      errors.push("domain_error");
+    }
+
+    if(inputOrganizationInfoURL.value.trim().length == 0){
+      errors.push("url_error");
+    }
+
+    if(!(/^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/.test(inputDomain.value))){
+      errors.push("domain_format_error");
+    }
+
+    if(!(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(inputEmail.value))){
+      errors.push("email_format_error");
+    }
+
+
+    if (errors.length > 0) {
+      error.style.display = "block";
+
+      for(var i=0;i<errors.length;i++){
+        document.getElementById(errors[i]).style.display = "block";
+      }
+
+      window.scrollTo(0,0);
+      return false;
+
+    } else {
+
+      error.style.display = "none";
+      this.submit();
+      return true;
+
+    }
+
+}
 
 </script>
 
