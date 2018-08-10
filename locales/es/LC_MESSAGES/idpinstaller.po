@@ -175,6 +175,39 @@ msgstr "El error puede deberse a un problema de permisos. Compruebe que los perm
 msgid "{idpinstaller:idpinstaller:step2_domain_error}"
 msgstr "El formato del dominio de la organización es incorrecto "
 
+msgid "{idpinstaller:idpinstaller:step2_pass1_error}"
+msgstr "La contraseña es obligatoria "
+
+msgid "{idpinstaller:idpinstaller:step2_pass2_error}"
+msgstr "Es obligatorio confirmar la contraseña "
+
+msgid "{idpinstaller:idpinstaller:step2_pass_error}"
+msgstr "Las contraseñas no coinciden "
+
+msgid "{idpinstaller:idpinstaller:step2_name_error}"
+msgstr "El nombre es obligatorio "
+    
+msgid "{idpinstaller:idpinstaller:step2_email_error}"
+msgstr "El email es obligatorio "
+
+msgid "{idpinstaller:idpinstaller:step2_email_format_error}"
+msgstr "El formato del email es incorrecto "
+
+msgid "{idpinstaller:idpinstaller:step2_organization_name_error}"
+msgstr "El nombre de la organización es obligatorio "
+
+msgid "{idpinstaller:idpinstaller:step2_organization_description_error}"
+msgstr "La descripción de la organización es obligatoria "
+
+msgid "{idpinstaller:idpinstaller:step2_domain_error}"
+msgstr "El dominio de la organización es obligatorio "
+
+msgid "{idpinstaller:idpinstaller:step2_domain_format_error}"
+msgstr "El formato del dominio de la organización es incorrecto "
+
+msgid "{idpinstaller:idpinstaller:step2_url_error}"
+msgstr "La URL de la organización es obligatoria "
+
 msgid "{idpinstaller:idpinstaller:step5_datasource_select}"
 msgstr "Seleccione el tipo de fuente de datos que va a utilizar como origen de la información de los usuarios: "
 
@@ -237,6 +270,27 @@ msgstr "Nombre de usuario"
 
 msgid "{idpinstaller:idpinstaller:step5_pdo_password}"
 msgstr "Contraseña"
+
+msgid "{idpinstaller:idpinstaller:step5_ldap_hostname_error}"
+msgstr "El hostname del servidor LDAP es obligatorio "
+
+msgid "{idpinstaller:idpinstaller:step5_ldap_port_error}"
+msgstr "El puerto del servidor LDAP es obligatorio "
+
+msgid "{idpinstaller:idpinstaller:step5_ldap_binddn_error}"
+msgstr "Si eliges la opción de bind anónimo es obligatorio rellenar el Bind DN "
+
+msgid "{idpinstaller:idpinstaller:step5_ldap_bindpassword_error}"
+msgstr "Si eliges la opción de bind anónimo es obligatorio rellenar la contraseña para hacer bind "
+
+msgid "{idpinstaller:idpinstaller:step5_pdo_dsn_error}"
+msgstr "El DSN de conexión a la base de datos es obligatorio "
+
+msgid "{idpinstaller:idpinstaller:step5_pdo_username_error}"
+msgstr "El usuario de la base de datos es obligatorio "
+
+msgid "{idpinstaller:idpinstaller:step5_pdo_password_error}"
+msgstr "La contraseña de la base de datos es obligatoria "
 
 msgid "{idpinstaller:idpinstaller:step5_datasource_request_error}"
 msgstr "La fuente de datos utilizada debe ser compatible con las extensiones desplegadas en el sistema."

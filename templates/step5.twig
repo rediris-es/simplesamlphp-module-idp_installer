@@ -56,7 +56,22 @@
     {% set selected = "ldap" %}
 {% endif %}
 
-<form action="" method="post" style="margin-top:20px;">    
+<div id="js-error" style="display: none; border-left: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; background: #f5f5f5;">  
+  <img style="margin-right: 10px;margin-left: 5px;" class="float-l erroricon" src="/resources/icons/experience/gtk-dialog-error.48x48.png">  
+  <div style="padding-left: 64px;">
+      <p id="ldap_hostname" class="errors-msg" style="margin: 0; padding-top: 5px ">{% trans '{idpinstaller:idpinstaller:step5_ldap_hostname_error}'%}</p>
+      <p id="ldap_port" class="errors-msg" style="margin: 0; padding-top: 5px ">{% trans '{idpinstaller:idpinstaller:step5_ldap_port_error}'%}</p>
+      <p id="ldap_binddn" class="errors-msg" style="margin: 0; padding-top: 5px ">{% trans '{idpinstaller:idpinstaller:step5_ldap_binddn_error}'%}</p>
+      <p id="ldap_bindpassword" class="errors-msg" style="margin: 0; padding-top: 5px ">{% trans '{idpinstaller:idpinstaller:step5_ldap_bindpassword_error}'%}</p>
+      <p id="pdo_dsn" class="errors-msg" style="margin: 0; padding-top: 5px ">{% trans '{idpinstaller:idpinstaller:step5_pdo_dsn_error}'%}</p>
+      <p id="pdo_username" class="errors-msg" style="margin: 0; padding-top: 5px ">{% trans '{idpinstaller:idpinstaller:step5_pdo_username_error}'%}</p>
+      <p id="pdo_password" class="errors-msg" style="margin: 0; padding-top: 5px ">{% trans '{idpinstaller:idpinstaller:step5_pdo_password_error}'%}</p>
+  </div>
+  <div style="clear:both"></div>
+</div>
+
+
+<form action="" method="post" style="margin-top:20px;" onsubmit="return validateForm()">    
 
     <p>{% trans '{idpinstaller:idpinstaller:step5_datasource_select}' %}
         <select id="data_source_type" name="data_source_type" onchange="showDatasource();">
@@ -176,3 +191,88 @@
         <input class="retry-next-button" type="submit" value="{{button_msg}}"/>
     </div>
 </form>
+
+<script>
+
+function validateForm(){
+
+    var selectDataSourceType = document.getElementsByName('data_source_type')[0];
+
+    var inputLdapHostname = document.getElementsByName('ldap_hostname')[0];
+    var inputLdapPort = document.getElementsByName('ldap_port')[0];
+    var inputLdapBinddn = document.getElementsByName('ldap_binddn')[0];
+    var inputLdapBindpassword = document.getElementsByName('ldap_bindpassword')[0];
+    var inputLdapAnonymousBind = document.getElementsByName('ldap_anonymous_bind')[0];
+    var inputPdoDsn = document.getElementsByName('pdo_dsn')[0];
+    var inputPdoUsername = document.getElementsByName('pdo_username')[0];
+    var inputPdoPassword = document.getElementsByName('pdo_password')[0];
+    
+    var error = document.getElementById('js-error');
+    var errors = [];
+
+    var allErrorsElements = document.getElementsByClassName("errors-msg");
+
+    for (var i = 0; i < allErrorsElements.length; i++) {
+        allErrorsElements[i].style.display = "none";
+    } 
+
+    if(selectDataSourceType.value=="ldap"){
+
+        if(inputLdapHostname.value.trim().length == 0){
+          errors.push("ldap_hostname");
+        }
+
+        if(inputLdapPort.value.trim().length == 0){
+          errors.push("ldap_port");
+        }
+
+        if(inputLdapAnonymousBind.value=="1"){
+
+            if(inputLdapBinddn.value.trim().length == 0){
+              errors.push("ldap_binddn");
+            }
+
+            if(inputLdapBindpassword.value.trim().length == 0){
+              errors.push("ldap_bindpassword");
+            }
+
+        }
+
+    }else if(selectDataSourceType.value=="pdo"){
+         
+        if(inputPdoDsn.value.trim().length == 0){
+          errors.push("pdo_dsn");
+        }
+
+        if(inputPdoUsername.value.trim().length == 0){
+          errors.push("pdo_username");
+        }
+
+        if(inputPdoPassword.value.trim().length == 0){
+          errors.push("pdo_password");
+        }
+
+    }
+
+    if (errors.length > 0) {
+
+      error.style.display = "block";
+
+      for(var i=0;i<errors.length;i++){
+        document.getElementById(errors[i]).style.display = "block";
+      }
+
+      window.scrollTo(0,0);
+      return false;
+
+    } else {
+
+      error.style.display = "none";
+      this.submit();
+      return true;
+
+    }
+
+}
+
+</script>
