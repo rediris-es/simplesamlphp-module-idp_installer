@@ -142,6 +142,7 @@ function idpinstaller_hook_step6(&$data) {
                 $file_tmp_name = realpath(__DIR__ . '/../../../cert/').'/tmp_org_info.php';
                 include($file_tmp_name);
                 $domain = $org_info['domain'];
+                $salt = $org_info['salt'];
 
                 $filename                 = __DIR__ . '/../../../config/authsources.php';
                 include($filename);
@@ -168,7 +169,7 @@ function idpinstaller_hook_step6(&$data) {
                         'eduPersonAffiliation' => array('member', $userRol),
                         'eduPersonPrincipalName' => $mail,
                         'eduPersonScopedAffiliation' => $userRol."@".$domain,
-                        'eduPersonTargetedID' => $mail,
+                        'eduPersonTargetedID' => hash("sha256",$salt.$hash."SIR"),
                         'mail' => $mail,
                         'schacHomeOrganization' => $domain,
                         'schacHomeOrganizationType' => 'university',

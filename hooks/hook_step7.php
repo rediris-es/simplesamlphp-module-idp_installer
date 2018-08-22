@@ -154,6 +154,7 @@ function idpinstaller_hook_step7(&$data) {
     if(file_exists($file_tmp_name)){
         include ($file_tmp_name);
     }
+    
     $org_name = !empty($org_info['name']) && $org_info['name'] !== '' ? $org_info['name'] : "idp-$hostname";
     $org_domain = !empty($org_info['domain']) && $org_info['domain'] !== '' ? $org_info['domain'] : "idp-$hostname";
     $org_desc = !empty($org_info['info']) && $org_info['info'] !== '' ? $org_info['info'] : "idp-$hostname";
@@ -167,6 +168,16 @@ function idpinstaller_hook_step7(&$data) {
     } else if (array_key_exists('ldap_datasource', $config)) {
         $auth = 'ldap_datasource';
     }
+
+    $code1='$attributes["LegacyTargetedId"] = array(md5($attributes["mail"][0]."SIR"));
+                 $attributes["irisMailMainAddress"] = $attributes["irisMailMainAddress"];
+                 $attributes["irisMailAlternateAddress"] = $attributes["irisMailAlternateAddress"];
+                 $attributes["mail"] = array($attributes["mail"][0]);
+                 $attributes["uid"] = array($attributes["uid"][0]);';
+
+    $code27='$attributes["schacPersonalUniqueCode"] = array("urn:mace:terena.org:schac:personalUniqueCode:es:rediris:sir:mbid:{md5}".md5($attributes["mail"][0]));
+            if(!isset($attributes["eduPersonPrincipalName"])){
+            $attributes["eduPersonPrincipalName"] = array($attributes["uid"][0]."@".'.$org_domain.');}';
 
     $m = "<?php\n\n\$metadata['idp-$hostname'] = array(
         'UIInfo' => array(
@@ -220,6 +231,30 @@ function idpinstaller_hook_step7(&$data) {
                 'schacHomeOrganizationType',
         ), 
         'authproc' => array(
+            1 => array('class' => 'core:PHP','code' => '$code1'),
+            25 => array('class' => 'core:GenerateGroups', 'eduPersonAffiliation'),
+            27 => array('class' => 'core:PHP','code' => '$code27'),
+            48 => array('class' => 'core:AttributeCopy','LegacyTargetedId' => 'eduPersonTargetedID'),
+            50 => 'core:AttributeLimit',
+            52 => array(
+             'class' => 'core:AttributeAdd',
+             'urn:oid:2.5.4.10' => '$org_name',
+             'urn:oid:1.3.6.1.4.1.25178.1.2.9' => array('$org_domain'),
+             'urn:oid:1.3.6.1.4.1.25178.1.2.10' => array('urn:schac:homeOrganizationType:es:university'), 
+             ),
+            53 => array(
+             'class' => 'core:ScopeAttribute',
+             'scopeAttribute' => 'schacHomeOrganization',
+             'sourceAttribute' => 'uid',
+             'targetAttribute' => 'eduPersonPrincipalName',
+             ),
+            54 => array(
+             'class' => 'core:ScopeAttribute',
+             'scopeAttribute' => 'eduPersonPrincipalName',
+             'sourceAttribute' => 'eduPersonAffiliation',
+             'targetAttribute' => 'eduPersonScopedAffiliation',
+             ), 
+            99 => array('class' => 'core:AttributeMap', 'sir2oid'),
             100 => array('class' => 'core:AttributeMap', 'name2oid'),
         ),
         'assertion.encryption' => true
