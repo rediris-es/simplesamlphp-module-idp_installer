@@ -208,8 +208,6 @@ function saveSSPLDAPConfiguration($params){
 
         file_put_contents($filenameTarget, $content);
 
-    }else{
-
     }
 
 }
