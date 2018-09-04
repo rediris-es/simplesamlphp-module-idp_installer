@@ -84,12 +84,18 @@ function idpinstaller_hook_step6(&$data) {
                     if (array_key_exists('sql_datasource', $config)) {
                         unset($config['sql_datasource']);
                     }
+
+                    saveSSPLDAPConfiguration($_REQUEST);
+                    
                     $res2 = @file_put_contents($filename, '<?php  $config = ' . var_export($config, 1) . "; ?>");
                     if (!$res2) {
                         $data['errors'][]            = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step2_contact_save_error}');
                         $data['errors'][]            = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step2_contact_save_error2}') . " <i>" . realpath($filename) . "</i>";
                         $data['datasource_selected'] = 'ldap';
                     }
+
+
+
                 }
                 return true;
             }

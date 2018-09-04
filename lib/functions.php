@@ -151,3 +151,65 @@ function transaleXMLToSsPHP($xmldata){
     }
     return $output;
 }
+
+function saveSSPLDAPConfiguration($params){
+
+    $filenameSource = __DIR__ . '/../../../www/selfservicepassword/conf/config.inc.php';
+    $filenameTarget = __DIR__ . '/../../../www/selfservicepassword/conf/config.inc.local.php';
+
+    if(file_exists($filenameSource)){
+
+        $old = get_defined_vars();
+
+        include($filenameSource);
+
+        $new = get_defined_vars();
+
+        $fileSettings = array_diff($new, $old);
+
+        $keyphrase = "H3C31J3w0aSgCvfZuAPAInqKBBsyK6hH0RQEDm5Apj4PduQYmBv4m3myf6wF";
+
+        $newSettings = array(
+                        'ldap_url' => $params['ldap_hostname'].":".$params['ldap_port'],
+                        'ldap_starttls' => ($params['ldap_enable_tls'] == 0 ? TRUE : FALSE),
+                        'ldap_binddn' => $params['ldap_binddn'],
+                        'ldap_bindpw' => $params['ldap_bindpassword'],
+                        'ldap_base' => "dc=tuorganizacion,dc=es",
+                        'ldap_login_attribute' => "uid",
+                        'ldap_fullname_attribute' => "cn",
+                        'ldap_filter' => "(&(objectClass=person)($ldap_login_attribute={login}))",
+                        'keyphrase' => $keyphrase
+                    );
+
+        $fileSettings = array_merge($fileSettings, $newSettings);
+      
+        $content = "<?php \n";
+        
+        foreach ($fileSettings as $key => $value) {
+
+            if (gettype($value) == 'string' ){
+                $val = "'{$value}'";
+            } else if (gettype($value) == 'boolean' ){
+                if ($value == 0){
+                    $val = "FALSE";
+                } else {
+                    $val = "TRUE";
+                }
+            } else if (gettype($value) == 'NULL' ) {
+                $val = "NULL";
+            } else {
+                $val = "{$value}";
+            }
+
+            $content .= "$".$key." = ".$val."; \n";
+        }
+
+        $content .= "\n ?>";
+
+        file_put_contents($filenameTarget, $content);
+
+    }else{
+
+    }
+
+}
