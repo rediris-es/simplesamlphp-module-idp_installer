@@ -85,7 +85,12 @@ function idpinstaller_hook_step6(&$data) {
                         unset($config['sql_datasource']);
                     }
 
-                    saveSSPLDAPConfiguration($_REQUEST);
+                    if($_REQUEST['ldap_enable_sspassword'] == 0){
+                        downloadSSPLdap();
+                        saveSSPLDAPConfiguration($_REQUEST);
+                    }
+
+                    
                     
                     $res2 = @file_put_contents($filename, '<?php  $config = ' . var_export($config, 1) . "; ?>");
                     if (!$res2) {

@@ -202,6 +202,7 @@ function saveSSPLDAPConfiguration($params){
             }
 
             $content .= "$".$key." = ".$val."; \n";
+            
         }
 
         $content .= "\n ?>";
@@ -209,5 +210,30 @@ function saveSSPLDAPConfiguration($params){
         file_put_contents($filenameTarget, $content);
 
     }
+
+}
+
+function downloadSSPLdap(){
+
+    if (!file_exists(__DIR__ . '/../../../www/selfservicepassword')) {
+		$url = "https://ltb-project.org/archives/ltb-project-self-service-password-1.3.tar.gz";
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+		$output = curl_exec($ch);
+		//Guardamos la imagen en un archivo
+		$fh = fopen(__DIR__ . '/../../../www/sspass.tar.gz', 'w');
+		fwrite($fh, $output);
+		fclose($fh);
+
+		$p = new PharData(__DIR__ . '/../../../www/sspass.tar.gz');
+		//$p->decompress();
+		$p->extractTo(__DIR__ . '/../../../www/sspass', null, true);
+
+		rename(__DIR__ . '/../../../www/sspass/ltb-project-self-service-password-1.3', __DIR__ . '/../../../www/selfservicepassword');
+
+		rmdir(__DIR__ . '/../../../www/sspass');
+		unlink(__DIR__ . '/../../../www/sspass.tar.gz');
+	}
 
 }

@@ -135,6 +135,13 @@
                     <option value="1"><?php echo $this->t('{idpinstaller:idpinstaller:step5_no}'); ?></option>
                 </select><br/>
             </p>   
+            <p>
+                ¿Desea instalar y configurar la aplicación Self Service Password para que cada usuario pueda gestionar su contraseña?<br/>
+                <select name="ldap_enable_sspassword">
+                    <option value="0"><?php echo $this->t('{idpinstaller:idpinstaller:step5_yes}'); ?></option>
+                    <option value="1"><?php echo $this->t('{idpinstaller:idpinstaller:step5_no}'); ?></option>
+                </select><br/>
+            </p>
             <div class="caution" style="min-height:45px;">
                 <?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_info}'); ?>
             </div>
