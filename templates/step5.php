@@ -110,7 +110,7 @@
                     <option value="0"><?php echo $this->t('{idpinstaller:idpinstaller:step5_anonbind_no}'); ?></option>
                 </select><br/>
             </p>            
-            <p>En el caso de realizar bind anónimo especifique el DN y password:</p>
+            <p><?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_bindtext}'); ?></p>
             <p>
                 <?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_binddn}'); ?><br/>
                 <input type="text" name="ldap_binddn" value="" style="width: 300px;"/><br/>
@@ -136,7 +136,7 @@
                 </select><br/>
             </p>   
             <p>
-                ¿Desea instalar y configurar la aplicación Self Service Password para que cada usuario pueda gestionar su contraseña?<br/>
+                <?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_sspassword}'); ?><br/>
                 <select name="ldap_enable_sspassword">
                     <option value="0"><?php echo $this->t('{idpinstaller:idpinstaller:step5_yes}'); ?></option>
                     <option value="1"><?php echo $this->t('{idpinstaller:idpinstaller:step5_no}'); ?></option>
@@ -162,7 +162,7 @@
                 <input type="password" name="pdo_password" value="" style="width: 300px;"/><br/>
             </p>
             <div class="caution" style="min-height:45px;">
-                <?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_info}'); ?>
+                <?php echo $this->t('{idpinstaller:idpinstaller:step5_pdo_info}'); ?>
             </div>
         </div>
         <input type="hidden" name="step" value="<?php echo $next_step; ?>"/>

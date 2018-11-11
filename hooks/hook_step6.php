@@ -81,6 +81,7 @@ function idpinstaller_hook_step6(&$data) {
                         'priv.password'     => NULL,
                         'authority'         => "urn:mace:".$_SERVER['HTTP_HOST'],
                     );
+
                     if (array_key_exists('sql_datasource', $config)) {
                         unset($config['sql_datasource']);
                     }
