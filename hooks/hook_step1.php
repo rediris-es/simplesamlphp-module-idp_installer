@@ -67,7 +67,7 @@ function idpinstaller_hook_step1(&$data) {
         $data['errors'][] = $ssphpobj->t('{idpinstaller:idpinstaller:step1_error_version}');
     } else {
         //Continuamos comprobando las extensiones de PHP
-        $extensions        = array("date", "dom", "hash", "libxml", "openssl", "pcre", "SPL", "zlib", "mcrypt", "posix");
+        $extensions        = array("date", "dom", "hash", "libxml", "openssl", "pcre", "SPL", "zlib", "posix");
         $failed_extensions = array();
         $loaded_extensions = get_loaded_extensions();
         foreach ($extensions as $extension) {
