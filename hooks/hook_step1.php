@@ -116,19 +116,23 @@ function idpinstaller_hook_step1(&$data) {
                 "modules",                
             );
             $perms_ko = array();
-            $apachegroupname = getApacheGroup();
-            foreach ($files as $file) {
-                $f = realpath(__DIR__ . "/../../../" . $file);
-                if (!is_writable($f) || !is_readable($f)) {
-                    $actual_perms = fileperms($f);
-                    $new_perms = $actual_perms | 0060 ;
-                    @$changed_perm = chmod($f, $new_perms);
-                    @$changed_grp = chgrp($f, $apachegroupname);
-                    if(!($changed_perm && $changed_grp)){
-                        $perms_ko[] = $f;
+            $windows_os = array("WIN32","WINNT","Windows");
+            if(!in_array(PHP_OS, $windows_os)){
+                $apachegroupname = posix_getgrgid(posix_getgid());
+                foreach ($files as $file) {
+                    $f = realpath(__DIR__ . "/../../../" . $file);
+                    if (!is_writable($f) || !is_readable($f)) {
+                        $actual_perms = fileperms($f);
+                        $new_perms = $actual_perms | 0060 ;
+                        @$changed_perm = chmod($f, $new_perms);
+                        @$changed_grp = chgrp($f, $apachegroupname);
+                        if(!($changed_perm && $changed_grp)){
+                            $perms_ko[] = $f;
+                        }
                     }
                 }
             }
+            
             if (count($perms_ko) > 0) {
                 $aux = $ssphpobj->t('{idpinstaller:idpinstaller:step1_perms_ko}');
                 $aux.= "<ul style='margin-top:30px;'><li>".implode("</li><li>",$perms_ko)."</li></ul>";
@@ -139,9 +143,9 @@ function idpinstaller_hook_step1(&$data) {
                 $file_owner = "[your_file_owner]";
                 $group = "[your_apache_group]";
 
-                if (!extension_loaded('posix')) {
-                    $file_owner = posix_getpwuid(fileowner($filename));
-                    $group = posix_getgrgid(posix_getgid());
+                if (extension_loaded('posix')) {
+                    $username = posix_getpwuid(fileowner($filename))['name'];
+                $group = posix_getgrgid(posix_getgid())['name'];
                 }
 
                 $aux.= "<pre>&gt; chown $recursive ".$file_owner.":".$group." $filename\n&gt; chmod $recursive g+w " . $filename . "</pre>";

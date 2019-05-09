@@ -90,9 +90,9 @@ function idpinstaller_hook_step5(&$data) {
         $file_owner = "[your_file_owner]";
         $group = "[your_apache_group]";
 
-        if (!extension_loaded('posix')) {
-            $file_owner = posix_getpwuid(fileowner($filename));
-            $group = posix_getgrgid(posix_getgid());
+        if (extension_loaded('posix')) {
+            $file_owner = posix_getpwuid(fileowner($filename))['name'];
+            $group = posix_getgrgid(posix_getgid())['name'];
         }
 
         $aux.= "<pre>&gt; chown $recursive ".$file_owner.":".$group." $filename\n&gt; chmod $recursive g+w " . $filename . "</pre>";

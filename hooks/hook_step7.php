@@ -60,8 +60,15 @@ function idpinstaller_hook_step7(&$data) {
         } else if (!is_dir($dir_certs)) {
             exec("mkdir $dir_certs");
         } else if (!is_writable($dir_certs)) {
-            $username = getFileUsername($dir_certs);
-            $groupname = getApacheGroup();
+
+            $username = "[your_file_owner]";
+            $groupname = "[your_apache_group]";
+
+            if (extension_loaded('posix')) {
+                $username = posix_getpwuid(fileowner($filename))['name'];
+                $group = posix_getgrgid(posix_getgid())['name'];
+            }
+
             $data['errors'][] = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step6_perm_cert_error}');
             $data['errors'][] = "<pre>&gt; chown -R " . $username . ":" . $groupname . " $dir_certs\n&gt; chmod -R g+w " . $dir_certs . "</pre>";
             return true;
@@ -94,7 +101,15 @@ function idpinstaller_hook_step7(&$data) {
             }
         } else {
             $o_name = str_replace(" ", "\ ", $org_name);
-            $dir_script = realpath(__DIR__) . "/../lib/makeCert.bat";
+
+            $windows_os = array("WIN32","WINNT","Windows");
+            $fileMakeCert = "makeCert.sh";
+
+            if(in_array(PHP_OS, $windows_os)){
+                $fileMakeCert = "makeCert.bat";
+            }
+
+            $dir_script = realpath(__DIR__) . "/../lib/".$fileMakeCert;
             //exec("sh $dir_script $dir_certs/$cert_file $pkey_file $o_name $hostname");
 
             /* Este tratamiento es un poco confuso, pero es la mejor de
@@ -120,8 +135,6 @@ function idpinstaller_hook_step7(&$data) {
         }
 
         if (!file_exists($crt) || !file_exists($pem)) {
-            $username = getFileUsername($dir_certs);
-            $groupname = getApacheGroup();
             $data['errors'][] = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step6_cert_error}');
             if (isset($command)) {
                 $data['errors'][] = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step6_cert_error_suggest}');
@@ -229,9 +242,9 @@ function idpinstaller_hook_step7(&$data) {
         $file_owner = "[your_file_owner]";
         $group = "[your_apache_group]";
 
-        if (!extension_loaded('posix')) {
-            $file_owner = posix_getpwuid(fileowner($filename));
-            $group = posix_getgrgid(posix_getgid());
+        if (extension_loaded('posix')) {
+            $file_owner = posix_getpwuid(fileowner($filename))['name'];
+            $group = posix_getgrgid(posix_getgid())['name'];
         }
 
         $aux.= "<pre>&gt; chown $recursive ".$file_owner.":".$group." $filename\n&gt; chmod $recursive g+w " . $filename . "</pre>";

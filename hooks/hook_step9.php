@@ -42,8 +42,6 @@
  */
 function idpinstaller_hook_step9(&$data) {
 
-    echo "LLEGA";
-
     $conf_path = realpath(__DIR__ . '/../../../config/config.php');
     $idph_path = realpath(__DIR__ . '/../../../metadata/saml20-idp-hosted.php');
     $spr_path  = realpath(__DIR__ . '/../../../metadata/saml20-sp-remote.php');
