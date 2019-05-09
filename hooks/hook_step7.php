@@ -41,6 +41,7 @@
  * @param array &$data  Los datos a utilizar por las plantillas de tipo stepn
  */
 function idpinstaller_hook_step7(&$data) {
+    putenv("OPENSSL_CONF=C:/xampp/apache/conf/openssl.cnf");
     $hostname = $_SERVER['HTTP_HOST'];
     $pkey_file = $hostname . ".key.pem";
     $cert_file = $hostname . ".crt.pem";
@@ -93,7 +94,7 @@ function idpinstaller_hook_step7(&$data) {
             }
         } else {
             $o_name = str_replace(" ", "\ ", $org_name);
-            $dir_script = realpath(__DIR__) . "/../lib/makeCert.sh";
+            $dir_script = realpath(__DIR__) . "/../lib/makeCert.bat";
             //exec("sh $dir_script $dir_certs/$cert_file $pkey_file $o_name $hostname");
 
             /* Este tratamiento es un poco confuso, pero es la mejor de
@@ -109,7 +110,8 @@ function idpinstaller_hook_step7(&$data) {
             $result = execInShell($cmdToExecute, NULL);
             $respStdout = $result[0]; // <= STDOUT
             $respStderr = $result[1]; // <= STDERR
-            $outCode    = $result[2]; // <= Out Code
+            $outCode    = $result[2]; // <= Out Code*/
+
 
             // Se procesan los mensajes de salida de errores
             if($outCode !== 0){
@@ -150,10 +152,10 @@ function idpinstaller_hook_step7(&$data) {
     $filename_hosted = realpath(__DIR__ . '/../../../metadata/saml20-idp-hosted.php');
     $perms_ko = array();
     
-    $file_tmp_name = realpath(__DIR__ . '/../../../cert/').'/tmp_org_info.php';
+    /*$file_tmp_name = realpath(__DIR__ . '/../../../cert/').'/tmp_org_info.php';
     if(file_exists($file_tmp_name)){
         include ($file_tmp_name);
-    }
+    }*/
     $org_name = !empty($org_info['name']) && $org_info['name'] !== '' ? $org_info['name'] : "idp-$hostname";
     $org_desc = !empty($org_info['info']) && $org_info['info'] !== '' ? $org_info['info'] : "idp-$hostname";
     $org_url  = !empty($org_info['url'])  && $org_info['url']  !== '' ? $org_info['url']  : $hostname;
@@ -218,15 +220,28 @@ function idpinstaller_hook_step7(&$data) {
     );";
 
     $res = @file_put_contents($filename_hosted, $m);
-    unlink($file_tmp_name);
+    //unlink($file_tmp_name);
     if (!$res || count($perms_ko) > 0) {
-        if (function_exists('posix_getgrnam')) {
+        $aux = "<br/>" . $data['ssphpobj']->t('{idpinstaller:idpinstaller:step7_error}');
+        $aux .= "<br/>" . $data['ssphpobj']->t('{idpinstaller:idpinstaller:step4_perms_ko}');
+        $filename = $perms_ko[0];
+        $recursive = is_dir($filename) ? "-R" : "";
+        $file_owner = "[your_file_owner]";
+        $group = "[your_apache_group]";
+
+        if (!extension_loaded('posix')) {
+            $file_owner = posix_getpwuid(fileowner($filename));
+            $group = posix_getgrgid(posix_getgid());
+        }
+
+        $aux.= "<pre>&gt; chown $recursive ".$file_owner.":".$group." $filename\n&gt; chmod $recursive g+w " . $filename . "</pre>";
+        /*if (function_exists('posix_getgrnam')) {
             $aux = "<br/>" . $data['ssphpobj']->t('{idpinstaller:idpinstaller:step7_error}');
             $aux .= "<br/>" . $data['ssphpobj']->t('{idpinstaller:idpinstaller:step4_perms_ko}');
             $filename = $perms_ko[0];
             $recursive = is_dir($filename) ? "-R" : "";
             $aux.= "<pre>&gt; chown $recursive " . getFileUsername($filename) . ":" . getApacheGroup() . " $filename\n&gt; chmod $recursive g+rw " . $filename . "</pre>";
-        }
+        }*/
         $data['errors2'][] = $aux;
         $data['errors2'][] = $data['ssphpobj']->t("{idpinstaller:idpinstaller:step1_remember_change_perms}");
     }
