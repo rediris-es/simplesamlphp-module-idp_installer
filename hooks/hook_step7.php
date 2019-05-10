@@ -41,7 +41,6 @@
  * @param array &$data  Los datos a utilizar por las plantillas de tipo stepn
  */
 function idpinstaller_hook_step7(&$data) {
-    putenv("OPENSSL_CONF=C:/xampp/apache/conf/openssl.cnf");
     $hostname = $_SERVER['HTTP_HOST'];
     $pkey_file = $hostname . ".key.pem";
     $cert_file = $hostname . ".crt.pem";
