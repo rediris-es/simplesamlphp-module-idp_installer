@@ -164,10 +164,10 @@ function idpinstaller_hook_step7(&$data) {
     $filename_hosted = realpath(__DIR__ . '/../../../metadata/saml20-idp-hosted.php');
     $perms_ko = array();
     
-    /*$file_tmp_name = realpath(__DIR__ . '/../../../cert/').'/tmp_org_info.php';
+    $file_tmp_name = realpath(__DIR__ . '/../../../cert/').'/tmp_org_info.php';
     if(file_exists($file_tmp_name)){
         include ($file_tmp_name);
-    }*/
+    }
     $org_name = !empty($org_info['name']) && $org_info['name'] !== '' ? $org_info['name'] : "idp-$hostname";
     $org_desc = !empty($org_info['info']) && $org_info['info'] !== '' ? $org_info['info'] : "idp-$hostname";
     $org_url  = !empty($org_info['url'])  && $org_info['url']  !== '' ? $org_info['url']  : $hostname;
@@ -232,7 +232,7 @@ function idpinstaller_hook_step7(&$data) {
     );";
 
     $res = @file_put_contents($filename_hosted, $m);
-    //unlink($file_tmp_name);
+    unlink($file_tmp_name);
     if (!$res || count($perms_ko) > 0) {
         $aux = "<br/>" . $data['ssphpobj']->t('{idpinstaller:idpinstaller:step7_error}');
         $aux .= "<br/>" . $data['ssphpobj']->t('{idpinstaller:idpinstaller:step4_perms_ko}');
