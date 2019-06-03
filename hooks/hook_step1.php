@@ -62,12 +62,18 @@
 function idpinstaller_hook_step1(&$data) {
     $ssphpobj = $data['ssphpobj'];
     //Comprobamos la versión de PHP
-    if (version_compare(PHP_VERSION, "5.3.0", ">=") === false) {
+    if (version_compare(PHP_VERSION, "5.5.0", ">=") === false) {
         $data['errors'][] = $ssphpobj->t('{idpinstaller:idpinstaller:general_error}');
         $data['errors'][] = $ssphpobj->t('{idpinstaller:idpinstaller:step1_error_version}');
     } else {
         //Continuamos comprobando las extensiones de PHP
-        $extensions        = array("date", "dom", "hash", "libxml", "openssl", "pcre", "SPL", "zlib", "mcrypt");
+        $extensions        = array("date", "dom", "hash", "libxml", "openssl", "pcre", "SPL", "zlib", "json", "mbstring");
+        $windows_os = array("WIN32","WINNT","Windows");
+
+        if(!in_array(PHP_OS, $windows_os)){
+        	$extensions[]="posix";
+        }
+
         $failed_extensions = array();
         $loaded_extensions = get_loaded_extensions();
         foreach ($extensions as $extension) {
