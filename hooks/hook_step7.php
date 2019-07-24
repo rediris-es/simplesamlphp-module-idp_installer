@@ -169,15 +169,9 @@ function idpinstaller_hook_step7(&$data) {
         $auth = 'ldap_datasource';
     }
 
-    $code1='$attributes["LegacyTargetedId"] = array(md5($attributes["mail"][0]."SIR"));
-                 $attributes["irisMailMainAddress"] = $attributes["irisMailMainAddress"];
-                 $attributes["irisMailAlternateAddress"] = $attributes["irisMailAlternateAddress"];
-                 $attributes["mail"] = array($attributes["mail"][0]);
-                 $attributes["uid"] = array($attributes["uid"][0]);';
+    $code1='$attributes["LegacyTargetedId"] = array(md5($attributes["mail"][0]."SIR"));';
 
-    $code27='$attributes["schacPersonalUniqueCode"] = array("urn:mace:terena.org:schac:personalUniqueCode:es:rediris:sir:mbid:{md5}".md5($attributes["mail"][0]));
-            if(!isset($attributes["eduPersonPrincipalName"])){
-            $attributes["eduPersonPrincipalName"] = array($attributes["uid"][0]."@".'.$org_domain.');}';
+    $code27='$attributes["schacPersonalUniqueCode"] = array("urn:mace:terena.org:schac:personalUniqueCode:es:ciemat:sir:mbid:{md5}".md5($attributes["mail"][0]));';
 
     $m = "<?php\n\n\$metadata['idp-$hostname'] = array(
         'UIInfo' => array(
@@ -216,7 +210,7 @@ function idpinstaller_hook_step7(&$data) {
         'auth' => '$auth',
         'attributes.NameFormat' => 'urn:oasis:names:tc:SAML:2.0:attrname-format:uri',
        	'signature.algorithm' => 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256',
-	'attributes' => array(
+		'attributes' => array(
                 'eduPersonTargetedID',
                 'eduPersonAffiliation',
                 'schacHomeOrganization',
@@ -234,27 +228,34 @@ function idpinstaller_hook_step7(&$data) {
             1 => array('class' => 'core:PHP','code' => '$code1'),
             25 => array('class' => 'core:GenerateGroups', 'eduPersonAffiliation'),
             27 => array('class' => 'core:PHP','code' => '$code27'),
+            45 => array(
+			 'class' => 'core:AttributeCopy',
+			 'givenName' => array('cn','displayName'),
+			) ,
             48 => array('class' => 'core:AttributeCopy','LegacyTargetedId' => 'eduPersonTargetedID'),
             50 => 'core:AttributeLimit',
             52 => array(
              'class' => 'core:AttributeAdd',
              'urn:oid:2.5.4.10' => '$org_name',
              'urn:oid:1.3.6.1.4.1.25178.1.2.9' => array('$org_domain'),
-             'urn:oid:1.3.6.1.4.1.25178.1.2.10' => array('urn:schac:homeOrganizationType:es:university'), 
+             'urn:oid:1.3.6.1.4.1.25178.1.2.10' => array('urn:schac:homeOrganizationType:es:pri'), 
              ),
             53 => array(
+			 'class' => 'core:AttributeAdd',
+			 'eduPersonEntitlement' => array('urn:mace:dir:entitlement:common-lib-terms'),
+			),
+            54 => array(
              'class' => 'core:ScopeAttribute',
-             'scopeAttribute' => 'schacHomeOrganization',
+             'scopeAttribute' => 'urn:oid:1.3.6.1.4.1.25178.1.2.9',
              'sourceAttribute' => 'uid',
              'targetAttribute' => 'eduPersonPrincipalName',
-             ),
-            54 => array(
+            ),
+            55 => array(
              'class' => 'core:ScopeAttribute',
              'scopeAttribute' => 'eduPersonPrincipalName',
              'sourceAttribute' => 'eduPersonAffiliation',
              'targetAttribute' => 'eduPersonScopedAffiliation',
-             ), 
-            99 => array('class' => 'core:AttributeMap', 'sir2oid'),
+            ),
             100 => array('class' => 'core:AttributeMap', 'name2oid'),
         ),
         'assertion.encryption' => true
