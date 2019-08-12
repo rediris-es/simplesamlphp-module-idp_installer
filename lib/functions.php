@@ -95,15 +95,6 @@ function getDataSources() {
     return $res;
 }
 
-function getFileUsername($filename) {
-    $file_owner = posix_getpwuid(fileowner($filename));
-    return $file_owner['name'];
-}
-
-function getApacheGroup() {
-    $group = posix_getgrgid(posix_getgid());
-    return $group['name'];
-}
 function transaleXMLToSsPHP($xmldata){
     
     if (!empty($xmldata)) {

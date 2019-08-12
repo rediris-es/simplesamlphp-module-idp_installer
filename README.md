@@ -7,6 +7,8 @@ The _IdP installer_ module provides a single authentication module:
 
 This module creates a basic configuration for a SAML2int IdP.
 
+This module is compatible for Windows versions. For more details: https://wiki.rediris.es/pages/viewpage.action?pageId=23003297
+
 Installation
 ------------
 
