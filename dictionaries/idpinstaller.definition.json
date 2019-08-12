@@ -42,7 +42,7 @@
         "es": "Siguiente"
     },
     "general_error": {
-        "es": "Error al instalar la conexión con la federación SIR2."
+        "es": "Error general del módulo de instalación del IdP. Por favor, consulte otros mensajes de error a continuación, o bien en los logs."
     },
     "step1_error_version": {
         "es": "La versión de PHP deberá ser mayor a igual a 5.3.0."
