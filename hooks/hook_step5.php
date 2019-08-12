@@ -24,6 +24,14 @@
  *
  * ************************************************************************** */
 
+/* Funciones para generar usuarios y contraseñas aleatorios para exampleauth
+ * Realizado por Adrian Gomez
+ * En Julio de 2018
+ ****************************************************************************** */
+
+
+
+
 /** 
  * Paso 5 del modulo instalador para SimpleSAMLphp v1.13.1
  * @package    IdPRef\modules\idpinstaller
@@ -42,6 +50,7 @@
  */
 function idpinstaller_hook_step5(&$data) {
     $data['datasources'] = getDataSources();
+
     $require_mods = array("saml", "idpinstaller", "modinfo", "ldap", "sqlauth", "core", "portal", "sir2skin"); //Modulos obligatorios
     $ssphpobj     = $data['ssphpobj'];
     $modules      = SimpleSAML_Module::getModules();

@@ -85,6 +85,14 @@ The installer creates a basic IdP configuration, that needs some further configu
 Depending on the backend to be used, you'll have to also configure the auth sources section
 to fit your needs.
 
+In metadata/saml20-idp-hosted.php, authprocs filters are based on the following attributes in the data source:
+ * uid
+ * givenName
+ * email
+ * eduPersonAffiliation
+
+Please check link for more information: https://wiki.rediris.es/pages/viewpage.action?pageId=335011
+
 TODO: links to LDAP, PDO, CAS documentation in SimpleSAMLphp.
 
 
