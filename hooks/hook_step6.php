@@ -81,17 +81,9 @@ function idpinstaller_hook_step6(&$data) {
                         'priv.password'     => NULL,
                         'authority'         => "urn:mace:".$_SERVER['HTTP_HOST'],
                     );
-
                     if (array_key_exists('sql_datasource', $config)) {
                         unset($config['sql_datasource']);
                     }
-
-                    if($_REQUEST['ldap_enable_sspassword'] == 0){
-                        downloadSSPLdap();
-                        saveSSPLDAPConfiguration($_REQUEST);
-                    }
-
-                    
                     if (array_key_exists('example-userpass', $config)) {
                         unset($config['example-userpass']);
                     }
@@ -101,9 +93,6 @@ function idpinstaller_hook_step6(&$data) {
                         $data['errors'][]            = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step2_contact_save_error2}') . " <i>" . realpath($filename) . "</i>";
                         $data['datasource_selected'] = 'ldap';
                     }
-
-
-
                 }
                 return true;
             }
@@ -145,7 +134,7 @@ function idpinstaller_hook_step6(&$data) {
                 }
                 return true;
             }
-        }else if (strcmp($ds_type, "config") == 0 && ($data['datasources'] == "all" || $data['datasources'] == "config")) {
+        }else if (strcmp($ds_type, "config") == 0) {
             if (array_key_exists('config_user', $_REQUEST) && !empty($_REQUEST['config_user'])
                     && array_key_exists('config_pass', $_REQUEST) && !empty($_REQUEST['config_pass'])
                     && array_key_exists('config_rol', $_REQUEST) && !empty($_REQUEST['config_rol'])) {

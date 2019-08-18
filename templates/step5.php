@@ -131,15 +131,13 @@
     } else if (strcmp($this->data['sir']['datasources'], "ldap") == 0) {
         $ldap = true;
         $pdo = false;
-        $conf = false;
+        $conf = true;
         unset($options['pdo']);
-        unset($options['config']);
     } else if (strcmp($this->data['sir']['datasources'], "pdo") == 0) {
         $pdo  = true;
         $ldap = false;
-        $conf = false;
+        $conf = true;
         unset($options['ldap']);
-        unset($options['config']);
     } else if(strcmp($this->data['sir']['datasources'], "config") == 0){
         $pdo  = false;
         $ldap = false;
@@ -188,7 +186,7 @@
                     <option value="0"><?php echo $this->t('{idpinstaller:idpinstaller:step5_anonbind_no}'); ?></option>
                 </select><br/>
             </p>            
-            <p><?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_bindtext}'); ?></p>
+            <p>En el caso de realizar bind anónimo especifique el DN y password:</p>
             <p>
                 <?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_binddn}'); ?><br/>
                 <input type="text" name="ldap_binddn" value="" style="width: 300px;"/><br/>
@@ -213,13 +211,6 @@
                     <option value="1"><?php echo $this->t('{idpinstaller:idpinstaller:step5_no}'); ?></option>
                 </select><br/>
             </p>   
-            <p>
-                <?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_sspassword}'); ?><br/>
-                <select name="ldap_enable_sspassword">
-                    <option value="0"><?php echo $this->t('{idpinstaller:idpinstaller:step5_yes}'); ?></option>
-                    <option value="1"><?php echo $this->t('{idpinstaller:idpinstaller:step5_no}'); ?></option>
-                </select><br/>
-            </p>
             <div class="caution" style="min-height:45px;">
                 <?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_info}'); ?>
             </div>
@@ -240,7 +231,7 @@
                 <input type="password" name="pdo_password" value="" style="width: 300px;"/><br/>
             </p>
             <div class="caution" style="min-height:45px;">
-                <?php echo $this->t('{idpinstaller:idpinstaller:step5_pdo_info}'); ?>
+                <?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_info}'); ?>
             </div>
         </div>
 
