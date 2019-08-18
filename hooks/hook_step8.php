@@ -80,13 +80,26 @@ function idpinstaller_hook_step8(&$data) {
         $data['errors'][] = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step8_curl_error2}');
     }
     if (!$res && count($perms_ko) > 0) {
-        if (function_exists('posix_getgrnam')) {
+            $aux       = "<br/>" . $data['ssphpobj']->t('{idpinstaller:idpinstaller:step8_error}');
+            $aux .= "<br/>" . $data['ssphpobj']->t('{idpinstaller:idpinstaller:step4_perms_ko}');
+            $filename  = $perms_ko[0];
+            $recursive = is_dir($filename) ? "-R" : "";
+            $file_owner = "[your_file_owner]";
+            $group = "[your_apache_group]";
+
+            if (extension_loaded('posix')) {
+                $username = posix_getpwuid(fileowner($filename))['name'];
+                $group = posix_getgrgid(posix_getgid())['name'];
+            }
+
+            $aux.= "<pre>&gt; chown $recursive ".$file_owner.":".$group." $filename\n&gt; chmod $recursive g+w " . $filename . "</pre>";
+       /* if (function_exists('posix_getgrnam')) {
             $aux       = "<br/>" . $data['ssphpobj']->t('{idpinstaller:idpinstaller:step8_error}');
             $aux .= "<br/>" . $data['ssphpobj']->t('{idpinstaller:idpinstaller:step4_perms_ko}');
             $filename  = $perms_ko[0];
             $recursive = is_dir($filename) ? "-R" : "";
             $aux.= "<pre>&gt; chown $recursive " . getFileUsername($filename) . ":" . getApacheGroup() . " $filename\n&gt; chmod $recursive g+rw " . $filename . "</pre>";
-        }
+        }*/
         $data['errors'][] = $aux;
         $data['errors'][] = $data['ssphpobj']->t("{idpinstaller:idpinstaller:step1_remember_change_perms}");
     }

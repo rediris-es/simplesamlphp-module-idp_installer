@@ -48,6 +48,8 @@ function idpinstaller_hook_step3(&$data) {
     if (array_key_exists('ssphp_password', $_REQUEST) && array_key_exists('ssphp_password2', $_REQUEST) && !empty($_REQUEST['ssphp_password'])) {
         $pass  = $_REQUEST['ssphp_password'];
         $pass2 = $_REQUEST['ssphp_password2'];
+        $salt = shell_exec("tr -cd '[:alnum:][:blank:]' < /dev/urandom | head -c48; echo");
+
         if(isset($_REQUEST['ssphp_organization_name'])){ 
             $org_name = $_REQUEST['ssphp_organization_name'];
         }
@@ -57,6 +59,9 @@ function idpinstaller_hook_step3(&$data) {
         if(isset($_REQUEST['ssphp_organization_info_url'])){
             $org_url_info = $_REQUEST['ssphp_organization_info_url'];
         } 
+        if(isset($_REQUEST['ssphp_organization_domain'])){
+            $org_domain = $_REQUEST['ssphp_organization_domain'];
+        } 
         $file_tmp_name = realpath(__DIR__ . '/../../../cert/').'/tmp_org_info.php';
         if(file_exists($file_tmp_name)){
             unlink($file_tmp_name);
@@ -65,6 +70,8 @@ function idpinstaller_hook_step3(&$data) {
             fwrite($file, '<?php $org_info = array('
                             . "'name' => '$org_name',"
                             . "'info' => '$org_info',"
+                            . "'salt' => '$salt',"
+                            . "'domain' => '$org_domain',"
                             . "'url'  => '$org_url_info'); ");
             fclose($file);
         }
@@ -72,8 +79,7 @@ function idpinstaller_hook_step3(&$data) {
         if (strcmp($pass, $pass2) == 0) {
             if (array_key_exists('ssphp_technicalcontact_name', $_REQUEST) && array_key_exists('ssphp_technicalcontact_email', $_REQUEST) && !empty($_REQUEST['ssphp_technicalcontact_name']) && !empty($_REQUEST['ssphp_technicalcontact_email'])) {
                 $filename                         = __DIR__ . '/../../../config/config.php';
-                include($filename);
-				
+                include($filename);				
         		$salt = shell_exec("tr -cd '[:alnum:][:blank:]' < /dev/urandom | head -c48; echo");
         		$config['auth.adminpassword'] = SimpleSAML\Utils\Crypto::pwHash($pass);
         		$config['secretsalt']		  = $salt;
@@ -91,7 +97,7 @@ function idpinstaller_hook_step3(&$data) {
         		*/
         		$config['admin.protectindexpage'] = true;
         		$config['showerrors']		  = false;
-        		$config['session.cookie.secure']  = true;
+        		$config['session.cookie.secure']  = false;
         		$config['trusted.url.domains']	  = array();
         		/*Fin de aniadido por Adrian Gomez*/
 

@@ -35,39 +35,117 @@
  */
 ?>
 
+<?php
+
+    function generateRandom($length)
+    {
+        $number = "";
+
+        for($i=0; $i<$length; $i++){
+            $number .= mt_rand(0,9);
+        }
+
+        return $number;
+        
+    }
+
+    function generateUsers()
+    {
+        $numUsers = 2;
+        $users = array();
+        while(count($users)<$numUsers){
+            $number = generateRandom(5);
+
+            if(!in_array($number, $users)){
+                $users []= "u".$number;
+            }
+        }
+
+        return $users;
+
+    }   
+
+    function generatePass()
+    {
+        $pass = array();
+        $pass []= generateSecurePass();
+        $pass []= generateSecurePass();
+
+        return $pass;
+    }
+
+    $users = generateUsers();
+    $pass = generatePass();
+    $rolUsers = array("staff", "faculty");
+
+?>
+
 <script type="text/javascript">
     function showDatasource() {
         var elem = document.getElementById('data_source_type');
         if (elem.value == "ldap") {
             SimpleSAML_show('ldap_form');
             SimpleSAML_hide('pdo_form');
-        } else {
-            SimpleSAML_hide('ldap_form');
+            SimpleSAML_hide('config_form');
+        } else if(elem.value == "pdo") {
             SimpleSAML_show('pdo_form');
+            SimpleSAML_hide('ldap_form');
+            SimpleSAML_hide('config_form');
+        } else if(elem.value == "config"){
+            SimpleSAML_hide('ldap_form');
+            SimpleSAML_hide('pdo_form');
+            SimpleSAML_show('config_form');
         }
     }
 </script>
-<form action="" method="post" style="margin-top:20px;">    
+
+<div id="js-error" style="display: none; border-left: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; background: #f5f5f5;">  
+  <img style="margin-right: 10px;margin-left: 5px;" class="float-l erroricon" src="/resources/icons/experience/gtk-dialog-error.48x48.png">  
+  <div style="padding-left: 64px;">
+      <p id="ldap_hostname" class="errors-msg" style="margin: 0; padding-top: 5px "><?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_hostname_error}'); ?></p>
+      <p id="ldap_port" class="errors-msg" style="margin: 0; padding-top: 5px "><?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_port_error}'); ?></p>
+      <p id="ldap_binddn" class="errors-msg" style="margin: 0; padding-top: 5px "><?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_binddn_error}'); ?></p>
+      <p id="ldap_bindpassword" class="errors-msg" style="margin: 0; padding-top: 5px "><?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_bindpassword_error}'); ?></p>
+      <p id="pdo_dsn" class="errors-msg" style="margin: 0; padding-top: 5px "><?php echo $this->t('{idpinstaller:idpinstaller:step5_pdo_dsn_error}'); ?></p>
+      <p id="pdo_username" class="errors-msg" style="margin: 0; padding-top: 5px "><?php echo $this->t('{idpinstaller:idpinstaller:step5_pdo_username_error}'); ?></p>
+      <p id="pdo_password" class="errors-msg" style="margin: 0; padding-top: 5px "><?php echo $this->t('{idpinstaller:idpinstaller:step5_pdo_password_error}'); ?></p>
+  </div>
+  <div style="clear:both"></div>
+</div>
+
+<form action="" method="post" style="margin-top:20px;" onsubmit="return validateForm()">    
     <?php
 //PASO 5 del instalador.
     $step      = 5;
     $next_step = 6;
     $options   = array(
-        'ldap' => "LDAP",
-        'pdo'  => "PDO"
+        'ldap'   => "LDAP",
+        'pdo'    => "PDO",
+        'config' => 'CONFIG'
     );
     
     if (strcmp($this->data['sir']['datasources'], "all") == 0) {
         $ldap = true;
         $pdo  = true;
+        $conf = true;
     } else if (strcmp($this->data['sir']['datasources'], "ldap") == 0) {
         $ldap = true;
         $pdo = false;
+        $conf = false;
         unset($options['pdo']);
+        unset($options['config']);
     } else if (strcmp($this->data['sir']['datasources'], "pdo") == 0) {
         $pdo  = true;
         $ldap = false;
+        $conf = false;
         unset($options['ldap']);
+        unset($options['config']);
+    } else if(strcmp($this->data['sir']['datasources'], "config") == 0){
+        $pdo  = false;
+        $ldap = false;
+        $conf = true;
+        unset($options['ldap']);
+        unset($options['pdo']);
     }
     if (count($this->data['sir']['errors']) > 0) {
         $button_msg = $this->t('{idpinstaller:idpinstaller:try_again_button}');
@@ -91,7 +169,7 @@
         </select>
     </p>
     <div onload = "showDatasource();">
-        <div id = "ldap_form" <?php if ((!$ldap && $pdo)||$selected=="pdo") { ?>style="display:none" <?php } ?>>
+        <div id = "ldap_form" <?php if ((!$ldap && ($pdo || $conf))|| $selected=="pdo" || $selected=="config") { ?>style="display:none" <?php } ?>>
             <h3><?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_title}'); ?></h3>
             <p>
                 <?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_hostname}'); ?><br/>
@@ -146,7 +224,7 @@
                 <?php echo $this->t('{idpinstaller:idpinstaller:step5_ldap_info}'); ?>
             </div>
         </div>
-        <div id="pdo_form" <?php if ((!$pdo && $ldap) || ($ldap && $pdo && $selected=="ldap")) { ?>style="display:none" <?php } ?>>
+        <div id="pdo_form" <?php if ((!$pdo && ($ldap || $conf)) || ($ldap && $pdo && $conf && ($selected=="ldap" || $selected=="conf"))) { ?>style="display:none" <?php } ?>>
             <h3><?php echo $this->t('{idpinstaller:idpinstaller:step5_pdo_title}'); ?></h3>
             <p>
                 <?php echo $this->t('{idpinstaller:idpinstaller:step5_pdo_dsn}'); ?><br/>
@@ -165,7 +243,114 @@
                 <?php echo $this->t('{idpinstaller:idpinstaller:step5_pdo_info}'); ?>
             </div>
         </div>
+
+        <div id="config_form" <?php if ((!$conf && ($ldap || $pdo)) || ($ldap && $pdo && $conf && ($selected=="ldap" || $selected=="pdo"))) { ?>style="display:none" <?php } ?>>
+            <h3><?php echo $this->t('{idpinstaller:idpinstaller:step5_config_title}'); ?></h3>
+
+            <?php foreach ($users as $key => $user): ?>
+                <h4>Usuario <?php echo ($key+1); ?></h4>
+                <p>
+                    <?php echo $this->t('{idpinstaller:idpinstaller:step5_config_user}'); ?><br/>
+                    <input type="text" readonly="readonly" name="config_user[]" value="<?php echo $user; ?>" style="width: 300px;"/><br/>
+                </p>
+                <p>
+                    <?php echo $this->t('{idpinstaller:idpinstaller:step5_config_pass}'); ?><br/>
+                    <input type="text" readonly="readonly" name="config_pass[]" value="<?php echo $pass[$key]; ?>" style="width: 300px;"/><br/>
+                </p>
+                <p>
+                    <?php echo $this->t('{idpinstaller:idpinstaller:step5_config_rol}'); ?><br/>
+                    <input type="text" readonly="readonly" name="config_rol[]" value="<?php echo $rolUsers[$key]; ?>" style="width: 300px;"/><br/>
+                </p>
+
+            <?php endforeach; ?>
+
+        </div>        
+
         <input type="hidden" name="step" value="<?php echo $next_step; ?>"/>
         <input type="submit" value="<?php echo $button_msg; ?>"/>
     </div>
 </form>
+<script>
+
+function validateForm(){
+
+    var selectDataSourceType = document.getElementsByName('data_source_type')[0];
+
+    var inputLdapHostname = document.getElementsByName('ldap_hostname')[0];
+    var inputLdapPort = document.getElementsByName('ldap_port')[0];
+    var inputLdapBinddn = document.getElementsByName('ldap_binddn')[0];
+    var inputLdapBindpassword = document.getElementsByName('ldap_bindpassword')[0];
+    var inputLdapAnonymousBind = document.getElementsByName('ldap_anonymous_bind')[0];
+    var inputPdoDsn = document.getElementsByName('pdo_dsn')[0];
+    var inputPdoUsername = document.getElementsByName('pdo_username')[0];
+    var inputPdoPassword = document.getElementsByName('pdo_password')[0];
+    
+    var error = document.getElementById('js-error');
+    var errors = [];
+
+    var allErrorsElements = document.getElementsByClassName("errors-msg");
+
+    for (var i = 0; i < allErrorsElements.length; i++) {
+        allErrorsElements[i].style.display = "none";
+    } 
+
+    if(selectDataSourceType.value=="ldap"){
+
+        if(inputLdapHostname.value.trim().length == 0){
+          errors.push("ldap_hostname");
+        }
+
+        if(inputLdapPort.value.trim().length == 0){
+          errors.push("ldap_port");
+        }
+
+        if(inputLdapAnonymousBind.value=="1"){
+
+            if(inputLdapBinddn.value.trim().length == 0){
+              errors.push("ldap_binddn");
+            }
+
+            if(inputLdapBindpassword.value.trim().length == 0){
+              errors.push("ldap_bindpassword");
+            }
+
+        }
+
+    }else if(selectDataSourceType.value=="pdo"){
+         
+        if(inputPdoDsn.value.trim().length == 0){
+          errors.push("pdo_dsn");
+        }
+
+        if(inputPdoUsername.value.trim().length == 0){
+          errors.push("pdo_username");
+        }
+
+        if(inputPdoPassword.value.trim().length == 0){
+          errors.push("pdo_password");
+        }
+
+    }
+
+    if (errors.length > 0) {
+
+      error.style.display = "block";
+
+      for(var i=0;i<errors.length;i++){
+        document.getElementById(errors[i]).style.display = "block";
+      }
+
+      window.scrollTo(0,0);
+      return false;
+
+    } else {
+
+      error.style.display = "none";
+      this.submit();
+      return true;
+
+    }
+
+}
+
+</script>

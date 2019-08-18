@@ -1,3 +1,4 @@
+
 <?php
 /*
  *  IdPRef - IdP de Referencia para SIR 2 basado en SimpleSAMLPHP v1.13.1
@@ -50,37 +51,37 @@ function idpinstaller_hook_step9(&$data) {
     $cert = $cert_path."/".$_SERVER['HTTP_HOST'].'.crt.pem';
     
     $data['info'][] = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step9_finished}');    
-    if (function_exists('posix_getgrnam')) {
-        $aux = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step9_change_perms}');
-        $print = false;
-        if(@!chmod($conf_path, 0440)){
-            $aux.= "<pre>&gt; chmod 440 " . $conf_path . "</pre>";
-            $print = true;
-        }
-        if(@!chmod($idph_path, 0444)){
-            $aux.= "<pre>&gt; chmod 444 " . $idph_path . "</pre>";
-            $print = true;
-        }
-        if(@!chmod($spr_path, 0444)){
-            $aux.= "<pre>&gt; chmod 444 " . $spr_path . "</pre>";
-            $print = true;
-        }
-        if(@!chmod($idpr_path, 0444)){
-            $aux.= "<pre>&gt; chmod 444 " . $idpr_path . "</pre>";
-            $print = true;
-        }
-        if(@!chmod($mods_path, 0555)){
-            $recursive5 = is_dir($mods_path) ? "-R" : "";
-            $aux.= "<pre>&gt; chmod $recursive5 555 " . $mods_path . "</pre>";
-            $print = true;
-        }
-        if(@!chmod($cert_path, 0540)){
-            $recursive6 = is_dir($cert_path) ? "-R" : "";
-            $aux.= "<pre>&gt; chmod $recursive6 540 " . $cert_path . "</pre>";
-            $print = true;
-        }
-        $print ? $data['info'][] = $aux : $data['info'][] = "\n";
+    
+    $aux = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step9_change_perms}');
+    $print = false;
+    if(@!chmod($conf_path, 0440)){
+        $aux.= "<pre>&gt; chmod 440 " . $conf_path . "</pre>";
+        $print = true;
     }
+    if(@!chmod($idph_path, 0444)){
+        $aux.= "<pre>&gt; chmod 444 " . $idph_path . "</pre>";
+        $print = true;
+    }
+    if(@!chmod($spr_path, 0444)){
+        $aux.= "<pre>&gt; chmod 444 " . $spr_path . "</pre>";
+        $print = true;
+    }
+    if(@!chmod($idpr_path, 0444)){
+        $aux.= "<pre>&gt; chmod 444 " . $idpr_path . "</pre>";
+        $print = true;
+    }
+    if(@!chmod($mods_path, 0555)){
+        $recursive5 = is_dir($mods_path) ? "-R" : "";
+        $aux.= "<pre>&gt; chmod $recursive5 555 " . $mods_path . "</pre>";
+        $print = true;
+    }
+    if(@!chmod($cert_path, 0540)){
+        $recursive6 = is_dir($cert_path) ? "-R" : "";
+        $aux.= "<pre>&gt; chmod $recursive6 540 " . $cert_path . "</pre>";
+        $print = true;
+    }
+    $print ? $data['info'][] = $aux : $data['info'][] = "\n";
+    
     $data['info'][] = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step9_remember}');
     $data['info'][] = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step9_modified_files}');
     

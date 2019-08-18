@@ -92,7 +92,9 @@ function idpinstaller_hook_step6(&$data) {
                     }
 
                     
-                    
+                    if (array_key_exists('example-userpass', $config)) {
+                        unset($config['example-userpass']);
+                    }
                     $res2 = @file_put_contents($filename, '<?php  $config = ' . var_export($config, 1) . "; ?>");
                     if (!$res2) {
                         $data['errors'][]            = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step2_contact_save_error}');
@@ -131,6 +133,9 @@ function idpinstaller_hook_step6(&$data) {
                     if (array_key_exists('ldap_datasource', $config)) {
                         unset($config['ldap_datasource']);
                     }
+                    if (array_key_exists('example-userpass', $config)) {
+                        unset($config['example-userpass']);
+                    }
                     $res2 = @file_put_contents($filename, '<?php  $config = ' . var_export($config, 1) . "; ?>");
                     if (!$res2) {
                         $data['errors'][]            = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step2_contact_save_error}');
@@ -138,6 +143,67 @@ function idpinstaller_hook_step6(&$data) {
                         $data['datasource_selected'] = 'pdo';
                     }
                 }
+                return true;
+            }
+        }else if (strcmp($ds_type, "config") == 0 && ($data['datasources'] == "all" || $data['datasources'] == "config")) {
+            if (array_key_exists('config_user', $_REQUEST) && !empty($_REQUEST['config_user'])
+                    && array_key_exists('config_pass', $_REQUEST) && !empty($_REQUEST['config_pass'])
+                    && array_key_exists('config_rol', $_REQUEST) && !empty($_REQUEST['config_rol'])) {
+                
+                $file_tmp_name = realpath(__DIR__ . '/../../../cert/').'/tmp_org_info.php';
+                include($file_tmp_name);
+                $domain = $org_info['domain'];
+                $salt = $org_info['salt'];
+
+                $filename                 = __DIR__ . '/../../../config/authsources.php';
+                include($filename);
+
+                $users = $_REQUEST['config_user'];
+                $pass = $_REQUEST['config_pass'];
+                $rolUsers = $_REQUEST['config_rol'];
+                $algor = "SHA1";
+
+                $usersArray = array('exampleauth:UserPass');
+
+                foreach ($users as $key => $user) {
+                    $userPass = $pass[$key];
+                    $userRol = $rolUsers[$key];
+
+                    $mail = $user."@".$domain;
+
+                    $hash = sha1($mail);
+
+                    $usersArray[$user.":".$userPass] = array(
+                        'uid' => array($userRol),
+                        'commonName' => $user,
+                        'displayName' => $user,
+                        'eduPersonAffiliation' => array('member', $userRol),
+                        'eduPersonPrincipalName' => $mail,
+                        'eduPersonScopedAffiliation' => $userRol."@".$domain,
+                        'eduPersonTargetedID' => hash("sha256",$salt.$hash."SIR"),
+                        'mail' => $mail,
+                        'schacHomeOrganization' => $domain,
+                        'schacHomeOrganizationType' => 'university',
+                        'schacPersonalUniqueCode' => $user.$algor.$hash,
+                    );
+
+                }
+
+                $config['example-userpass'] = $usersArray;
+
+                if (array_key_exists('ldap_datasource', $config)) {
+                    unset($config['ldap_datasource']);
+                }
+                if (array_key_exists('sql_datasource', $config)) {
+                    unset($config['sql_datasource']);
+                }
+                $res2 = @file_put_contents($filename, '<?php  $config = ' . var_export($config, 1) . "; ?>");
+                if (!$res2) {
+                    $data['errors'][]            = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step2_contact_save_error}');
+                    $data['errors'][]            = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step2_contact_save_error2}') . " <i>" . realpath($filename) . "</i>";
+                    $data['datasource_selected'] = 'pdo';
+                }
+                
                 return true;
             }
         }

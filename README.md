@@ -7,6 +7,8 @@ The _IdP installer_ module provides a single authentication module:
 
 This module creates a basic configuration for a SAML2int IdP.
 
+This module is compatible for Windows versions. For more details: https://wiki.rediris.es/pages/viewpage.action?pageId=23003297
+
 Installation
 ------------
 
@@ -82,6 +84,14 @@ Post-install
 The installer creates a basic IdP configuration, that needs some further configuration. 
 Depending on the backend to be used, you'll have to also configure the auth sources section
 to fit your needs.
+
+In metadata/saml20-idp-hosted.php, authprocs filters are based on the following attributes in the data source:
+ * uid
+ * givenName
+ * email
+ * eduPersonAffiliation
+
+Please check link for more information: https://wiki.rediris.es/pages/viewpage.action?pageId=335011
 
 TODO: links to LDAP, PDO, CAS documentation in SimpleSAMLphp.
 

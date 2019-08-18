@@ -59,8 +59,15 @@ function idpinstaller_hook_step7(&$data) {
         } else if (!is_dir($dir_certs)) {
             exec("mkdir $dir_certs");
         } else if (!is_writable($dir_certs)) {
-            $username = getFileUsername($dir_certs);
-            $groupname = getApacheGroup();
+
+            $username = "[your_file_owner]";
+            $groupname = "[your_apache_group]";
+
+            if (extension_loaded('posix')) {
+                $username = posix_getpwuid(fileowner($filename))['name'];
+                $group = posix_getgrgid(posix_getgid())['name'];
+            }
+
             $data['errors'][] = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step6_perm_cert_error}');
             $data['errors'][] = "<pre>&gt; chown -R " . $username . ":" . $groupname . " $dir_certs\n&gt; chmod -R g+w " . $dir_certs . "</pre>";
             return true;
@@ -93,7 +100,15 @@ function idpinstaller_hook_step7(&$data) {
             }
         } else {
             $o_name = str_replace(" ", "\ ", $org_name);
-            $dir_script = realpath(__DIR__) . "/../lib/makeCert.sh";
+
+            $windows_os = array("WIN32","WINNT","Windows");
+            $fileMakeCert = "makeCert.sh";
+
+            if(in_array(PHP_OS, $windows_os)){
+                $fileMakeCert = "makeCert.bat";
+            }
+
+            $dir_script = realpath(__DIR__) . "/../lib/".$fileMakeCert;
             //exec("sh $dir_script $dir_certs/$cert_file $pkey_file $o_name $hostname");
 
             /* Este tratamiento es un poco confuso, pero es la mejor de
@@ -109,7 +124,8 @@ function idpinstaller_hook_step7(&$data) {
             $result = execInShell($cmdToExecute, NULL);
             $respStdout = $result[0]; // <= STDOUT
             $respStderr = $result[1]; // <= STDERR
-            $outCode    = $result[2]; // <= Out Code
+            $outCode    = $result[2]; // <= Out Code*/
+
 
             // Se procesan los mensajes de salida de errores
             if($outCode !== 0){
@@ -118,8 +134,6 @@ function idpinstaller_hook_step7(&$data) {
         }
 
         if (!file_exists($crt) || !file_exists($pem)) {
-            $username = getFileUsername($dir_certs);
-            $groupname = getApacheGroup();
             $data['errors'][] = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step6_cert_error}');
             if (isset($command)) {
                 $data['errors'][] = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step6_cert_error_suggest}');
@@ -154,7 +168,9 @@ function idpinstaller_hook_step7(&$data) {
     if(file_exists($file_tmp_name)){
         include ($file_tmp_name);
     }
+    
     $org_name = !empty($org_info['name']) && $org_info['name'] !== '' ? $org_info['name'] : "idp-$hostname";
+    $org_domain = !empty($org_info['domain']) && $org_info['domain'] !== '' ? $org_info['domain'] : "idp-$hostname";
     $org_desc = !empty($org_info['info']) && $org_info['info'] !== '' ? $org_info['info'] : "idp-$hostname";
     $org_url  = !empty($org_info['url'])  && $org_info['url']  !== '' ? $org_info['url']  : $hostname;
     
@@ -166,6 +182,10 @@ function idpinstaller_hook_step7(&$data) {
     } else if (array_key_exists('ldap_datasource', $config)) {
         $auth = 'ldap_datasource';
     }
+
+    $code1='$attributes["LegacyTargetedId"] = array(md5($attributes["mail"][0]."SIR"));';
+
+    $code27='$attributes["schacPersonalUniqueCode"] = array("urn:mace:terena.org:schac:personalUniqueCode:es:ciemat:sir:mbid:{md5}".md5($attributes["mail"][0]));';
 
     $m = "<?php\n\n\$metadata['idp-$hostname'] = array(
         'UIInfo' => array(
@@ -190,6 +210,13 @@ function idpinstaller_hook_step7(&$data) {
                 'eu' => '$org_url',
                 'ca' => '$org_url',
             ),
+            'Domain' => array(
+                'en' => '$org_domain',
+                'es' => '$org_domain',
+                'gl' => '$org_domain',
+                'eu' => '$org_domain',
+                'ca' => '$org_domain',
+            ),
         ),
         'host' => '__DEFAULT__',
         'privatekey' => '$pkey_file',
@@ -197,7 +224,7 @@ function idpinstaller_hook_step7(&$data) {
         'auth' => '$auth',
         'attributes.NameFormat' => 'urn:oasis:names:tc:SAML:2.0:attrname-format:uri',
        	'signature.algorithm' => 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256',
-	'attributes' => array(
+		'attributes' => array(
                 'eduPersonTargetedID',
                 'eduPersonAffiliation',
                 'schacHomeOrganization',
@@ -212,6 +239,37 @@ function idpinstaller_hook_step7(&$data) {
                 'schacHomeOrganizationType',
         ), 
         'authproc' => array(
+            1 => array('class' => 'core:PHP','code' => '$code1'),
+            25 => array('class' => 'core:GenerateGroups', 'eduPersonAffiliation'),
+            27 => array('class' => 'core:PHP','code' => '$code27'),
+            45 => array(
+			 'class' => 'core:AttributeCopy',
+			 'givenName' => array('cn','displayName'),
+			) ,
+            48 => array('class' => 'core:AttributeCopy','LegacyTargetedId' => 'eduPersonTargetedID'),
+            50 => 'core:AttributeLimit',
+            52 => array(
+             'class' => 'core:AttributeAdd',
+             'urn:oid:2.5.4.10' => '$org_name',
+             'urn:oid:1.3.6.1.4.1.25178.1.2.9' => array('$org_domain'),
+             'urn:oid:1.3.6.1.4.1.25178.1.2.10' => array('urn:schac:homeOrganizationType:es:pri'), 
+             ),
+            53 => array(
+			 'class' => 'core:AttributeAdd',
+			 'eduPersonEntitlement' => array('urn:mace:dir:entitlement:common-lib-terms'),
+			),
+            54 => array(
+             'class' => 'core:ScopeAttribute',
+             'scopeAttribute' => 'urn:oid:1.3.6.1.4.1.25178.1.2.9',
+             'sourceAttribute' => 'uid',
+             'targetAttribute' => 'eduPersonPrincipalName',
+            ),
+            55 => array(
+             'class' => 'core:ScopeAttribute',
+             'scopeAttribute' => 'eduPersonPrincipalName',
+             'sourceAttribute' => 'eduPersonAffiliation',
+             'targetAttribute' => 'eduPersonScopedAffiliation',
+            ),
             100 => array('class' => 'core:AttributeMap', 'name2oid'),
         ),
         'assertion.encryption' => true
@@ -220,13 +278,26 @@ function idpinstaller_hook_step7(&$data) {
     $res = @file_put_contents($filename_hosted, $m);
     unlink($file_tmp_name);
     if (!$res || count($perms_ko) > 0) {
-        if (function_exists('posix_getgrnam')) {
+        $aux = "<br/>" . $data['ssphpobj']->t('{idpinstaller:idpinstaller:step7_error}');
+        $aux .= "<br/>" . $data['ssphpobj']->t('{idpinstaller:idpinstaller:step4_perms_ko}');
+        $filename = $perms_ko[0];
+        $recursive = is_dir($filename) ? "-R" : "";
+        $file_owner = "[your_file_owner]";
+        $group = "[your_apache_group]";
+
+        if (extension_loaded('posix')) {
+            $file_owner = posix_getpwuid(fileowner($filename))['name'];
+            $group = posix_getgrgid(posix_getgid())['name'];
+        }
+
+        $aux.= "<pre>&gt; chown $recursive ".$file_owner.":".$group." $filename\n&gt; chmod $recursive g+w " . $filename . "</pre>";
+        /*if (function_exists('posix_getgrnam')) {
             $aux = "<br/>" . $data['ssphpobj']->t('{idpinstaller:idpinstaller:step7_error}');
             $aux .= "<br/>" . $data['ssphpobj']->t('{idpinstaller:idpinstaller:step4_perms_ko}');
             $filename = $perms_ko[0];
             $recursive = is_dir($filename) ? "-R" : "";
             $aux.= "<pre>&gt; chown $recursive " . getFileUsername($filename) . ":" . getApacheGroup() . " $filename\n&gt; chmod $recursive g+rw " . $filename . "</pre>";
-        }
+        }*/
         $data['errors2'][] = $aux;
         $data['errors2'][] = $data['ssphpobj']->t("{idpinstaller:idpinstaller:step1_remember_change_perms}");
     }
