@@ -230,11 +230,20 @@
     "step5_ldap_referral": {
         "es": "Activar el seguimiento de referrals. Los controladores de dominio de Active Directory pueden requerir su desactivación para functionar correctamente"
     },
+    "step5_ldap_bindtext": {
+        "es": "En el caso de realizar bind anónimo especifique el DN y password:"
+    },
+    "step5_ldap_sspassword": {
+        "es": "¿Desea instalar y configurar la aplicación Self Service Password para que cada usuario pueda gestionar su contraseña?"
+    },
     "step5_ldap_timeout": {
         "es": "Timeout de acceso al LDAP, en segundos"
     },
     "step5_ldap_info": {
-        "es": "Esta configuración permitirá la conexión del IdP a la fuente de datos, pero no incluye la configuración de obtención de la información de la misma. Para configurar esta, se deberá seguir la documentación oficial de SimpleSAMLphp."
+        "es": "Esta configuración permitirá la conexión del IdP a la fuente de datos, pero no incluye la configuración de obtención de la información de la misma. Para configurar esta, se deberá seguir <a target='_blank' href='http://wiki.rediris.es/SIR2/SSp_directorios_LDAP'>esta documentación.</a>."
+    },
+    "step5_pdo_info": {
+        "es": "Esta configuración permitirá la conexión del IdP a la fuente de datos, pero no incluye la configuración de obtención de la información de la misma. Para configurar esta, se deberá seguir <a target='_blank' href='http://wiki.rediris.es/SIR2/SSp_bases_de_datos'>esta documentación.</a>."
     },
     "step5_ldap_title":{
         "es":"Configuración de fuente de datos de tipo LDAP"

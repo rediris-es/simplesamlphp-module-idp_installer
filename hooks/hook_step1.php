@@ -67,6 +67,7 @@ function idpinstaller_hook_step1(&$data) {
         $data['errors'][] = $ssphpobj->t('{idpinstaller:idpinstaller:step1_error_version}');
     } else {
         //Continuamos comprobando las extensiones de PHP
+
         $extensions        = array("date", "dom", "hash", "libxml", "openssl", "pcre", "SPL", "zlib", "json", "mbstring");
         $windows_os = array("WIN32","WINNT","Windows");
 

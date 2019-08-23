@@ -76,17 +76,7 @@ function idpinstaller_hook_step5(&$data) {
                         $data['errors'][] = $ssphpobj->t('{idpinstaller:idpinstaller:step4_error}');
                     }
                 }
-            } else { //PARA LOS QUE QUEREMOS DESACTIVAR
-                if (file_exists($f . '/default-enable')) {
-
-                    @unlink($f . '/default-enable');
-                    @touch($f . '/default-disable');
-
-                    if (!file_exists($f . '/default-disable')) {
-                        $data['errors'][] = $ssphpobj->t('{idpinstaller:idpinstaller:step4_error}');
-                    }
-                }
-            }
+            } 
         }
     }
     if (count($modules_ko) > 0) {

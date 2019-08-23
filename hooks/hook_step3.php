@@ -79,12 +79,9 @@ function idpinstaller_hook_step3(&$data) {
         if (strcmp($pass, $pass2) == 0) {
             if (array_key_exists('ssphp_technicalcontact_name', $_REQUEST) && array_key_exists('ssphp_technicalcontact_email', $_REQUEST) && !empty($_REQUEST['ssphp_technicalcontact_name']) && !empty($_REQUEST['ssphp_technicalcontact_email'])) {
                 $filename                         = __DIR__ . '/../../../config/config.php';
-                include($filename);
-		
-                $algoritmo = 'sha512';
-		
+                include($filename);				
         		$salt = shell_exec("tr -cd '[:alnum:][:blank:]' < /dev/urandom | head -c48; echo");
-        		$config['auth.adminpassword'] = SimpleSAML\Utils\Crypto::pwHash($pass, strtoupper($algoritmo), $salt);
+        		$config['auth.adminpassword'] = SimpleSAML\Utils\Crypto::pwHash($pass);
         		$config['secretsalt']		  = $salt;
                 $config['technicalcontact_name']  = $_REQUEST['ssphp_technicalcontact_name'];
                 $config['technicalcontact_email'] = $_REQUEST['ssphp_technicalcontact_email'];
@@ -104,7 +101,7 @@ function idpinstaller_hook_step3(&$data) {
         		$config['trusted.url.domains']	  = array();
         		/*Fin de aniadido por Adrian Gomez*/
 
-                $res                              = @file_put_contents($filename, '<?php  $config = ' . var_export($config, 1) . "; ?>");
+                $res = @file_put_contents($filename, '<?php  $config = ' . var_export($config, 1) . "; ?>");
                 if (!$res) {
                     $data['errors'][] = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step2_contact_save_error}');
                     $data['errors'][] = $data['ssphpobj']->t('{idpinstaller:idpinstaller:step2_contact_save_error2}') . " <i>" . realpath($filename) . "</i>";

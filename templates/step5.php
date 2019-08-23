@@ -131,15 +131,13 @@
     } else if (strcmp($this->data['sir']['datasources'], "ldap") == 0) {
         $ldap = true;
         $pdo = false;
-        $conf = false;
+        $conf = true;
         unset($options['pdo']);
-        unset($options['config']);
     } else if (strcmp($this->data['sir']['datasources'], "pdo") == 0) {
         $pdo  = true;
         $ldap = false;
-        $conf = false;
+        $conf = true;
         unset($options['ldap']);
-        unset($options['config']);
     } else if(strcmp($this->data['sir']['datasources'], "config") == 0){
         $pdo  = false;
         $ldap = false;

@@ -143,6 +143,91 @@ function transaleXMLToSsPHP($xmldata){
     return $output;
 }
 
+function saveSSPLDAPConfiguration($params){
+
+    $filenameSource = __DIR__ . '/../../../www/selfservicepassword/conf/config.inc.php';
+    $filenameTarget = __DIR__ . '/../../../www/selfservicepassword/conf/config.inc.local.php';
+
+    if(file_exists($filenameSource)){
+
+        $old = get_defined_vars();
+
+        include($filenameSource);
+
+        $new = get_defined_vars();
+
+        $fileSettings = array_diff($new, $old);
+
+        $keyphrase = "H3C31J3w0aSgCvfZuAPAInqKBBsyK6hH0RQEDm5Apj4PduQYmBv4m3myf6wF";
+
+        $newSettings = array(
+                        'ldap_url' => $params['ldap_hostname'].":".$params['ldap_port'],
+                        'ldap_starttls' => ($params['ldap_enable_tls'] == 0 ? TRUE : FALSE),
+                        'ldap_binddn' => $params['ldap_binddn'],
+                        'ldap_bindpw' => $params['ldap_bindpassword'],
+                        'ldap_base' => "dc=tuorganizacion,dc=es",
+                        'ldap_login_attribute' => "uid",
+                        'ldap_fullname_attribute' => "cn",
+                        'ldap_filter' => "(&(objectClass=person)($ldap_login_attribute={login}))",
+                        'keyphrase' => $keyphrase
+                    );
+
+        $fileSettings = array_merge($fileSettings, $newSettings);
+      
+        $content = "<?php \n";
+        
+        foreach ($fileSettings as $key => $value) {
+
+            if (gettype($value) == 'string' ){
+                $val = "'{$value}'";
+            } else if (gettype($value) == 'boolean' ){
+                if ($value == 0){
+                    $val = "FALSE";
+                } else {
+                    $val = "TRUE";
+                }
+            } else if (gettype($value) == 'NULL' ) {
+                $val = "NULL";
+            } else {
+                $val = "{$value}";
+            }
+
+            $content .= "$".$key." = ".$val."; \n";
+            
+        }
+
+        $content .= "\n ?>";
+
+        file_put_contents($filenameTarget, $content);
+
+    }
+
+}
+
+function downloadSSPLdap(){
+
+    if (!file_exists(__DIR__ . '/../../../www/selfservicepassword')) {
+		$url = "https://ltb-project.org/archives/ltb-project-self-service-password-1.3.tar.gz";
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+		$output = curl_exec($ch);
+		//Guardamos la imagen en un archivo
+		$fh = fopen(__DIR__ . '/../../../www/sspass.tar.gz', 'w');
+		fwrite($fh, $output);
+		fclose($fh);
+
+		$p = new PharData(__DIR__ . '/../../../www/sspass.tar.gz');
+		//$p->decompress();
+		$p->extractTo(__DIR__ . '/../../../www/sspass', null, true);
+
+		rename(__DIR__ . '/../../../www/sspass/ltb-project-self-service-password-1.3', __DIR__ . '/../../../www/selfservicepassword');
+
+		rmdir(__DIR__ . '/../../../www/sspass');
+		unlink(__DIR__ . '/../../../www/sspass.tar.gz');
+	}
+
+}
 function generateSecurePass($length = 9, $add_dashes = false, $available_sets = 'luds')
     {
         $sets = array();

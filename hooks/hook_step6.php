@@ -134,7 +134,7 @@ function idpinstaller_hook_step6(&$data) {
                 }
                 return true;
             }
-        }else if (strcmp($ds_type, "config") == 0 && ($data['datasources'] == "all" || $data['datasources'] == "config")) {
+        }else if (strcmp($ds_type, "config") == 0) {
             if (array_key_exists('config_user', $_REQUEST) && !empty($_REQUEST['config_user'])
                     && array_key_exists('config_pass', $_REQUEST) && !empty($_REQUEST['config_pass'])
                     && array_key_exists('config_rol', $_REQUEST) && !empty($_REQUEST['config_rol'])) {
